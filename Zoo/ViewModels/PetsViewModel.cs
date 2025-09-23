@@ -29,8 +29,7 @@ public partial class PetsViewModel : ViewModelBase
         {
             var animals = await _selectService.SelectAll("Animals");
             var animalsList = animals?.ToList();
-
-            // Обновляем коллекцию в UI потоке
+            
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
                 Animals.Clear();
@@ -42,13 +41,10 @@ public partial class PetsViewModel : ViewModelBase
                     }
                 }
             });
-
-            Console.WriteLine($"Loaded {Animals.Count} animals"); // Для отладки
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error loading animals: {ex.Message}");
-            // Можно добавить обработку ошибок
         }
     }
 }
