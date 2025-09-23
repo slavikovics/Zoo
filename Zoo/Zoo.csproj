@@ -34,7 +34,7 @@
     <ItemGroup>
       <None Remove="database.json" />
       <Content Include="database.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
 </Project>
