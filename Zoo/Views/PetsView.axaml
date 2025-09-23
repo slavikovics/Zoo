@@ -7,7 +7,6 @@
              xmlns:vm="using:Zoo.ViewModels"
              x:DataType="vm:PetsViewModel">
     <StackPanel>
-        <Button>ewrrewe</Button>
         <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding Animals}"/>
     </StackPanel>
 </UserControl>
