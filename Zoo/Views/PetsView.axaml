@@ -3,20 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Zoo.Views.PetsView">
-    <DataGrid>
-        <DataGrid.Columns>
-            <DataGridTextColumn Header="Id"/>
-            <DataGridTextColumn Header="Name"/>
-            <DataGridTextColumn Header="Type"/>
-            <DataGridTextColumn Header="Birth date"/>
-            <DataGridTextColumn Header="Sex"/>
-            <DataGridTemplateColumn Header="Winter place"/>
-            <DataGridTemplateColumn Header="Reptile info"/>
-            <DataGridTemplateColumn Header="Diet"/>
-            <DataGridTemplateColumn Header="Habitat zone"/>
-            <DataGridTemplateColumn Header="Vet"/>
-            <DataGridTemplateColumn Header="Caretaker"/>
-        </DataGrid.Columns>
-    </DataGrid>
+             x:Class="Zoo.Views.PetsView"
+             xmlns:vm="using:Zoo.ViewModels"
+             x:DataType="vm:PetsViewModel">
+    <StackPanel>
+        <Button>ewrrewe</Button>
+        <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding Animals}"/>
+    </StackPanel>
 </UserControl>

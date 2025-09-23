@@ -10,7 +10,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Avalonia.Markup.Xaml;
 using DatabaseUtils;
+using DatabaseUtils.Queries;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Zoo.ViewModels;
 using Zoo.Views;
 
@@ -18,26 +20,30 @@ namespace Zoo;
 
 public partial class App : Application
 {
-    public static ServiceProvider? ServiceProvider { get; set; }
+    public static ServiceProvider? ServiceProvider { get; private set; }
     
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
     }
 
-    private async Task<string> GetConnectionString()
+    private string GetConnectionString()
     {
-        var settings = await File.ReadAllTextAsync("database.json");
+        var settings = File.ReadAllText("database.json");
         return JsonSerializer.Deserialize<Dictionary<string, string>>(settings)!["ConnectionString"];
     }
 
-    private async Task RegisterUserServices()
+    private void RegisterUserServices()
     {
-        var connectionString = await GetConnectionString();
-        ServiceCollection serviceCollection = new ServiceCollection();
+        var connectionString = Task.Run(GetConnectionString).Result;
+        ServiceCollection serviceCollection = new ();
+        
         serviceCollection.AddSingleton<IDatabaseConnectionFactory>(_ => 
             new NpgsqlConnectionFactory(connectionString));
+        serviceCollection.AddSingleton<MainViewModel>();
         serviceCollection.AddTransient<PetsViewModel>();
+        serviceCollection.AddSingleton(typeof(ISelectService<>), typeof(SelectService<>));
+        
         ServiceProvider = serviceCollection.BuildServiceProvider();
     }
 
@@ -50,7 +56,7 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
-                DataContext = ServiceProvider?.GetService<PetsViewModel>()
+                DataContext = ServiceProvider?.GetService<MainViewModel>()
             };
         }
 

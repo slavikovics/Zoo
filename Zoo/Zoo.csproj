@@ -9,7 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Models\"/>
         <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
 
@@ -30,5 +29,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DatabaseUtils\DatabaseUtils.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="database.json" />
+      <Content Include="database.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 </Project>
