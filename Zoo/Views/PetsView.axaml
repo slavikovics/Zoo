@@ -41,7 +41,7 @@
                 <DataGridTemplateColumn Header="Удалить">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:Animal">
-                            <Button Margin="3"></Button>
+                            <Button HorizontalAlignment="Center" Margin="8 4 8 4" ><Svg Width="16" Path="../Assets/bin.svg"/></Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
