@@ -1,15 +1,48 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Zoo.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private ViewModelBase? _currentViewModel;
+    [ObservableProperty] private ViewModelBase? _currentViewModel;
+
+    [ObservableProperty] private bool _isBackEnabled;
+
+    [ObservableProperty] private bool _isAddEnabled = true;
+    
+    [ObservableProperty] private bool _areAnimalsEnabled;
+    
+    [ObservableProperty] private bool _areAnimalTypesEnabled = true;
+    
+    [ObservableProperty] private bool _areWinterPlacesEnabled = true;
+    
+    [ObservableProperty] private bool _areDietsEnabled = true;
+    
+    [ObservableProperty] private bool _areDietTypesEnabled = true;
+    
+    [ObservableProperty] private bool _areEmployeesEnabled = true;
+    
+    [ObservableProperty] private bool _areHabitatsEnabled = true;
+    
+    [ObservableProperty] private bool _areReptileInfosEnabled = true;
+
+    private readonly List<bool> _navItems;
+
+    private void EnableAllNavItems()
+    {
+        for (int i = 0; i < _navItems.Count; i++)
+        {
+            _navItems[i] = true;
+        }
+    }
 
     public MainViewModel()
     {
         CurrentViewModel = App.ServiceProvider?.GetService<PetsViewModel>();
+        _navItems = [IsBackEnabled, IsAddEnabled, AreAnimalsEnabled, AreAnimalTypesEnabled, AreWinterPlacesEnabled, 
+            AreDietsEnabled, AreDietTypesEnabled, AreEmployeesEnabled, AreHabitatsEnabled, AreReptileInfosEnabled];
+        
     }
 }

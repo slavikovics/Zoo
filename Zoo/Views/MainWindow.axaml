@@ -19,16 +19,16 @@
     <DockPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto"  DockPanel.Dock="Top">
             <StackPanel Margin="5 5 5 20" Orientation="Horizontal" Spacing="10">
-                <Button>Назад</Button>
-                <Button>Добавить</Button>
-                <Button>Животные</Button>
-                <Button>Типы животных</Button>
-                <Button>Места зимовки</Button>
-                <Button>Рационы питания</Button>
-                <Button>Типы рационов</Button>
-                <Button>Работники</Button>
-                <Button>Зоны обитания</Button>
-                <Button>Информация для рептилий</Button>
+                <Button IsEnabled="{Binding IsBackEnabled}">Назад</Button>
+                <Button IsEnabled="{Binding IsAddEnabled}">Добавить</Button>
+                <Button IsEnabled="{Binding AreAnimalsEnabled}">Животные</Button>
+                <Button IsEnabled="{Binding AreAnimalTypesEnabled}">Типы животных</Button>
+                <Button IsEnabled="{Binding AreWinterPlacesEnabled}">Места зимовки</Button>
+                <Button IsEnabled="{Binding AreDietsEnabled}">Рационы питания</Button>
+                <Button IsEnabled="{Binding AreDietTypesEnabled}">Типы рационов</Button>
+                <Button IsEnabled="{Binding AreEmployeesEnabled}">Работники</Button>
+                <Button IsEnabled="{Binding AreHabitatsEnabled}">Зоны обитания</Button>
+                <Button IsEnabled="{Binding AreReptileInfosEnabled}">Информация для рептилий</Button>
             </StackPanel>
         </ScrollViewer>
 
