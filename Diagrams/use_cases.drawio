@@ -1,0 +1,172 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2">
+  <diagram name="Страница — 1" id="g7tcLjOli_ROFgzeFCaH">
+    <mxGraphModel dx="1871" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="R1BOPhnAV6UsnUqVZYRx-15" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="80" width="640" height="980" as="geometry" />
+        </mxCell>
+        <mxCell id="zYbvImc0_gr9GPeY3Z3W-1" value="Смотритель / ветеринар" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="270" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-2" value="Система учёта животных, птиц, рептилий в зоопраке" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="170" y="90" width="210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-3" value="Добавление питомца" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="247.5" y="130" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-4" value="Удаление питомца" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="430" y="150" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-5" value="Редактирование питомца" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="420" y="230" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-10" value="Добавление типа рациона" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="320" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-11" value="Удаление типа рациона" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="230" y="350" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-12" value="Редактирование типа рациона" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="430" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-13" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="RUEsDIs3C0-FJB41FITl-3" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="300" as="sourcePoint" />
+            <mxPoint x="280" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-14" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="RUEsDIs3C0-FJB41FITl-4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="300" as="sourcePoint" />
+            <mxPoint x="258" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-15" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="RUEsDIs3C0-FJB41FITl-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="300" as="sourcePoint" />
+            <mxPoint x="258" y="255" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-16" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="RUEsDIs3C0-FJB41FITl-10" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="300" as="sourcePoint" />
+            <mxPoint x="260" y="335" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-17" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="RUEsDIs3C0-FJB41FITl-11" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="300" as="sourcePoint" />
+            <mxPoint x="255" y="425" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-18" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="RUEsDIs3C0-FJB41FITl-12" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="300" as="sourcePoint" />
+            <mxPoint x="255" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-20" value="Добавление информации о рационе питания" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="650" y="180" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-21" value="&quot;extend&quot;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0.939;entryY=0.261;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" source="RUEsDIs3C0-FJB41FITl-20" target="RUEsDIs3C0-FJB41FITl-5" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="270" y="400" as="sourcePoint" />
+            <mxPoint x="430" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-22" value="Удаление информации о рационе питания" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="650" y="260" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-23" value="Редактирование информации о рационе питания" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="650" y="350" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-24" value="&quot;extend&quot;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=0.996;entryY=0.576;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" source="RUEsDIs3C0-FJB41FITl-22" target="RUEsDIs3C0-FJB41FITl-5" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="660" y="225" as="sourcePoint" />
+            <mxPoint x="570" y="275" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-25" value="&quot;extend&quot;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="RUEsDIs3C0-FJB41FITl-23" target="RUEsDIs3C0-FJB41FITl-5" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="660" y="305" as="sourcePoint" />
+            <mxPoint x="560" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-26" value="Просмотр полной информации по типу и имени питомца" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="230" y="790" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-27" value="Просмотр списка сотрудников, работающих семейными парами" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="230" y="880" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-28" value="Просмотр перечня всех животных на теущую дату с их рационами" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="230" y="970" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-29" value="Добавление смотрителя / ветеринара" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="220" y="530" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-32" value="Удаление смотрителя / ветеринара" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="220" y="610" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-33" value="Редактирование смотрителя / ветеринара" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="220" y="690" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-37" value="Директор зоопарка" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="615" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RUEsDIs3C0-FJB41FITl-38" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="RUEsDIs3C0-FJB41FITl-29" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="100" y="650" as="sourcePoint" />
+            <mxPoint x="290" y="475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R1BOPhnAV6UsnUqVZYRx-1" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="RUEsDIs3C0-FJB41FITl-32">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="100" y="650" as="sourcePoint" />
+            <mxPoint x="230" y="575" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R1BOPhnAV6UsnUqVZYRx-2" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="RUEsDIs3C0-FJB41FITl-33">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="100" y="650" as="sourcePoint" />
+            <mxPoint x="230" y="655" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R1BOPhnAV6UsnUqVZYRx-3" value="Сотрудник зоопарка" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-40" y="880" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="R1BOPhnAV6UsnUqVZYRx-7" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="RUEsDIs3C0-FJB41FITl-26">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="20" y="920" as="sourcePoint" />
+            <mxPoint x="310" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R1BOPhnAV6UsnUqVZYRx-8" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="RUEsDIs3C0-FJB41FITl-27">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="20" y="920" as="sourcePoint" />
+            <mxPoint x="240" y="835" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R1BOPhnAV6UsnUqVZYRx-9" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="RUEsDIs3C0-FJB41FITl-28">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="20" y="920" as="sourcePoint" />
+            <mxPoint x="240" y="925" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R1BOPhnAV6UsnUqVZYRx-10" value="" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="60" y="700" as="sourcePoint" />
+            <mxPoint x="-10" y="870" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R1BOPhnAV6UsnUqVZYRx-12" value="" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="60" y="370" as="sourcePoint" />
+            <mxPoint x="-30" y="860" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
