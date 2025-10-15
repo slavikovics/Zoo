@@ -55,4 +55,10 @@ public partial class MainViewModel : ViewModelBase
     {
         CurrentViewModel = _navigationService?.NavigateTo<DietsViewModel>();
     }
+    
+    [RelayCommand]
+    private void NavigateToEmployees()
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<EmployeesViewModel>();
+    }
 }

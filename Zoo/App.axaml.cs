@@ -43,7 +43,11 @@ public partial class App : Application
             new NpgsqlConnectionFactory(connectionString));
         serviceCollection.AddSingleton<INavigationService, NavigationService>();
         serviceCollection.AddSingleton<MainViewModel>();
+        
         serviceCollection.AddTransient<PetsViewModel>();
+        serviceCollection.AddTransient<DietsViewModel>();
+        serviceCollection.AddTransient<EmployeesViewModel>();
+        
         serviceCollection.AddSingleton(typeof(ISelectService<>), typeof(SelectService<>));
         
         ServiceProvider = serviceCollection.BuildServiceProvider();

@@ -22,8 +22,8 @@
                 <Button IsEnabled="{Binding IsBackEnabled}">Назад</Button>
                 <Button IsEnabled="{Binding IsAddEnabled}">Добавить</Button>
                 <Button IsEnabled="{Binding AreAnimalsEnabled}">Питомцы</Button>
-                <Button IsEnabled="{Binding AreDietsEnabled}">Рационы питания</Button>
-                <Button IsEnabled="{Binding AreEmployeesEnabled}">Сотрудники</Button>
+                <Button IsEnabled="{Binding AreDietsEnabled}" Command="{Binding NavigateToDietsCommand}">Рационы питания</Button>
+                <Button IsEnabled="{Binding AreEmployeesEnabled}" Command="{Binding NavigateToEmployeesCommand}">Сотрудники</Button>
                 <Button IsEnabled="{Binding AreHabitatsEnabled}">Поиск по типу и имени питомца</Button>
                 <Button IsEnabled="{Binding AreReptileInfosEnabled}">Семейные пары</Button>
             </StackPanel>
