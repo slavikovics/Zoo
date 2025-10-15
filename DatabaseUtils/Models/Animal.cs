@@ -1,7 +1,7 @@
 namespace DatabaseUtils.DTOs;
 
 public class Animal(int id, string name, int typeId, DateTime? birthDate, string sex, 
-    int? winterPlaceId, int? reptileInfoId, int dietId, int habitatZoneId, int vet, int caretakerId) : IFieldNamesAvailable
+    int? winterPlaceId, int? reptileInfoId, int dietId, int habitatZoneId, int vet, int caretakerId)
 {
     public int Id { get; set; } = id;
 
@@ -28,10 +28,4 @@ public class Animal(int id, string name, int typeId, DateTime? birthDate, string
     public int Vet { get; set; } = vet;
 
     public int CaretakerId { get; set; } = caretakerId;
-    
-    public List<string> GetAllFieldNames()
-    {
-        return [nameof(Id), nameof(Name), nameof(TypeId), nameof(BirthDate), nameof(Sex), nameof(WinterPlaceId), 
-            nameof(ReptileInfoId), nameof(DietId), nameof(HabitatZoneId), nameof(Vet), nameof(CaretakerId)];
-    }
 }

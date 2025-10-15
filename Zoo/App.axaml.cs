@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using DatabaseUtils;
 using DatabaseUtils.Queries;
@@ -40,6 +41,7 @@ public partial class App : Application
         
         serviceCollection.AddSingleton<IDatabaseConnectionFactory>(_ => 
             new NpgsqlConnectionFactory(connectionString));
+        serviceCollection.AddSingleton<INavigationService, NavigationService>();
         serviceCollection.AddSingleton<MainViewModel>();
         serviceCollection.AddTransient<PetsViewModel>();
         serviceCollection.AddSingleton(typeof(ISelectService<>), typeof(SelectService<>));
@@ -54,10 +56,12 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = ServiceProvider?.GetService<MainViewModel>()
-            };
+            var mainWindow = new MainWindow();
+                
+            var navService = ServiceProvider?.GetRequiredService<INavigationService>();
+            mainWindow.DataContext = ServiceProvider?.GetRequiredService<MainViewModel>();
+                
+            desktop.MainWindow = mainWindow;
         }
 
         base.OnFrameworkInitializationCompleted();

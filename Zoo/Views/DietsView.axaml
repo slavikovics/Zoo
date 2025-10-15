@@ -3,42 +3,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Zoo.Views.PetsView"
+             x:Class="Zoo.Views.DietsView"
              xmlns:vm="using:Zoo.ViewModels"
              xmlns:models="using:DatabaseUtils.DTOs"
              xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
-             x:DataType="vm:PetsViewModel">
+             x:DataType="vm:DietsViewModel">
     <ScrollViewer>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Animals}" IsReadOnly="True">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Diets}" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True"/>
                 
-                <!-- Type column - simplified to display only -->
+                <DataGridTextColumn Header="Название" Binding="{Binding Name}" IsReadOnly="True"/>
+                
                 <DataGridTemplateColumn Header="Тип" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Animal">
+                        <DataTemplate DataType="models:Diet">
                             <TextBlock Text="{Binding TypeId}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-                <DataGridTextColumn Header="Имя" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True"/>
                 
-                <!-- Birth date column - simplified to display only -->
-                <DataGridTemplateColumn Header="Дата рождения" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Animal">
-                            <TextBlock Text="{Binding BirthDate, StringFormat='{}{0:dd.MM.yyyy}'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                
-                <DataGridTextColumn Header="Пол" Binding="{Binding Sex}" IsReadOnly="True"/>
-                
-                <!-- New Edit column -->
+                <!-- Edit column -->
                 <DataGridTemplateColumn Header="Редактировать" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Animal">
+                        <DataTemplate DataType="models:Diet">
                             <Button HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/edit.svg"/>
                             </Button>
@@ -46,10 +36,10 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-                <!-- Existing Delete column -->
+                <!-- Delete column -->
                 <DataGridTemplateColumn Header="Удалить" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Animal">
+                        <DataTemplate DataType="models:Diet">
                             <Button HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/bin.svg"/>
                             </Button>

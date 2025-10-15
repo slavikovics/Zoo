@@ -1,7 +1,7 @@
 namespace DatabaseUtils.DTOs;
 
 public class Employee(int id, string name, DateTime birthDate, string phoneNumber, 
-    string maritalStatus, int? marriedWith) : IFieldNamesAvailable
+    string maritalStatus, int? marriedWith)
 {
     public int Id { get; set; } = id;
 
@@ -14,10 +14,4 @@ public class Employee(int id, string name, DateTime birthDate, string phoneNumbe
     public string MaritalStatus { get; set; } = maritalStatus;
 
     public int? MarriedWith { get; set; } = marriedWith;
-    
-    public List<string> GetAllFieldNames()
-    {
-        return [nameof(Id), nameof(Name), nameof(BirthDate), nameof(PhoneNumber), nameof(MaritalStatus), 
-            nameof(MarriedWith)];
-    }
 }

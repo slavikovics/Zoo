@@ -1,6 +1,6 @@
 namespace DatabaseUtils.DTOs;
 
-public class ReptileInfo(int id, decimal normalTemperature, DateTime sleepStart, DateTime sleepEnd) : IFieldNamesAvailable
+public class ReptileInfo(int id, decimal normalTemperature, DateTime sleepStart, DateTime sleepEnd)
 {
     public int Id { get; set; } = id;
     
@@ -9,9 +9,4 @@ public class ReptileInfo(int id, decimal normalTemperature, DateTime sleepStart,
     public DateTime SleepStart { get; set; } = sleepStart;
 
     public DateTime SleepEnd { get; set; } = sleepEnd;
-    
-    public List<string> GetAllFieldNames()
-    {
-        return [nameof(Id), nameof(NormalTemperature), nameof(SleepStart), nameof(SleepEnd)];
-    }
 }
