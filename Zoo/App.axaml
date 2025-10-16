@@ -11,6 +11,12 @@
         <DataTemplate DataType="vm:PetsViewModel">
             <views:PetsView/>
         </DataTemplate>
+        <DataTemplate DataType="vm:DietsViewModel">
+            <views:DietsView/>
+        </DataTemplate>
+        <DataTemplate DataType="vm:EmployeesViewModel">
+            <views:EmployeesView/>
+        </DataTemplate>
     </Application.DataTemplates>
     <Application.Styles>
         <FluentTheme />

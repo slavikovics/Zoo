@@ -6,7 +6,5 @@ namespace Zoo;
 
 public interface INavigationService
 {
-    ViewModelBase NavigateTo<TViewModel>() where TViewModel : ViewModelBase;
-    
-    ViewModelBase GoBack();
+    TViewModel NavigateTo<TViewModel>() where TViewModel : ViewModelBase;
 }

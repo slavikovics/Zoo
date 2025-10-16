@@ -63,7 +63,7 @@ public partial class App : Application
             var mainWindow = new MainWindow();
                 
             var navService = ServiceProvider?.GetRequiredService<INavigationService>();
-            mainWindow.DataContext = ServiceProvider?.GetRequiredService<MainViewModel>();
+            mainWindow.DataContext = navService?.NavigateTo<MainViewModel>();
                 
             desktop.MainWindow = mainWindow;
         }
