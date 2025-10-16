@@ -11,4 +11,9 @@ public class Diet(int id, string name, int typeId, string? description)
     public int TypeId { get; set; } = typeId;
 
     public string? Description { get; set; } = description;
+    
+    public override string ToString()
+    {
+        return $"{Name}, тип: {TypeId}, описание: {Description}";
+    }
 }

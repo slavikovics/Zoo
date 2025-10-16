@@ -11,4 +11,9 @@ public class BirdsWinterPlace(int id, string name, DateTime departure, DateTime 
     public DateTime Departure { get; set; } = departure;
 
     public DateTime Arrival { get; set; } = arrival;
+    
+    public override string ToString()
+    {
+        return $"{CountryName}, отправление: {Departure}, прибытие: {Arrival}";
+    }
 }

@@ -9,10 +9,6 @@ public class Animal(int id, string name, int typeId, DateTime? birthDate, string
 
     public int TypeId { get; set; } = typeId;
     
-    //
-    public List<int> AvailableTypes { get; set; } = [1, 2, 3];
-    //
-    
     public DateTimeOffset? BirthDate { get; set; } =  birthDate;
 
     public string Sex { get; set; } = sex;
@@ -28,4 +24,9 @@ public class Animal(int id, string name, int typeId, DateTime? birthDate, string
     public int Vet { get; set; } = vet;
 
     public int CaretakerId { get; set; } = caretakerId;
+
+    public override string ToString()
+    {
+        return $"{Name}, тип: {TypeId}, пол: {Sex}";
+    }
 }

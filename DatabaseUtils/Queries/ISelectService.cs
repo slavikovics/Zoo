@@ -1,8 +1,8 @@
 ﻿namespace DatabaseUtils.Queries;
 
-public interface ISelectService<T>
+public interface ISelectService
 {
-    Task<IEnumerable<T>?> SelectAll(string tableName);
+    Task<IEnumerable<T>?> SelectAll<T>(string tableName) where T : class;
 
-    Task<IEnumerable<T>?> SelectById(string tableName, string idColumnName, int id);
+    Task<IEnumerable<T>?> SelectById<T>(string tableName, string idColumnName, int id) where T : class;
 }

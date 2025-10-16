@@ -51,7 +51,7 @@ public partial class App : Application
         serviceCollection.AddTransient<DietEditViewModel>();
         serviceCollection.AddTransient<EmployeeEditViewModel>();
         
-        serviceCollection.AddSingleton(typeof(ISelectService<>), typeof(SelectService<>));
+        serviceCollection.AddSingleton<ISelectService, SelectService>();
         
         ServiceProvider = serviceCollection.BuildServiceProvider();
     }

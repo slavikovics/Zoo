@@ -10,7 +10,7 @@ namespace Zoo.ViewModels;
 public partial class EmployeeEditViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
-    private readonly ISelectService<Employee> _dataService;
+    private readonly ISelectService _dataService;
 
     [ObservableProperty] private string _title = "Create Employee";
 
@@ -25,7 +25,7 @@ public partial class EmployeeEditViewModel : ViewModelBase
         
     public bool IsMarried => Employee?.MaritalStatus == "Married";
 
-    public EmployeeEditViewModel(INavigationService navigationService, ISelectService<Employee> dataService)
+    public EmployeeEditViewModel(INavigationService navigationService, ISelectService dataService)
     {
         _navigationService = navigationService;
         _dataService = dataService;

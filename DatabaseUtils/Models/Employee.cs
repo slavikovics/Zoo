@@ -14,4 +14,9 @@ public class Employee(int id, string name, DateTime birthDate, string phoneNumbe
     public string MaritalStatus { get; set; } = maritalStatus;
 
     public int? MarriedWith { get; set; } = marriedWith;
+    
+    public override string ToString()
+    {
+        return $"{Name}, дата рождения: {BirthDate}, номер телефона: {PhoneNumber}, семейное положение: {MaritalStatus}";
+    }
 }

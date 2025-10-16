@@ -10,7 +10,7 @@ namespace Zoo.ViewModels;
 public partial class DietEditViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
-    private readonly ISelectService<Diet> _dataService;
+    private readonly ISelectService _dataService;
 
     [ObservableProperty] private string _title = "Create Diet";
 
@@ -18,7 +18,7 @@ public partial class DietEditViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<DietType> _dietTypes = new();
 
-    public DietEditViewModel(INavigationService navigationService, ISelectService<Diet> dataService)
+    public DietEditViewModel(INavigationService navigationService, ISelectService dataService)
     {
         _navigationService = navigationService;
         _dataService = dataService;

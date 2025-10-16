@@ -4,7 +4,7 @@ using Microsoft.Data.SqlClient;
 
 namespace DatabaseUtils.Queries;
 
-public class SelectService<T> : ISelectService<T>
+public class SelectService : ISelectService
 {
     private readonly IDatabaseConnectionFactory _connectionFactory;
 
@@ -13,14 +13,14 @@ public class SelectService<T> : ISelectService<T>
         _connectionFactory = databaseConnectionFactory;
     }
     
-    public async Task<IEnumerable<T>?> SelectAll(string tableName)
+    public async Task<IEnumerable<T>?> SelectAll<T>(string tableName) where T : class
     {
         var selectQuery = $"SELECT * FROM {tableName}";
         using var connection = await _connectionFactory.CreateConnectionAsync();
         return await connection.QueryAsync<T>(selectQuery);
     }
     
-    public async Task<IEnumerable<T>?> SelectById(string tableName, string idColumnName, int id)
+    public async Task<IEnumerable<T>?> SelectById<T>(string tableName, string idColumnName, int id) where T : class
     {
         var selectQuery = $@"SELECT * FROM {tableName} WHERE {idColumnName} = @id";
         using var connection = await _connectionFactory.CreateConnectionAsync();

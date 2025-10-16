@@ -9,11 +9,11 @@ namespace Zoo.ViewModels;
 
 public class EmployeesViewModel : ViewModelBase
 {
-    private readonly ISelectService<Employee> _selectService;
+    private readonly ISelectService _selectService;
 
     public ObservableCollection<Employee> Employees { get; set; }
     
-    public EmployeesViewModel(ISelectService<Employee> selectService)
+    public EmployeesViewModel(ISelectService selectService)
     {
         _selectService = selectService;
         Employees = new ObservableCollection<Employee>();
@@ -24,7 +24,7 @@ public class EmployeesViewModel : ViewModelBase
     {
         try
         {
-            var diets = await _selectService.SelectAll("Employees");
+            var diets = await _selectService.SelectAll<Employee>("Employees");
             var dietsList = diets?.ToList();
             
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
