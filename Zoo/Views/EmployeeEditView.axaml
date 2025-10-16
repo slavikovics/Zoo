@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Zoo.Views.EmployeeEditView"
+             xmlns:vm="using:Zoo.ViewModels"
+             xmlns:models="using:DatabaseUtils.DTOs"
+             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
+             x:DataType="vm:EmployeeEditViewModel">
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="15">
+            <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold"/>
+            
+                <StackPanel Spacing="10" Margin="10">
+                    <Grid ColumnDefinitions="120,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Full Name:" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Employee.Name}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Birth Date:" VerticalAlignment="Center"/>
+                        <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding Employee.BirthDate}"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Phone Number:" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Employee.PhoneNumber}"/>
+                        
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Marital Status:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" 
+                                  ItemsSource="{Binding MaritalStatusOptions}"
+                                  SelectedItem="{Binding Employee.MaritalStatus}"/>
+                        
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Married With:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="4" Grid.Column="1" 
+                                  ItemsSource="{Binding AvailableSpouses}"
+                                  SelectedValue="{Binding Employee.MarriedWith}">
+                            <ComboBox.Styles>
+                                <Style Selector="ComboBox">
+                                    <Setter Property="IsEnabled" Value="{Binding IsMarried}"/>
+                                </Style>
+                            </ComboBox.Styles>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                <Button Content="Save" Command="{Binding SaveCommand}" Width="80"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="80"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

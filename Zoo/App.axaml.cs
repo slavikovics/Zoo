@@ -47,6 +47,9 @@ public partial class App : Application
         serviceCollection.AddTransient<PetsViewModel>();
         serviceCollection.AddTransient<DietsViewModel>();
         serviceCollection.AddTransient<EmployeesViewModel>();
+        serviceCollection.AddTransient<AnimalEditViewModel>();
+        serviceCollection.AddTransient<DietEditViewModel>();
+        serviceCollection.AddTransient<EmployeeEditView>();
         
         serviceCollection.AddSingleton(typeof(ISelectService<>), typeof(SelectService<>));
         

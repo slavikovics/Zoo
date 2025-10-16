@@ -1,0 +1,91 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Zoo.Views.AnimalEditView"
+             xmlns:vm="using:Zoo.ViewModels"
+             xmlns:models="using:DatabaseUtils.DTOs"
+             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
+             x:DataType="vm:AnimalEditViewModel">
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="15">
+            <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold"/>
+            
+                <StackPanel Spacing="10" Margin="10">
+                    <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Animal.Name}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Animal Type:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" 
+                                  ItemsSource="{Binding AnimalTypes}"
+                                  SelectedValue="{Binding Animal.TypeId}"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Birth Date:" VerticalAlignment="Center"/>
+                        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Animal.BirthDate}"/>
+                        
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Sex:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" 
+                                  ItemsSource="{Binding SexOptions}"
+                                  SelectedItem="{Binding Animal.Sex}"/>
+                    </Grid>
+                </StackPanel>
+            
+                <StackPanel Spacing="10" Margin="10">
+                    <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Habitat Zone:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" 
+                                  ItemsSource="{Binding HabitatZones}"
+                                  SelectedValue="{Binding Animal.HabitatZoneId}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Diet:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" 
+                                  ItemsSource="{Binding Diets}"
+                                  SelectedValue="{Binding Animal.DietId}"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Caretaker:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="2" Grid.Column="1" 
+                                  ItemsSource="{Binding Caretakers}"
+                                  SelectedValue="{Binding Animal.CaretakerId}"/>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Spacing="10" Margin="10">
+                    <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Winter Place:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" 
+                                  ItemsSource="{Binding WinterPlaces}"
+                                  SelectedValue="{Binding Animal.WinterPlaceId}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Reptile Info:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" 
+                                  ItemsSource="{Binding ReptileInfos}"
+                                  SelectedValue="{Binding Animal.ReptileInfoId}"/>
+                    </Grid>
+                </StackPanel>
+            
+                <StackPanel Spacing="10" Margin="10">
+                    <ListBox ItemsSource="{Binding SelectedVets}" Height="120">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ComboBox ItemsSource="{Binding AvailableVets}"
+                              SelectedItem="{Binding SelectedVetToAdd}"
+                              Margin="0,5,0,0"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="Add Vet" Command="{Binding AddVetCommand}" Margin="0,5"/>
+                        <Button Content="Remove Selected" Command="{Binding RemoveVetCommand}" Margin="0,5"/>
+                    </StackPanel>
+                </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                <Button Content="Save" Command="{Binding SaveCommand}" Width="80"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="80"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -48,5 +48,17 @@
         <DependentUpon>EmployeesView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Views\DietEditView.axaml.cs">
+        <DependentUpon>DietEditView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\AnimalEditView.axaml.cs">
+        <DependentUpon>AnimalEditView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\EmployeeEditView.axaml.cs">
+        <DependentUpon>EmployeeEditView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>
