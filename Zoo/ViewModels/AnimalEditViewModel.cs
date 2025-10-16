@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.DTOs;
@@ -36,10 +37,7 @@ public partial class AnimalEditViewModel : ViewModelBase
 
     [ObservableProperty] private Employee? _selectedVetToAdd;
 
-    public ObservableCollection<string> SexOptions { get; } = new()
-    {
-        "Male", "Female", "Unknown"
-    };
+    public ObservableCollection<string> SexOptions { get; } = ["Male", "Female", "Unknown"];
 
     public AnimalEditViewModel(INavigationService navigationService, ISelectService<Animal> dataService)
     {
@@ -67,7 +65,7 @@ public partial class AnimalEditViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async void Save()
+    private async Task Save()
     {
     }
 

@@ -11,54 +11,95 @@ public partial class MainViewModel : ViewModelBase
 
     [ObservableProperty] private bool _isBackEnabled;
 
-    [ObservableProperty] private bool _isAddEnabled = true;
-    
-    [ObservableProperty] private bool _areAnimalsEnabled;
-    
-    [ObservableProperty] private bool _areAnimalTypesEnabled = true;
-    
-    [ObservableProperty] private bool _areWinterPlacesEnabled = true;
-    
-    [ObservableProperty] private bool _areDietsEnabled = true;
-    
-    [ObservableProperty] private bool _areDietTypesEnabled = true;
-    
-    [ObservableProperty] private bool _areEmployeesEnabled = true;
-    
-    [ObservableProperty] private bool _areHabitatsEnabled = true;
-    
-    [ObservableProperty] private bool _areReptileInfosEnabled = true;
-
-    private readonly List<bool> _navItems;
+    [ObservableProperty] private bool _isAddEnabled;
     
     private readonly INavigationService? _navigationService;
-
-    private void EnableAllNavItems()
-    {
-        for (int i = 0; i < _navItems.Count; i++)
-        {
-            _navItems[i] = true;
-        }
-    }
 
     public MainViewModel()
     {
         _navigationService = App.ServiceProvider?.GetService<INavigationService>();
         CurrentViewModel = _navigationService?.NavigateTo<PetsViewModel>();
-        
-        _navItems = [IsBackEnabled, IsAddEnabled, AreAnimalsEnabled, AreAnimalTypesEnabled, AreWinterPlacesEnabled, 
-            AreDietsEnabled, AreDietTypesEnabled, AreEmployeesEnabled, AreHabitatsEnabled, AreReptileInfosEnabled];
+    }
+
+    [RelayCommand]
+    private void NavigateToPets()
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<PetsViewModel>();
+        IsAddEnabled = true;
+        IsBackEnabled = false;
+    }
+
+    [RelayCommand]
+    private void NavigateToAddPet()
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<AnimalEditViewModel>();
+        IsAddEnabled = false;
+        IsBackEnabled = true;
     }
 
     [RelayCommand]
     private void NavigateToDiets()
     {
         CurrentViewModel = _navigationService?.NavigateTo<DietsViewModel>();
+        IsAddEnabled = true;
+        IsBackEnabled = false;
+    }
+    
+    [RelayCommand]
+    private void NavigateToAddDiet()
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<DietEditViewModel>();
+        IsAddEnabled = false;
+        IsBackEnabled = true;
     }
     
     [RelayCommand]
     private void NavigateToEmployees()
     {
         CurrentViewModel = _navigationService?.NavigateTo<EmployeesViewModel>();
+        IsAddEnabled = true;
+        IsBackEnabled = false;
+    }
+    
+    [RelayCommand]
+    private void NavigateToAddEmployee()
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<EmployeeEditViewModel>();
+        IsAddEnabled = false;
+        IsBackEnabled = true;
+    }
+
+    [RelayCommand]
+    private void NavigateToAnimalSearch()
+    {
+        
+    }
+
+    [RelayCommand]
+    private void NavigateToFamilyPairs()
+    {
+        
+    }
+
+    [RelayCommand]
+    private void Add()
+    {
+        switch (CurrentViewModel)
+        {
+            case PetsViewModel: NavigateToAddPet(); break;
+            case DietsViewModel: NavigateToAddDiet(); break;
+            case EmployeesViewModel: NavigateToAddEmployee(); break;
+        }
+    }
+
+    [RelayCommand]
+    private void Back()
+    {
+        switch (CurrentViewModel)
+        {
+            case AnimalEditViewModel: NavigateToPets(); break;
+            case DietEditViewModel: NavigateToDiets(); break;
+            case EmployeeEditViewModel: NavigateToEmployees(); break;
+        }
     }
 }
