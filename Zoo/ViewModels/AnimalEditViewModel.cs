@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.DTOs;
@@ -19,19 +20,19 @@ public partial class AnimalEditViewModel : ViewModelBase
     private string _title = "Создать питомца";
 
     [ObservableProperty] 
-    private Animal _animal = new(1, "1", 1, DateTime.MaxValue, "Unknown", null, null, 1, 1, 1, 1);
+    private Animal _animal = new(1, "Новый питомец", 1, DateTime.MaxValue, "Unknown", null, null, 1, 1, 1, 1);
 
     [ObservableProperty] 
     private ObservableCollection<AnimalType> _animalTypes = [];
 
     [ObservableProperty] 
-    private ObservableCollection<BirdsWinterPlace> _winterPlaces = [];
+    private ObservableCollection<BirdsWinterPlace?> _winterPlaces = [null];
 
     [ObservableProperty] 
-    private ObservableCollection<ReptileInfo> _reptileInfos = [];
+    private ObservableCollection<ReptileInfo?> _reptileInfos = [null];
 
     [ObservableProperty] 
-    private ObservableCollection<Diet> _diets = [];
+    private ObservableCollection<Diet?> _diets = [null];
 
     [ObservableProperty] 
     private ObservableCollection<HabitatZone> _habitatZones = [];
@@ -48,22 +49,114 @@ public partial class AnimalEditViewModel : ViewModelBase
     [ObservableProperty] 
     private Employee? _selectedVetToAdd;
 
+    [ObservableProperty] 
+    private string? _error;
+
     public ObservableCollection<string> SexOptions { get; } = ["Male", "Female", "Unknown"];
 
     public AnimalEditViewModel(INavigationService navigationService, ISelectService dataService)
     {
         _navigationService = navigationService;
         _dataService = dataService;
-        InitializeAsync();
+        _ = InitializeAsync();
     }
 
-    private async void InitializeAsync()
+    private async Task InitializeAsync()
     {
-        var types = await _dataService.SelectAll<AnimalType>("AnimalTypes");
-        if (types is null) return;
-        foreach (var type in types)
+        await Task.WhenAll(LoadAnimalTypes(),
+            LoadBirdsWinterPlaces(),
+            LoadReptileInfos(),
+            LoadDiets(),
+            LoadHabitatZones());
+    }
+
+    private async Task LoadAnimalTypes()
+    {
+        try
         {
-            AnimalTypes.Add(type);
+            var types = await _dataService.SelectAll<AnimalType>("AnimalTypes");
+            
+            if (types is null) return;
+            foreach (var type in types)
+            {
+                AnimalTypes.Add(type);
+            }
+        }
+        catch (Exception ex)
+        {
+            Error += ex.Message;
+        }
+    }
+    
+    private async Task LoadBirdsWinterPlaces()
+    {
+        try
+        {
+            var places = await _dataService.SelectAll<BirdsWinterPlace>("BirdsWinterPlaces");
+            
+            if (places is null) return;
+            foreach (var place in places)
+            {
+                WinterPlaces.Add(place);
+            }
+        }
+        catch (Exception ex)
+        {
+            Error += ex.Message;
+        }
+    }
+    
+    private async Task LoadReptileInfos()
+    {
+        try
+        {
+            var info = await _dataService.SelectAll<ReptileInfo>("ReptileInfos");
+            
+            if (info is null) return;
+            foreach (var reptileInfo in info)
+            {
+                ReptileInfos.Add(reptileInfo);
+            }
+        }
+        catch (Exception ex)
+        {
+            Error += ex.Message;
+        }
+    }
+    
+    private async Task LoadDiets()
+    {
+        try
+        {
+            var diets = await _dataService.SelectAll<Diet>("Diets");
+            
+            if (diets is null) return;
+            foreach (var diet in diets)
+            {
+                Diets.Add(diet);
+            }
+        }
+        catch (Exception ex)
+        {
+            Error += ex.Message;
+        }
+    }
+    
+    private async Task LoadHabitatZones()
+    {
+        try
+        {
+            var habitats = await _dataService.SelectAll<HabitatZone>("HabitatZones");
+            
+            if (habitats is null) return;
+            foreach (var habitat in habitats)
+            {
+                HabitatZones.Add(habitat);
+            }
+        }
+        catch (Exception ex)
+        {
+            Error += ex.Message;
         }
     }
 

@@ -86,6 +86,7 @@
                 <Button Content="Сохранить" Command="{Binding SaveCommand}" Width="80"/>
                 <Button Content="Отмена" Command="{Binding CancelCommand}" Width="80"/>
             </StackPanel>
+            <TextBlock Foreground="DarkRed" Text="{Binding }"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

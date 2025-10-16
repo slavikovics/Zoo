@@ -18,7 +18,7 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel()
     {
         _navigationService = App.ServiceProvider?.GetService<INavigationService>();
-        CurrentViewModel = _navigationService?.NavigateTo<PetsViewModel>();
+        NavigateToPets();
     }
 
     [RelayCommand]
