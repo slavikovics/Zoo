@@ -20,19 +20,20 @@ public partial class AnimalEditViewModel : ViewModelBase
     private string _title = "Создать питомца";
 
     [ObservableProperty] 
-    private Animal _animal = new(1, "Новый питомец", 1, DateTime.MaxValue, "Unknown", null, null, 1, 1, 1, 1);
+    private Animal _animal = new(1, "Новый питомец", 2, DateTime.MaxValue, "Unknown", 2, 2, 2, 2, 2, 2);
 
     [ObservableProperty] 
     private ObservableCollection<AnimalType> _animalTypes = [];
 
-    [ObservableProperty] 
-    private ObservableCollection<BirdsWinterPlace?> _winterPlaces = [null];
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Animal))]
+    private ObservableCollection<BirdsWinterPlace?> _winterPlaces = [];
 
     [ObservableProperty] 
-    private ObservableCollection<ReptileInfo?> _reptileInfos = [null];
+    private ObservableCollection<ReptileInfo?> _reptileInfos = [];
 
     [ObservableProperty] 
-    private ObservableCollection<Diet?> _diets = [null];
+    private ObservableCollection<Diet?> _diets = [];
 
     [ObservableProperty] 
     private ObservableCollection<HabitatZone> _habitatZones = [];
