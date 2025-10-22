@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,20 +21,20 @@ public partial class AnimalEditViewModel : ViewModelBase
     private string _title = "Создать питомца";
 
     [ObservableProperty] 
-    private Animal _animal = new(1, "Новый питомец", 2, DateTime.MaxValue, "Unknown", 2, 2, 2, 2, 2, 2);
+    private Animal _animal = new(1, "Новый питомец", 1, DateTime.MaxValue, "Unknown", 1, 1, 1, 1, 1, 1);
 
     [ObservableProperty] 
     private ObservableCollection<AnimalType> _animalTypes = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Animal))]
-    private ObservableCollection<BirdsWinterPlace?> _winterPlaces = [];
+    private ObservableCollection<BirdsWinterPlace?> _winterPlaces = [BirdsWinterPlace.Empty()];
 
     [ObservableProperty] 
-    private ObservableCollection<ReptileInfo?> _reptileInfos = [];
+    private ObservableCollection<ReptileInfo?> _reptileInfos = [ReptileInfo.Empty()];
 
     [ObservableProperty] 
-    private ObservableCollection<Diet?> _diets = [];
+    private ObservableCollection<Diet?> _diets = [Diet.Empty()];
 
     [ObservableProperty] 
     private ObservableCollection<HabitatZone> _habitatZones = [];
@@ -68,7 +69,8 @@ public partial class AnimalEditViewModel : ViewModelBase
             LoadBirdsWinterPlaces(),
             LoadReptileInfos(),
             LoadDiets(),
-            LoadHabitatZones());
+            LoadHabitatZones(),
+            LoadCaretakers());
     }
 
     private async Task LoadAnimalTypes()
@@ -111,7 +113,7 @@ public partial class AnimalEditViewModel : ViewModelBase
     {
         try
         {
-            var info = await _dataService.SelectAll<ReptileInfo>("ReptileInfos");
+            var info = await _dataService.SelectAll<ReptileInfo>("ReptilesInfo");
             
             if (info is null) return;
             foreach (var reptileInfo in info)
@@ -153,6 +155,24 @@ public partial class AnimalEditViewModel : ViewModelBase
             foreach (var habitat in habitats)
             {
                 HabitatZones.Add(habitat);
+            }
+        }
+        catch (Exception ex)
+        {
+            Error += ex.Message;
+        }
+    }
+    
+    private async Task LoadCaretakers()
+    {
+        try
+        {
+            var caretakers = await _dataService.SelectAll<Employee>("Employees");
+            
+            if (caretakers is null) return;
+            foreach (var caretaker in caretakers)
+            {
+                Caretakers.Add(caretaker);
             }
         }
         catch (Exception ex)

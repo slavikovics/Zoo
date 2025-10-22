@@ -2,11 +2,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DatabaseUtils.DTOs;
 
-public class Diet(int id, string name, int typeId, string? description)
+public class Diet(int? id, string? name, int typeId, string? description)
 {
-    public int Id { get; set; } = id;
+    public int? Id { get; set; } = id;
 
-    public string Name { get; set; } = name;
+    public string? Name { get; set; } = name;
 
     public int TypeId { get; set; } = typeId;
 
@@ -14,6 +14,12 @@ public class Diet(int id, string name, int typeId, string? description)
     
     public override string ToString()
     {
-        return $"{Name}, тип: {TypeId}, описание: {Description}";
+        if (Id is not null) return $"{Name}, тип: {TypeId}, описание: {Description}";
+        return "Без диеты";
+    }
+
+    public static Diet Empty()
+    {
+        return new Diet(null, null, 0, null);
     }
 }

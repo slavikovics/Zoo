@@ -1,8 +1,8 @@
 namespace DatabaseUtils.DTOs;
 
-public class ReptileInfo(int id, decimal normalTemperature, DateTime sleepStart, DateTime sleepEnd)
+public class ReptileInfo(int? id, decimal normalTemperature, DateTime sleepStart, DateTime sleepEnd)
 {
-    public int Id { get; set; } = id;
+    public int? Id { get; set; } = id;
     
     public decimal NormalTemperature { get; set; } = normalTemperature;
     
@@ -12,6 +12,12 @@ public class ReptileInfo(int id, decimal normalTemperature, DateTime sleepStart,
     
     public override string ToString()
     {
+        if (Id is null) return "Без дополнительной информации";
         return $"Температура: {NormalTemperature}, начало спячки: {SleepStart}, конец спячки: {SleepEnd}";
+    }
+
+    public static ReptileInfo Empty()
+    {
+        return new ReptileInfo(null, 0, DateTime.MinValue, DateTime.MinValue);
     }
 }

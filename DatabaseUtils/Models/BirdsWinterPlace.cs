@@ -2,11 +2,11 @@ using System.Runtime.InteropServices.JavaScript;
 
 namespace DatabaseUtils.DTOs;
 
-public class BirdsWinterPlace(int id, string countryName, DateTime departure, DateTime arrival)
+public class BirdsWinterPlace(int? id, string? countryName, DateTime departure, DateTime arrival)
 {
-    public int Id { get; set; } = id;
+    public int? Id { get; set; } = id;
 
-    public string CountryName { get; set; } = countryName;
+    public string? CountryName { get; set; } = countryName;
 
     public DateTime Departure { get; set; } = departure;
 
@@ -14,6 +14,12 @@ public class BirdsWinterPlace(int id, string countryName, DateTime departure, Da
     
     public override string ToString()
     {
-        return $"{CountryName}, отправление: {Departure}, прибытие: {Arrival}";
+        if (Id is not null) return $"{CountryName}, отправление: {Departure}, прибытие: {Arrival}";
+        return $"Без места зимовки";
+    }
+
+    public static BirdsWinterPlace Empty()
+    {
+        return new BirdsWinterPlace(null, null, DateTime.MinValue, DateTime.MinValue);
     }
 }
