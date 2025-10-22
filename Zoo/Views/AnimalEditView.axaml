@@ -5,8 +5,6 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Zoo.Views.AnimalEditView"
              xmlns:vm="using:Zoo.ViewModels"
-             xmlns:models="using:DatabaseUtils.DTOs"
-             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
              x:DataType="vm:AnimalEditViewModel">
     <ScrollViewer>
         <StackPanel Margin="20" Spacing="15">
@@ -25,7 +23,7 @@
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата рождения:" VerticalAlignment="Center"/>
                         <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Animal.BirthDate}"/>
                         
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Sex:" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Пол:" VerticalAlignment="Center"/>
                         <ComboBox Grid.Row="3" Grid.Column="1" 
                                   ItemsSource="{Binding SexOptions}"
                                   SelectedItem="{Binding Animal.Sex}"/>
@@ -66,27 +64,23 @@
                 </StackPanel>
             
                 <StackPanel Spacing="10" Margin="10">
-                    <ListBox ItemsSource="{Binding SelectedVets}" Height="120">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
+                    <TextBlock Margin="5" HorizontalAlignment="Left">Ветеринары:</TextBlock>
+                    <ListBox SelectionMode="Multiple, Toggle" SelectedItems="{Binding VetsToRemove}" ItemsSource="{Binding SelectedVets}" Height="120">
                     </ListBox>
                     <ComboBox ItemsSource="{Binding AvailableVets}"
                               SelectedItem="{Binding SelectedVetToAdd}"
                               Margin="0,5,0,0"/>
                     <StackPanel Orientation="Horizontal" Spacing="10">
-                        <Button Content="Добавить ветеринара" Command="{Binding AddVetCommand}" Margin="0,5"/>
+                        <Button Content="Добавить ветеринара" Command="{Binding AddVetCommand}" CommandParameter="{Binding SelectedVetToAdd}" Margin="0,5"/>
                         <Button Content="Удалить выбранные" Command="{Binding RemoveVetCommand}" Margin="0,5"/>
                     </StackPanel>
                 </StackPanel>
 
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
-                <Button Content="Сохранить" Command="{Binding SaveCommand}" Width="80"/>
-                <Button Content="Отмена" Command="{Binding CancelCommand}" Width="80"/>
+                <Button Content="Сохранить" Command="{Binding SaveCommand}"/>
+                <Button Content="Отмена" Command="{Binding CancelCommand}"/>
             </StackPanel>
-            <TextBlock Foreground="DarkRed" Text="{Binding }"/>
+            <TextBlock Foreground="DarkRed" Text="{Binding Error}"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
