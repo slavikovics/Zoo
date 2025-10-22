@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace Zoo.Views;
 
-public partial class AnimalEditView : UserControl
+public partial class AddAnimalView : UserControl
 {
-    public AnimalEditView()
+    public AddAnimalView()
     {
         InitializeComponent();
     }

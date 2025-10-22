@@ -17,8 +17,8 @@
         <DataTemplate DataType="vm:EmployeesViewModel">
             <views:EmployeesView/>
         </DataTemplate>
-        <DataTemplate DataType="vm:AnimalEditViewModel">
-            <views:AnimalEditView/>
+        <DataTemplate DataType="vm:AddAnimalViewModel">
+            <views:AddAnimalView/>
         </DataTemplate>
         <DataTemplate DataType="vm:DietEditViewModel">
             <views:DietEditView/>

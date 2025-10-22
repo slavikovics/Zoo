@@ -32,7 +32,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void NavigateToAddPet()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<AnimalEditViewModel>();
+        CurrentViewModel = _navigationService?.NavigateTo<AddAnimalViewModel>();
         IsAddEnabled = false;
         IsBackEnabled = true;
     }
@@ -97,7 +97,7 @@ public partial class MainViewModel : ViewModelBase
     {
         switch (CurrentViewModel)
         {
-            case AnimalEditViewModel: NavigateToPets(); break;
+            case AddAnimalViewModel: NavigateToPets(); break;
             case DietEditViewModel: NavigateToDiets(); break;
             case EmployeeEditViewModel: NavigateToEmployees(); break;
         }

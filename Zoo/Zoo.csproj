@@ -52,7 +52,7 @@
         <DependentUpon>DietEditView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Views\AnimalEditView.axaml.cs">
+      <Compile Update="Views\AddAnimalView.axaml.cs">
         <DependentUpon>AnimalEditView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
