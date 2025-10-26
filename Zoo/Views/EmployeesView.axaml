@@ -30,7 +30,7 @@
                 <DataGridTemplateColumn Header="Супруг(а)" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:Employee">
-                            <TextBlock Text="{Binding MarriedWith}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -1,7 +1,7 @@
 namespace DatabaseUtils.DTOs;
 
 public class Animal(int id, string name, int typeId, DateTime? birthDate, string sex, 
-    int? winterPlaceId, int? reptileInfoId, int dietId, int habitatZoneId, int vet, int caretakerId)
+    int? winterPlaceId, int? reptileInfoId, int dietId, int habitatZoneId, int caretakerId)
 {
     public int Id { get; set; } = id;
 
@@ -20,9 +20,7 @@ public class Animal(int id, string name, int typeId, DateTime? birthDate, string
     public int DietId { get; set; } = dietId;
 
     public int HabitatZoneId { get; set; } = habitatZoneId;
-
-    public int Vet { get; set; } = vet;
-
+    
     public int CaretakerId { get; set; } = caretakerId;
 
     public override string ToString()

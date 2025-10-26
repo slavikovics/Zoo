@@ -31,7 +31,7 @@
                         <TextBlock Grid.Row="4" Grid.Column="0" Text="Married With:" VerticalAlignment="Center"/>
                         <ComboBox Grid.Row="4" Grid.Column="1" 
                                   ItemsSource="{Binding AvailableSpouses}"
-                                  SelectedValue="{Binding Employee.MarriedWith}">
+                                  >
                             <ComboBox.Styles>
                                 <Style Selector="ComboBox">
                                     <Setter Property="IsEnabled" Value="{Binding IsMarried}"/>

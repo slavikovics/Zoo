@@ -14,7 +14,7 @@ public partial class EmployeeEditViewModel : ViewModelBase
 
     [ObservableProperty] private string _title = "Create Employee";
 
-    [ObservableProperty] private Employee _employee = new(1, "1", DateTime.MaxValue, "232", "3243", null);
+    [ObservableProperty] private Employee _employee = new(1, "1", DateTime.MaxValue, "232", "3243");
 
     [ObservableProperty] private ObservableCollection<Employee> _availableSpouses = new();
     
