@@ -1,13 +1,13 @@
 namespace DatabaseUtils.DTOs;
 
-public class Employee(int id, string name, DateTime birthDate, string phoneNumber, 
+public class Employee(int? id, string name, DateTime birthDate, string phoneNumber, 
     string maritalStatus)
 {
-    public int Id { get; set; } = id;
+    public int? Id { get; set; } = id;
 
     public string Name { get; set; } = name;
 
-    public DateTime BirthDate { get; set; } = birthDate;
+    public DateTimeOffset BirthDate { get; set; } = birthDate.ToUniversalTime();
 
     public string PhoneNumber { get; set; } = phoneNumber;
 
@@ -15,6 +15,12 @@ public class Employee(int id, string name, DateTime birthDate, string phoneNumbe
     
     public override string ToString()
     {
+        if (Id is null) return "Нет сотрудника";
         return $"{Name}, дата рождения: {BirthDate}, номер телефона: {PhoneNumber}, семейное положение: {MaritalStatus}";
+    }
+    
+    public static Employee Empty()
+    {
+        return new Employee(null, "", DateTime.MinValue, "", "");
     }
 }

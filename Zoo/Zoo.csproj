@@ -48,7 +48,7 @@
         <DependentUpon>EmployeesView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Views\DietEditView.axaml.cs">
+      <Compile Update="Views\AddDietView.axaml.cs">
         <DependentUpon>DietEditView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
@@ -56,7 +56,7 @@
         <DependentUpon>AnimalEditView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Views\EmployeeEditView.axaml.cs">
+      <Compile Update="Views\AddEmployeeView.axaml.cs">
         <DependentUpon>EmployeeEditView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>

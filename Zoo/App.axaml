@@ -20,11 +20,11 @@
         <DataTemplate DataType="vm:AddAnimalViewModel">
             <views:AddAnimalView/>
         </DataTemplate>
-        <DataTemplate DataType="vm:DietEditViewModel">
-            <views:DietEditView/>
+        <DataTemplate DataType="vm:AddDietViewModel">
+            <views:AddDietView/>
         </DataTemplate>
-        <DataTemplate DataType="vm:EmployeeEditViewModel">
-            <views:EmployeeEditView/>
+        <DataTemplate DataType="vm:AddEmployeeViewModel">
+            <views:AddEmployeeView/>
         </DataTemplate>
     </Application.DataTemplates>
     <Application.Styles>

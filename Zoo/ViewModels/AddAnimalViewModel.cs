@@ -16,8 +16,10 @@ public partial class AddAnimalViewModel : ViewModelBase
     private readonly INavigationService _navigationService;
     
     private readonly ISelectService _dataService;
+    
+    private readonly MainViewModel _mainViewModel;
 
-    [ObservableProperty] private string _title = "Создать питомца";
+    [ObservableProperty] private string _title = "Добавить питомца";
     
     [ObservableProperty] private string _animalName = "Новый питомец";
 
@@ -61,10 +63,11 @@ public partial class AddAnimalViewModel : ViewModelBase
 
     public ObservableCollection<string> SexOptions { get; } = ["Male", "Female", "Unknown"];
 
-    public AddAnimalViewModel(INavigationService navigationService, ISelectService dataService)
+    public AddAnimalViewModel(INavigationService navigationService, ISelectService dataService, MainViewModel mainViewModel)
     {
         _navigationService = navigationService;
         _dataService = dataService;
+        _mainViewModel = mainViewModel;
         _ = InitializeAsync();
     }
 
@@ -139,5 +142,6 @@ public partial class AddAnimalViewModel : ViewModelBase
     [RelayCommand]
     private void Cancel()
     {
+        _mainViewModel.NavigateToPetsCommand.Execute(null);
     }
 }

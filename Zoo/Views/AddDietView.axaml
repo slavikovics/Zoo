@@ -3,25 +3,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Zoo.Views.DietEditView"
+             x:Class="Zoo.Views.AddDietView"
              xmlns:vm="using:Zoo.ViewModels"
              xmlns:models="using:DatabaseUtils.DTOs"
              xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
-             x:DataType="vm:DietEditViewModel">
+             x:DataType="vm:AddDietViewModel">
     <ScrollViewer>
         <StackPanel Margin="20" Spacing="15">
             <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold"/>
             <StackPanel Spacing="10" Margin="10">
                     <Grid ColumnDefinitions="120,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Название:" VerticalAlignment="Center"/>
                         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Diet.Name}"/>
                         
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Diet Type:" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Тип диеты:" VerticalAlignment="Center"/>
                         <ComboBox Grid.Row="1" Grid.Column="1" 
                                   ItemsSource="{Binding DietTypes}"
-                                  SelectedValue="{Binding Diet.TypeId}"/>
+                                  SelectedIndex="{Binding SelectedDietType}"/>
                         
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Description:" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Описание:" VerticalAlignment="Top"/>
                         <TextBox Grid.Row="2" Grid.Column="1" 
                                  Text="{Binding Diet.Description}"
                                  AcceptsReturn="True"
@@ -31,8 +31,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
-                <Button Content="Save" Command="{Binding SaveCommand}" Width="80"/>
-                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="80"/>
+                <Button Content="Добавить" Command="{Binding SaveCommand}"/>
+                <Button Content="Отмена" Command="{Binding CancelCommand}"/>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>
