@@ -2,20 +2,25 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.DTOs;
 using DatabaseUtils.Queries;
+using Microsoft.Data.SqlClient;
 
 namespace Zoo.ViewModels;
 
-public class EmployeesViewModel : ViewModelBase
+public partial class EmployeesViewModel : ViewModelBase
 {
     private readonly ISelectService _selectService;
+    
+    private readonly IDeleteService _deleteService;
 
     public ObservableCollection<Employee> Employees { get; set; }
     
-    public EmployeesViewModel(ISelectService selectService)
+    public EmployeesViewModel(ISelectService selectService, IDeleteService deleteService)
     {
         _selectService = selectService;
+        _deleteService = deleteService;
         Employees = new ObservableCollection<Employee>();
         Task.Run(LoadAnimals);
     }
@@ -42,6 +47,25 @@ public class EmployeesViewModel : ViewModelBase
         catch (Exception ex)
         {
             Console.WriteLine($"Error loading animals: {ex.Message}");
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteEmployee(int id)
+    {
+        try
+        {
+            await _deleteService.Delete(id, "Employees", "Id");
+            
+            var itemsToRemove = Employees.Where(x => x.Id == id).ToList();
+            foreach (var item in itemsToRemove)
+            {
+                Employees.Remove(item);
+            }
+        }
+        catch (Exception sqlException)
+        {
+            Console.WriteLine(sqlException.Message);
         }
     }
 }

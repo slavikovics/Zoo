@@ -6,14 +6,12 @@
              x:Class="Zoo.Views.PetsView"
              xmlns:vm="using:Zoo.ViewModels"
              xmlns:models="using:DatabaseUtils.DTOs"
-             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
              x:DataType="vm:PetsViewModel">
     <ScrollViewer>
         <DataGrid x:Name="Pets" AutoGenerateColumns="False" ItemsSource="{Binding Animals}" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True"/>
                 
-                <!-- Type column - simplified to display only -->
                 <DataGridTemplateColumn Header="Тип" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:Animal">
@@ -24,7 +22,6 @@
                 
                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}" IsReadOnly="True"/>
                 
-                <!-- Birth date column - simplified to display only -->
                 <DataGridTemplateColumn Header="Дата рождения" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:Animal">
@@ -35,7 +32,6 @@
                 
                 <DataGridTextColumn Header="Пол" Binding="{Binding Sex}" IsReadOnly="True"/>
                 
-                <!-- New Edit column -->
                 <DataGridTemplateColumn Header="Редактировать" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:Animal">
@@ -46,7 +42,6 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-                <!-- Existing Delete column -->
                 <DataGridTemplateColumn Header="Удалить" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:Animal">

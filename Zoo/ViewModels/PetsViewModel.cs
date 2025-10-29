@@ -55,12 +55,19 @@ public partial class PetsViewModel : ViewModelBase
     [RelayCommand]
     private async Task DeleteAnimal(int id)
     {
-        var itemsToRemove = Animals.Where(x => x.Id == id).ToList();
-        foreach (var item in itemsToRemove)
+        try
         {
-            Animals.Remove(item);
+            await _deleteService.Delete(id, "Animals", "Id");
+            
+            var itemsToRemove = Animals.Where(x => x.Id == id).ToList();
+            foreach (var item in itemsToRemove)
+            {
+                Animals.Remove(item);
+            }
         }
-
-        await _deleteService.Delete(id, "Animals", "Id");
+        catch (Exception sqlException)
+        {
+            Console.WriteLine(sqlException.Message);
+        }
     }
 }

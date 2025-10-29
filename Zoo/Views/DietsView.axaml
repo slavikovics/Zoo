@@ -6,10 +6,9 @@
              x:Class="Zoo.Views.DietsView"
              xmlns:vm="using:Zoo.ViewModels"
              xmlns:models="using:DatabaseUtils.DTOs"
-             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
              x:DataType="vm:DietsViewModel">
     <ScrollViewer>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Diets}" IsReadOnly="True">
+        <DataGrid x:Name="Diets" AutoGenerateColumns="False" ItemsSource="{Binding Diets}" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True"/>
                 
@@ -23,7 +22,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Описание" MaxWidth="200" Binding="{Binding Description}" IsReadOnly="True"/>
                 
                 <!-- Edit column -->
                 <DataGridTemplateColumn Header="Редактировать" IsReadOnly="True">
@@ -40,7 +39,7 @@
                 <DataGridTemplateColumn Header="Удалить" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models:Diet">
-                            <Button HorizontalAlignment="Center" Margin="8 4 8 4">
+                            <Button Command="{Binding #Diets.((vm:DietsViewModel)DataContext).DeleteDietCommand}" CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/bin.svg"/>
                             </Button>
                         </DataTemplate>
