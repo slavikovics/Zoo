@@ -52,6 +52,7 @@ public partial class App : Application
         serviceCollection.AddTransient<AddEmployeeViewModel>();
         
         serviceCollection.AddSingleton<ISelectService, SelectService>();
+        serviceCollection.AddSingleton<IDeleteService, DeleteService>();
         
         ServiceProvider = serviceCollection.BuildServiceProvider();
     }

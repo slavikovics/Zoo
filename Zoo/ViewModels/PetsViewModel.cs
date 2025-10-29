@@ -7,18 +7,22 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.DTOs;
 using DatabaseUtils.Queries;
+using Zoo.Views;
 
 namespace Zoo.ViewModels;
 
 public partial class PetsViewModel : ViewModelBase
 {
     private readonly ISelectService _selectService;
+    
+    private readonly IDeleteService _deleteService;
 
     public ObservableCollection<Animal> Animals { get; set; }
     
-    public PetsViewModel(ISelectService selectService)
+    public PetsViewModel(ISelectService selectService, IDeleteService deleteService)
     {
         _selectService = selectService;
+        _deleteService = deleteService;
         Animals = new ObservableCollection<Animal>();
         Task.Run(LoadAnimals);
     }
@@ -46,5 +50,17 @@ public partial class PetsViewModel : ViewModelBase
         {
             Console.WriteLine($"Error loading animals: {ex.Message}");
         }
+    }
+
+    [RelayCommand]
+    private async Task DeleteAnimal(int id)
+    {
+        var itemsToRemove = Animals.Where(x => x.Id == id).ToList();
+        foreach (var item in itemsToRemove)
+        {
+            Animals.Remove(item);
+        }
+
+        await _deleteService.Delete(id, "Animals", "Id");
     }
 }
