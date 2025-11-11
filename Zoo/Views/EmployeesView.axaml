@@ -26,14 +26,6 @@
                 
                 <DataGridTextColumn Header="Семейное положение" Binding="{Binding MaritalStatus}" IsReadOnly="True"/>
                 
-                <DataGridTemplateColumn Header="Супруг(а)" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Employee">
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                
                 <!-- Edit column -->
                 <DataGridTemplateColumn Header="Редактировать" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>

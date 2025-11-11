@@ -71,7 +71,7 @@ CREATE TABLE Animals (
      Sex VARCHAR(50) NOT NULL,
      WinterPlaceId INT NULL,
      ReptileInfoId INT NULL,
-     DietId INT NULL,
+     DietId INT NOT NULL,
      HabitatZoneId INT NOT NULL,
      CaretakerId INT NOT NULL,
      FOREIGN KEY (TypeId) REFERENCES AnimalTypes(Id) ON DELETE RESTRICT,
