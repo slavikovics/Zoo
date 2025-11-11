@@ -53,6 +53,22 @@ public partial class MainViewModel : ViewModelBase
     }
     
     [RelayCommand]
+    private void NavigateToDietTypes()
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<DietTypesViewModel>();
+        IsAddEnabled = true;
+        IsBackEnabled = false;
+    }
+    
+    [RelayCommand]
+    private void NavigateToAddDietType()
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<AddDietViewModel>();
+        IsAddEnabled = false;
+        IsBackEnabled = true;
+    }
+    
+    [RelayCommand]
     private void NavigateToEmployees()
     {
         CurrentViewModel = _navigationService?.NavigateTo<EmployeesViewModel>();

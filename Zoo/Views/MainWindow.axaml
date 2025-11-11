@@ -23,6 +23,7 @@
                 <Button IsEnabled="{Binding IsAddEnabled}" Command="{Binding AddCommand}">Добавить</Button>
                 <Button Command="{Binding NavigateToPetsCommand}">Питомцы</Button>
                 <Button Command="{Binding NavigateToDietsCommand}">Рационы питания</Button>
+                <Button Command="{Binding NavigateToDietTypesCommand}">Типы рационов</Button>
                 <Button Command="{Binding NavigateToEmployeesCommand}">Сотрудники</Button>
                 <Button Command="{Binding NavigateToAnimalSearchCommand}">Поиск по типу и имени питомца</Button>
                 <Button Command="{Binding NavigateToFamilyPairsCommand}">Семейные пары</Button>
