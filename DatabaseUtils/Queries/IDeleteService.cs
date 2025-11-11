@@ -2,5 +2,5 @@
 
 public interface IDeleteService
 {
-    public Task Delete(int id, string tableName, string idColumnName);
+    public Task Delete<T>(int id, string idColumnName = "Id") where T : class;
 }

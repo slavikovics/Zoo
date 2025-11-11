@@ -90,6 +90,263 @@ CREATE TABLE AnimalVet (
     FOREIGN KEY (VetId) REFERENCES Employees(Id) ON DELETE CASCADE
 );
 
+-- 1. Процедура создания животного
+CREATE OR REPLACE PROCEDURE CreateAnimal(
+    p_name VARCHAR(50),
+    p_type_id INT,
+    p_birthdate DATE,
+    p_sex VARCHAR(50),
+    p_winter_place_id INT,
+    p_reptile_info_id INT,
+    p_diet_id INT,
+    p_habitat_zone_id INT,
+    p_caretaker_id INT
+)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO Animals (
+        Name, TypeId, BirthDate, Sex, WinterPlaceId,
+        ReptileInfoId, DietId, HabitatZoneId, CaretakerId
+    ) VALUES (
+                 p_name, p_type_id, p_birthdate, p_sex, p_winter_place_id,
+                 p_reptile_info_id, p_diet_id, p_habitat_zone_id, p_caretaker_id
+             );
+END;
+$$;
+
+-- 2. Процедура редактирования животного
+CREATE OR REPLACE PROCEDURE UpdateAnimal(
+    p_animal_id INT,
+    p_name VARCHAR(50),
+    p_type_id INT,
+    p_birthdate DATE,
+    p_sex VARCHAR(50),
+    p_winter_place_id INT,
+    p_reptile_info_id INT,
+    p_diet_id INT,
+    p_habitat_zone_id INT,
+    p_caretaker_id INT
+)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE Animals
+    SET
+        Name = p_name,
+        TypeId = p_type_id,
+        BirthDate = p_birthdate,
+        Sex = p_sex,
+        WinterPlaceId = p_winter_place_id,
+        ReptileInfoId = p_reptile_info_id,
+        DietId = p_diet_id,
+        HabitatZoneId = p_habitat_zone_id,
+        CaretakerId = p_caretaker_id
+    WHERE Id = p_animal_id;
+END;
+$$;
+
+-- 3. Процедура добавления типа рациона
+CREATE OR REPLACE PROCEDURE CreateDietType(
+    p_type VARCHAR(50)
+)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO DietTypes (Type) VALUES (p_type);
+END;
+$$;
+
+-- 4. Процедура редактирования типа рациона
+CREATE OR REPLACE PROCEDURE UpdateDietType(
+    p_id INT,
+    p_type VARCHAR(50)
+)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE DietTypes
+    SET Type = p_type
+    WHERE Id = p_id;
+END;
+$$;
+
+-- 5. Процедура добавления рациона
+CREATE OR REPLACE PROCEDURE CreateDiet(
+    p_name VARCHAR(50),
+    p_type_id INT,
+    p_description VARCHAR(500) DEFAULT NULL
+)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO Diets (Name, TypeId, Description)
+    VALUES (p_name, p_type_id, p_description);
+END;
+$$;
+
+-- 6. Процедура редактирования рациона
+CREATE OR REPLACE PROCEDURE UpdateDiet(
+    p_id INT,
+    p_name VARCHAR(50),
+    p_type_id INT,
+    p_description VARCHAR(500) DEFAULT NULL
+)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE Diets
+    SET
+        Name = p_name,
+        TypeId = p_type_id,
+        Description = p_description
+    WHERE Id = p_id;
+END;
+$$;
+
+-- 7. Процедура добавления сотрудника
+CREATE OR REPLACE PROCEDURE CreateEmployee(
+    p_name VARCHAR(50),
+    p_birthdate DATE,
+    p_phone_number VARCHAR(50),
+    p_marital_status VARCHAR(50)
+)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO Employees (Name, BirthDate, PhoneNumber, MaritalStatus)
+    VALUES (p_name, p_birthdate, p_phone_number, p_marital_status);
+END;
+$$;
+
+-- 8. Процедура редактирования сотрудника
+CREATE OR REPLACE PROCEDURE UpdateEmployee(
+    p_id INT,
+    p_name VARCHAR(50),
+    p_birthdate DATE,
+    p_phone_number VARCHAR(50),
+    p_marital_status VARCHAR(50)
+)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE Employees
+    SET
+        Name = p_name,
+        BirthDate = p_birthdate,
+        PhoneNumber = p_phone_number,
+        MaritalStatus = p_marital_status
+    WHERE Id = p_id;
+END;
+$$;
+
+-- 9. Процедура для добавления массива ветеринаров к одному животному
+CREATE OR REPLACE PROCEDURE AddVetArrayToAnimal(
+    p_animal_id INT,
+    p_vet_ids INT[]
+)
+    LANGUAGE plpgsql
+AS $$
+DECLARE
+    vet_id INT;
+BEGIN
+    -- Проверяем существование животного
+    IF NOT EXISTS (SELECT 1 FROM Animals WHERE Id = p_animal_id) THEN
+        RAISE EXCEPTION 'Животное с ID % не существует', p_animal_id;
+    END IF;
+
+    -- Добавляем каждого ветеринара из массива
+    FOREACH vet_id IN ARRAY p_vet_ids
+        LOOP
+            -- Проверяем существование ветеринара
+            IF NOT EXISTS (SELECT 1 FROM Employees WHERE Id = vet_id) THEN
+                RAISE NOTICE 'Ветеринар с ID % не существует, пропускаем', vet_id;
+                CONTINUE;
+            END IF;
+
+            -- Добавляем связь, игнорируя дубликаты
+            INSERT INTO AnimalVet (AnimalId, VetId)
+            VALUES (p_animal_id, vet_id)
+            ON CONFLICT (AnimalId, VetId) DO NOTHING;
+        END LOOP;
+END;
+$$;
+
+-- 10. Процедура для удаления всех ветеринаров у животного
+CREATE OR REPLACE PROCEDURE RemoveAllVetsFromAnimal(
+    p_animal_id INT
+)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Проверяем существование животного
+    IF NOT EXISTS (SELECT Id FROM Animals WHERE Id = p_animal_id) THEN
+        RAISE EXCEPTION 'Животное с ID % не существует', p_animal_id;
+    END IF;
+
+    -- Удаляем все связи для данного животного
+    DELETE FROM AnimalVet
+    WHERE AnimalId = p_animal_id;
+
+    -- Возвращаем информационное сообщение
+    RAISE NOTICE 'Удалены все ветеринары у животного с ID %', p_animal_id;
+END;
+$$;
+
+-- 11. Функция для получения всех ветеринаров животного
+CREATE OR REPLACE FUNCTION GetAnimalVetsFullInfo(
+    p_animal_id INT
+)
+    RETURNS TABLE(
+                     Id INT,
+                     Name VARCHAR(50),
+                     BirthDate DATE,
+                     PhoneNumber VARCHAR(50),
+                     MaritalStatus VARCHAR(50)
+                 )
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Проверяем существование животного
+    IF NOT EXISTS (SELECT 1 FROM Animals WHERE Id = p_animal_id) THEN
+        RAISE EXCEPTION 'Животное с ID % не существует', p_animal_id;
+    END IF;
+
+    RETURN QUERY
+        SELECT
+            e.Id,
+            e.Name,
+            e.BirthDate,
+            e.PhoneNumber,
+            e.MaritalStatus
+        FROM Employees e
+                 INNER JOIN AnimalVet av ON e.Id = av.VetId
+        WHERE av.AnimalId = p_animal_id
+        ORDER BY e.Name;
+END;
+$$;
+
+-- 12. Функция для проверки возраста сотрудника
+CREATE OR REPLACE FUNCTION CheckEmployeeAge()
+    RETURNS TRIGGER
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Проверяем, что сотруднику не менее 18 лет
+    IF EXTRACT(YEAR FROM AGE(NEW.BirthDate)) < 18 THEN
+        RAISE EXCEPTION 'Сотрудник должен быть старше 18 лет';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+-- 13. Триггер для проверки возраста при обновлении или добавлении сотрудника
+CREATE TRIGGER EmployeeAgeCheck
+    BEFORE INSERT OR UPDATE ON Employees
+    FOR EACH ROW
+EXECUTE FUNCTION CheckEmployeeAge();
+
 -- 1. Типы животных
 INSERT INTO AnimalTypes (Id, Name) VALUES
     (1, 'Млекопитающее'),

@@ -39,7 +39,7 @@ public partial class AddDietViewModel : ViewModelBase
         IEnumerable<DietType>? items = null;
         try
         {
-            items = await _dataService.SelectAll<DietType>("DietTypes");
+            items = await _dataService.SelectAll<DietType>();
         }
         catch (Exception e)
         {

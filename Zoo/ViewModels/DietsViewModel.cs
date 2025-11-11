@@ -29,7 +29,7 @@ public partial class DietsViewModel : ViewModelBase
     {
         try
         {
-            var diets = await _selectService.SelectAll<Diet>("Diets");
+            var diets = await _selectService.SelectAll<Diet>();
             var dietsList = diets?.ToList();
             
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
@@ -55,7 +55,7 @@ public partial class DietsViewModel : ViewModelBase
     {
         try
         {
-            await _deleteService.Delete(id, "Diets", "Id");
+            await _deleteService.Delete<Diet>(id);
             
             var itemsToRemove = Diets.Where(x => x.Id == id).ToList();
             foreach (var item in itemsToRemove)

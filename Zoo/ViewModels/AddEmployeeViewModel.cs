@@ -47,7 +47,7 @@ public partial class AddEmployeeViewModel : ViewModelBase
         IEnumerable<Employee>? items = null;
         try
         {
-            items = await _dataService.SelectAll<Employee>("Employees");
+            items = await _dataService.SelectAll<Employee>();
         }
         catch (Exception e)
         {

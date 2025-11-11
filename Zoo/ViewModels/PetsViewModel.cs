@@ -31,7 +31,7 @@ public partial class PetsViewModel : ViewModelBase
     {
         try
         {
-            var animals = await _selectService.SelectAll<Animal>("Animals");
+            var animals = await _selectService.SelectAll<Animal>();
             var animalsList = animals?.ToList();
             
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
@@ -57,7 +57,7 @@ public partial class PetsViewModel : ViewModelBase
     {
         try
         {
-            await _deleteService.Delete(id, "Animals", "Id");
+            await _deleteService.Delete<Animal>(id);
             
             var itemsToRemove = Animals.Where(x => x.Id == id).ToList();
             foreach (var item in itemsToRemove)

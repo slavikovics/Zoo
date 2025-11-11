@@ -12,6 +12,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using DatabaseUtils;
 using DatabaseUtils.Queries;
+using DatabaseUtils.TableNameResolver;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Zoo.ViewModels;
@@ -22,6 +23,8 @@ namespace Zoo;
 public partial class App : Application
 {
     public static ServiceProvider? ServiceProvider { get; private set; }
+
+    private DatabaseConfigDto _databaseConfig;
     
     public override void Initialize()
     {
@@ -30,17 +33,30 @@ public partial class App : Application
 
     private string GetConnectionString()
     {
+        return _databaseConfig.ConnectionString;
+    }
+
+    private Dictionary<string, string> GetTableConfig()
+    {
+        return _databaseConfig.TableNames;
+    }
+
+    private void LoadDatabaseConfig()
+    {
         var settings = File.ReadAllText("database.json");
-        return JsonSerializer.Deserialize<Dictionary<string, string>>(settings)!["ConnectionString"];
+        _databaseConfig = JsonSerializer.Deserialize<DatabaseConfigDto>(settings)!;
     }
 
     private void RegisterUserServices()
     {
-        var connectionString = Task.Run(GetConnectionString).Result;
+        LoadDatabaseConfig();
+        var connectionString = GetConnectionString();
         ServiceCollection serviceCollection = new ();
+        serviceCollection.AddSingleton<ITableNameResolver>(_ => new TableNameResolver(GetTableConfig(), GetConnectionString()));
         
         serviceCollection.AddSingleton<IDatabaseConnectionFactory>(_ => 
             new NpgsqlConnectionFactory(connectionString));
+        
         serviceCollection.AddSingleton<INavigationService, NavigationService>();
         serviceCollection.AddSingleton<MainViewModel>();
         

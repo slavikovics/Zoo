@@ -99,7 +99,7 @@ public partial class AddAnimalViewModel : ViewModelBase
     {
         try
         {
-            var items = await _dataService.SelectAll<T>(tableName);
+            var items = await _dataService.SelectAll<T>();
             
             if (items is null) return;
             foreach (var item in items)
