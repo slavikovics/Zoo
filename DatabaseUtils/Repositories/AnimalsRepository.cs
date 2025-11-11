@@ -44,7 +44,6 @@ public class AnimalsRepository : IAnimalsRepository
     {
         var create =
             @"SELECT CreateAnimal(@name, @typeId, @birthdate::date, @sex, @winterPlaceId, @reptileInfoId, @dietId, @habitatZoneId, @caretakerId)";
-
         using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
 
         var newId = await connection.ExecuteScalarAsync<int>(create, new

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
-using Microsoft.Data.SqlClient;
 
 namespace Zoo.ViewModels;
 
@@ -22,22 +21,22 @@ public partial class EmployeesViewModel : ViewModelBase
         _selectService = selectService;
         _deleteService = deleteService;
         Employees = new ObservableCollection<Employee>();
-        Task.Run(LoadAnimals);
+        Task.Run(LoadEmployees);
     }
 
-    private async Task LoadAnimals()
+    private async Task LoadEmployees()
     {
         try
         {
-            var diets = await _selectService.SelectAll<Employee>();
-            var dietsList = diets?.ToList();
+            var employees = await _selectService.SelectAll<Employee>();
+            var employeesList = employees?.ToList();
             
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
                 Employees.Clear();
-                if (dietsList != null)
+                if (employeesList != null)
                 {
-                    foreach (var diet in dietsList)
+                    foreach (var diet in employeesList)
                     {
                         Employees.Add(diet);
                     }
@@ -46,7 +45,7 @@ public partial class EmployeesViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error loading animals: {ex.Message}");
+            Console.WriteLine($"Error loading employees: {ex.Message}");
         }
     }
 

@@ -221,19 +221,25 @@ BEGIN
 END;
 $$;
 
--- 7. Процедура добавления сотрудника
-CREATE OR REPLACE PROCEDURE CreateEmployee(
+-- 7. Функция добавления сотрудника
+CREATE OR REPLACE FUNCTION CreateEmployee(
     p_name VARCHAR(50),
     p_birthdate DATE,
     p_phone_number VARCHAR(50),
     p_marital_status VARCHAR(50)
 )
+    RETURNS INT
     LANGUAGE plpgsql
 AS
 $$
+DECLARE
+    new_id INT;
 BEGIN
     INSERT INTO Employees (Name, BirthDate, PhoneNumber, MaritalStatus)
-    VALUES (p_name, p_birthdate, p_phone_number, p_marital_status);
+    VALUES (p_name, p_birthdate, p_phone_number, p_marital_status)
+    RETURNING Id INTO new_id;
+
+    RETURN new_id;
 END;
 $$;
 
@@ -370,6 +376,51 @@ CREATE TRIGGER EmployeeAgeCheck
     ON Employees
     FOR EACH ROW
 EXECUTE FUNCTION CheckEmployeeAge();
+
+-- 14. Процедура для добавления связи между супругами
+CREATE OR REPLACE PROCEDURE AddEmployeeSpouse(
+    p_employee_id INT,
+    p_spouse_id INT
+)
+    LANGUAGE plpgsql
+AS
+$$
+BEGIN
+    -- Проверяем, что сотрудники существуют
+    IF NOT EXISTS (SELECT 1 FROM Employees WHERE Id = p_employee_id) THEN
+        RAISE EXCEPTION 'Сотрудник с ID % не существует', p_employee_id;
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM Employees WHERE Id = p_spouse_id) THEN
+        RAISE EXCEPTION 'Сотрудник с ID % не существует', p_spouse_id;
+    END IF;
+
+    -- Проверяем, что это не один и тот же сотрудник
+    IF p_employee_id = p_spouse_id THEN
+        RAISE EXCEPTION 'Нельзя добавить сотрудника в качестве супруга самому себе';
+    END IF;
+
+    INSERT INTO EmployeeSpouse (EmployeeId, SpouseId)
+    VALUES (p_employee_id, p_spouse_id)
+    ON CONFLICT (EmployeeId, SpouseId) DO NOTHING;
+
+END;
+$$;
+
+-- 15. Процедура для удаления супружеской связи между сотрудниками
+CREATE OR REPLACE PROCEDURE RemoveAllEmployeeSpouses(
+    p_employee_id INT
+)
+    LANGUAGE plpgsql
+AS
+$$
+BEGIN
+    DELETE
+    FROM EmployeeSpouse
+    WHERE EmployeeId = p_employee_id
+       OR SpouseId = p_employee_id;
+END;
+$$;
 
 -- 1. Типы животных
 INSERT INTO AnimalTypes (Name)

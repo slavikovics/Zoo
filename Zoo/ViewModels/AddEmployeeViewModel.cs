@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
+using DatabaseUtils.Repositories;
 
 namespace Zoo.ViewModels;
 
@@ -18,9 +19,11 @@ public partial class AddEmployeeViewModel : ViewModelBase
     
     private readonly MainViewModel _mainViewModel;
 
+    private readonly IEmployeesRepository _employeesRepository;
+
     [ObservableProperty] private string _title = "Добавить сотрудника";
 
-    [ObservableProperty] private Employee _employee = new(1, "Новый сотрудник", DateTime.MinValue, "232", "Single");
+    [ObservableProperty] private Employee _employee = new(1, "Новый сотрудник", DateTime.Now, "232", "Single");
 
     [ObservableProperty] private ObservableCollection<Employee> _availableSpouses = [Employee.Empty()];
     
@@ -34,11 +37,12 @@ public partial class AddEmployeeViewModel : ViewModelBase
    
     public bool IsMarried => SelectedMaritalStatus == "Married";
 
-    public AddEmployeeViewModel(INavigationService navigationService, ISelectService dataService, MainViewModel mainViewModel)
+    public AddEmployeeViewModel(INavigationService navigationService, ISelectService dataService, IEmployeesRepository employeesRepository, MainViewModel mainViewModel)
     {
         _navigationService = navigationService;
         _dataService = dataService;
         _mainViewModel = mainViewModel;
+        _employeesRepository = employeesRepository;
         InitializeAsync();
     }
 
@@ -65,8 +69,16 @@ public partial class AddEmployeeViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async void Save()
+    private async Task Save()
     {
+        Employee.MaritalStatus = SelectedMaritalStatus;
+        var newEmployee = await _employeesRepository.Create(Employee);
+        if (newEmployee is not null && SelectedSpouse.Id is not null)
+        {
+            await _employeesRepository.AddSpouse((int)newEmployee, SelectedSpouse);
+        }
+
+        _mainViewModel.NavigateToEmployeesCommand.Execute(null);
     }
 
     [RelayCommand]

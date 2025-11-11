@@ -2,20 +2,15 @@ using System.Collections.Generic;
 using System.IO;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
-using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using DatabaseUtils;
 using DatabaseUtils.Queries;
 using DatabaseUtils.Repositories;
 using DatabaseUtils.TableNameResolver;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Zoo.ViewModels;
 using Zoo.Views;
 
@@ -60,6 +55,7 @@ public partial class App : Application
             new NpgsqlConnectionFactory(connectionString));
 
         serviceCollection.AddSingleton<IAnimalsRepository, AnimalsRepository>();
+        serviceCollection.AddSingleton<IEmployeesRepository, EmployeesRepository>();
 
         serviceCollection.AddSingleton<INavigationService, NavigationService>();
         serviceCollection.AddSingleton<MainViewModel>();

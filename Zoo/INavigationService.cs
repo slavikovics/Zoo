@@ -1,5 +1,3 @@
-using System;
-using Avalonia.Controls;
 using Zoo.ViewModels;
 
 namespace Zoo;

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
-using Microsoft.Data.SqlClient;
 
 namespace Zoo.ViewModels;
 
@@ -22,10 +21,10 @@ public partial class DietsViewModel : ViewModelBase
         _selectService = selectService;
         _deleteService = deleteService;
         Diets = new ObservableCollection<Diet>();
-        Task.Run(LoadAnimals);
+        Task.Run(LoadDiets);
     }
 
-    private async Task LoadAnimals()
+    private async Task LoadDiets()
     {
         try
         {
@@ -46,7 +45,7 @@ public partial class DietsViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error loading animals: {ex.Message}");
+            Console.WriteLine($"Error loading diets: {ex.Message}");
         }
     }
 

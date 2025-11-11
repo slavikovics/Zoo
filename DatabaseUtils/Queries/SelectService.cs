@@ -1,6 +1,5 @@
 using Dapper;
 using DatabaseUtils.TableNameResolver;
-using Microsoft.Data.SqlClient;
 
 namespace DatabaseUtils.Queries;
 
