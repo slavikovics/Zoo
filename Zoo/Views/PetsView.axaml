@@ -8,7 +8,7 @@
              xmlns:models1="clr-namespace:DatabaseUtils.Models;assembly=DatabaseUtils"
              x:DataType="vm:PetsViewModel">
     <ScrollViewer>
-        <DataGrid x:Name="Pets" AutoGenerateColumns="False" ItemsSource="{Binding Animals}" IsReadOnly="True">
+        <DataGrid x:Name="Pets" AutoGenerateColumns="False" CanUserResizeColumns="True" ItemsSource="{Binding Animals}" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True"/>
                 
@@ -32,7 +32,7 @@
                 
                 <DataGridTextColumn Header="Пол" Binding="{Binding Sex}" IsReadOnly="True"/>
                 
-                <DataGridTemplateColumn Header="Редактировать" IsReadOnly="True">
+                <DataGridTemplateColumn CanUserResize="False" Header="Редактировать" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models1:Animal">
                             <Button HorizontalAlignment="Center" Margin="8 4 8 4">
@@ -42,7 +42,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-                <DataGridTemplateColumn Header="Удалить" IsReadOnly="True">
+                <DataGridTemplateColumn CanUserResize="False" Header="Удалить" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models1:Animal">
                             <Button Command="{Binding #Pets.((vm:PetsViewModel)DataContext).DeleteAnimalCommand}" CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">

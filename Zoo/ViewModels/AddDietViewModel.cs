@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
+using DatabaseUtils.Repositories;
 
 namespace Zoo.ViewModels;
 
@@ -15,6 +16,8 @@ public partial class AddDietViewModel : ViewModelBase
     private readonly INavigationService _navigationService;
     
     private readonly ISelectService _dataService;
+    
+    private readonly IDietsRepository _dietsRepository;
     
     private readonly MainViewModel _mainViewModel;
 
@@ -26,11 +29,12 @@ public partial class AddDietViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<DietType> _dietTypes = [];
 
-    public AddDietViewModel(INavigationService navigationService, ISelectService dataService, MainViewModel mainViewModel)
+    public AddDietViewModel(INavigationService navigationService, ISelectService dataService, IDietsRepository dietsRepository, MainViewModel mainViewModel)
     {
         _navigationService = navigationService;
         _dataService = dataService;
         _mainViewModel = mainViewModel;
+        _dietsRepository = dietsRepository;
         InitializeAsync();
     }
 
@@ -59,6 +63,11 @@ public partial class AddDietViewModel : ViewModelBase
     [RelayCommand]
     private async Task Save()
     {
+        int selectedDietType = DietTypes.ElementAtOrDefault(SelectedDietType)!.Id;
+        Diet.TypeId = selectedDietType;
+        await _dietsRepository.Create(Diet);
+        
+        _mainViewModel.NavigateToDietsCommand.Execute(null);
     }
 
     [RelayCommand]

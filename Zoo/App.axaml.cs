@@ -56,6 +56,7 @@ public partial class App : Application
 
         serviceCollection.AddSingleton<IAnimalsRepository, AnimalsRepository>();
         serviceCollection.AddSingleton<IEmployeesRepository, EmployeesRepository>();
+        serviceCollection.AddSingleton<IDietsRepository, DietsRepository>();
 
         serviceCollection.AddSingleton<INavigationService, NavigationService>();
         serviceCollection.AddSingleton<MainViewModel>();

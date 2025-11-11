@@ -8,7 +8,7 @@
              xmlns:models1="clr-namespace:DatabaseUtils.Models;assembly=DatabaseUtils"
              x:DataType="vm:EmployeesViewModel">
     <ScrollViewer>
-        <DataGrid x:Name="Employees" AutoGenerateColumns="False" ItemsSource="{Binding Employees}" IsReadOnly="True">
+        <DataGrid x:Name="Employees" AutoGenerateColumns="False" CanUserResizeColumns="True" ItemsSource="{Binding Employees}" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True"/>
                 
@@ -27,7 +27,7 @@
                 <DataGridTextColumn Header="Семейное положение" Binding="{Binding MaritalStatus}" IsReadOnly="True"/>
                 
                 <!-- Edit column -->
-                <DataGridTemplateColumn Header="Редактировать" IsReadOnly="True">
+                <DataGridTemplateColumn CanUserResize="False" Header="Редактировать" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models1:Employee">
                             <Button HorizontalAlignment="Center" Margin="8 4 8 4">
@@ -38,7 +38,7 @@
                 </DataGridTemplateColumn>
                 
                 <!-- Delete column -->
-                <DataGridTemplateColumn Header="Удалить" IsReadOnly="True">
+                <DataGridTemplateColumn CanUserResize="False" Header="Удалить" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models1:Employee">
                             <Button Command="{Binding #Employees.((vm:EmployeesViewModel)DataContext).DeleteEmployeeCommand}" CommandParameter="{Binding Id}"  HorizontalAlignment="Center" Margin="8 4 8 4">
