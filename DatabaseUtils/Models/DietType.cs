@@ -1,4 +1,4 @@
-namespace DatabaseUtils.DTOs;
+namespace DatabaseUtils.Models;
 
 public class DietType(int id, string type)
 {

@@ -1,4 +1,4 @@
-namespace DatabaseUtils.DTOs;
+namespace DatabaseUtils.Models;
 
 public class AnimalType(int id, string name)
 {

@@ -1,4 +1,4 @@
-namespace DatabaseUtils.DTOs;
+namespace DatabaseUtils.Models;
 
 public class ReptileInfo(int? id, decimal normalTemperature, DateTime sleepStart, DateTime sleepEnd)
 {

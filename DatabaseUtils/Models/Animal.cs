@@ -1,4 +1,4 @@
-namespace DatabaseUtils.DTOs;
+namespace DatabaseUtils.Models;
 
 public class Animal(int id, string name, int typeId, DateTime? birthDate, string sex, 
     int? winterPlaceId, int? reptileInfoId, int dietId, int habitatZoneId, int caretakerId)
@@ -9,7 +9,7 @@ public class Animal(int id, string name, int typeId, DateTime? birthDate, string
 
     public int TypeId { get; set; } = typeId;
     
-    public DateTimeOffset? BirthDate { get; set; } =  birthDate;
+    public DateTime? BirthDate { get; set; } =  birthDate;
 
     public string Sex { get; set; } = sex;
     

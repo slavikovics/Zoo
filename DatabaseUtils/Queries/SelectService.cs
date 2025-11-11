@@ -1,5 +1,4 @@
 using Dapper;
-using DatabaseUtils.DTOs;
 using DatabaseUtils.TableNameResolver;
 using Microsoft.Data.SqlClient;
 

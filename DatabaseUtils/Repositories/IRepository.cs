@@ -10,5 +10,5 @@ public interface IRepository<T> where T : class
     
     Task Delete(int id);
     
-    Task Create(int id);
+    Task<int?> Create(T model);
 }

@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Zoo.Views.DietsView"
              xmlns:vm="using:Zoo.ViewModels"
-             xmlns:models="using:DatabaseUtils.DTOs"
+             xmlns:models1="clr-namespace:DatabaseUtils.Models;assembly=DatabaseUtils"
              x:DataType="vm:DietsViewModel">
     <ScrollViewer>
         <DataGrid x:Name="Diets" AutoGenerateColumns="False" ItemsSource="{Binding Diets}" IsReadOnly="True">
@@ -16,7 +16,7 @@
                 
                 <DataGridTemplateColumn Header="Тип" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Diet">
+                        <DataTemplate DataType="models1:Diet">
                             <TextBlock Text="{Binding TypeId}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -27,7 +27,7 @@
                 <!-- Edit column -->
                 <DataGridTemplateColumn Header="Редактировать" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Diet">
+                        <DataTemplate DataType="models1:Diet">
                             <Button HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/edit.svg"/>
                             </Button>
@@ -38,7 +38,7 @@
                 <!-- Delete column -->
                 <DataGridTemplateColumn Header="Удалить" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Diet">
+                        <DataTemplate DataType="models1:Diet">
                             <Button Command="{Binding #Diets.((vm:DietsViewModel)DataContext).DeleteDietCommand}" CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/bin.svg"/>
                             </Button>

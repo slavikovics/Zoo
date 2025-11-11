@@ -1,6 +1,4 @@
-using System.Runtime.InteropServices.JavaScript;
-
-namespace DatabaseUtils.DTOs;
+namespace DatabaseUtils.Models;
 
 public class BirdsWinterPlace(int? id, string? countryName, DateTime departure, DateTime arrival)
 {

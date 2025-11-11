@@ -1,4 +1,4 @@
-namespace DatabaseUtils.DTOs;
+namespace DatabaseUtils.Models;
 
 public class Employee(int? id, string name, DateTime birthDate, string phoneNumber, 
     string maritalStatus)

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using DatabaseUtils.DTOs;
+using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
 using Microsoft.Data.SqlClient;
 

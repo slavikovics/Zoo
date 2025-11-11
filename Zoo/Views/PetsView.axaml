@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Zoo.Views.PetsView"
              xmlns:vm="using:Zoo.ViewModels"
-             xmlns:models="using:DatabaseUtils.DTOs"
+             xmlns:models1="clr-namespace:DatabaseUtils.Models;assembly=DatabaseUtils"
              x:DataType="vm:PetsViewModel">
     <ScrollViewer>
         <DataGrid x:Name="Pets" AutoGenerateColumns="False" ItemsSource="{Binding Animals}" IsReadOnly="True">
@@ -14,7 +14,7 @@
                 
                 <DataGridTemplateColumn Header="Тип" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Animal">
+                        <DataTemplate DataType="models1:Animal">
                             <TextBlock Text="{Binding TypeId}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -24,7 +24,7 @@
                 
                 <DataGridTemplateColumn Header="Дата рождения" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Animal">
+                        <DataTemplate DataType="models1:Animal">
                             <TextBlock Text="{Binding BirthDate, StringFormat='{}{0:dd.MM.yyyy}'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -34,7 +34,7 @@
                 
                 <DataGridTemplateColumn Header="Редактировать" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Animal">
+                        <DataTemplate DataType="models1:Animal">
                             <Button HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/edit.svg"/>
                             </Button>
@@ -44,7 +44,7 @@
                 
                 <DataGridTemplateColumn Header="Удалить" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Animal">
+                        <DataTemplate DataType="models1:Animal">
                             <Button Command="{Binding #Pets.((vm:PetsViewModel)DataContext).DeleteAnimalCommand}" CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/bin.svg"/>
                             </Button>

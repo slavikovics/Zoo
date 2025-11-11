@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Zoo.Views.EmployeesView"
              xmlns:vm="using:Zoo.ViewModels"
-             xmlns:models="using:DatabaseUtils.DTOs"
+             xmlns:models1="clr-namespace:DatabaseUtils.Models;assembly=DatabaseUtils"
              x:DataType="vm:EmployeesViewModel">
     <ScrollViewer>
         <DataGrid x:Name="Employees" AutoGenerateColumns="False" ItemsSource="{Binding Employees}" IsReadOnly="True">
@@ -16,7 +16,7 @@
                 
                 <DataGridTemplateColumn Header="Дата рождения" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Employee">
+                        <DataTemplate DataType="models1:Employee">
                             <TextBlock Text="{Binding BirthDate, StringFormat='{}{0:dd.MM.yyyy}'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -29,7 +29,7 @@
                 <!-- Edit column -->
                 <DataGridTemplateColumn Header="Редактировать" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Employee">
+                        <DataTemplate DataType="models1:Employee">
                             <Button HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/edit.svg"/>
                             </Button>
@@ -40,7 +40,7 @@
                 <!-- Delete column -->
                 <DataGridTemplateColumn Header="Удалить" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models:Employee">
+                        <DataTemplate DataType="models1:Employee">
                             <Button Command="{Binding #Employees.((vm:EmployeesViewModel)DataContext).DeleteEmployeeCommand}" CommandParameter="{Binding Id}"  HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/bin.svg"/>
                             </Button>

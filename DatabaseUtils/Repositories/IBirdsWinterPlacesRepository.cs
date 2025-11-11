@@ -1,4 +1,4 @@
-using DatabaseUtils.DTOs;
+using DatabaseUtils.Models;
 
 namespace DatabaseUtils.Repositories;
 

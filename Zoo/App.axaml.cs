@@ -12,6 +12,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using DatabaseUtils;
 using DatabaseUtils.Queries;
+using DatabaseUtils.Repositories;
 using DatabaseUtils.TableNameResolver;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -25,7 +26,7 @@ public partial class App : Application
     public static ServiceProvider? ServiceProvider { get; private set; }
 
     private DatabaseConfigDto _databaseConfig;
-    
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -51,40 +52,43 @@ public partial class App : Application
     {
         LoadDatabaseConfig();
         var connectionString = GetConnectionString();
-        ServiceCollection serviceCollection = new ();
-        serviceCollection.AddSingleton<ITableNameResolver>(_ => new TableNameResolver(GetTableConfig(), GetConnectionString()));
-        
-        serviceCollection.AddSingleton<IDatabaseConnectionFactory>(_ => 
+        ServiceCollection serviceCollection = new();
+        serviceCollection.AddSingleton<ITableNameResolver>(_ =>
+            new TableNameResolver(GetTableConfig(), GetConnectionString()));
+
+        serviceCollection.AddSingleton<IDatabaseConnectionFactory>(_ =>
             new NpgsqlConnectionFactory(connectionString));
-        
+
+        serviceCollection.AddSingleton<IAnimalsRepository, AnimalsRepository>();
+
         serviceCollection.AddSingleton<INavigationService, NavigationService>();
         serviceCollection.AddSingleton<MainViewModel>();
-        
+
         serviceCollection.AddTransient<PetsViewModel>();
         serviceCollection.AddTransient<DietsViewModel>();
         serviceCollection.AddTransient<EmployeesViewModel>();
         serviceCollection.AddTransient<AddAnimalViewModel>();
         serviceCollection.AddTransient<AddDietViewModel>();
         serviceCollection.AddTransient<AddEmployeeViewModel>();
-        
+
         serviceCollection.AddSingleton<ISelectService, SelectService>();
         serviceCollection.AddSingleton<IDeleteService, DeleteService>();
-        
+
         ServiceProvider = serviceCollection.BuildServiceProvider();
     }
 
     public override void OnFrameworkInitializationCompleted()
     {
         RegisterUserServices();
-        
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             DisableAvaloniaDataAnnotationValidation();
             var mainWindow = new MainWindow();
-                
+
             var navService = ServiceProvider?.GetRequiredService<INavigationService>();
             mainWindow.DataContext = navService?.NavigateTo<MainViewModel>();
-                
+
             desktop.MainWindow = mainWindow;
         }
 
