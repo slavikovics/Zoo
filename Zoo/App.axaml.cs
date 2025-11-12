@@ -11,6 +11,7 @@ using DatabaseUtils.Queries;
 using DatabaseUtils.Repositories;
 using DatabaseUtils.TableNameResolver;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Zoo.ViewModels;
 using Zoo.Views;
 
@@ -57,6 +58,7 @@ public partial class App : Application
         serviceCollection.AddSingleton<IAnimalsRepository, AnimalsRepository>();
         serviceCollection.AddSingleton<IEmployeesRepository, EmployeesRepository>();
         serviceCollection.AddSingleton<IDietsRepository, DietsRepository>();
+        serviceCollection.AddSingleton<IDietTypesRepository, DietTypesRepository>();
 
         serviceCollection.AddSingleton<INavigationService, NavigationService>();
         serviceCollection.AddSingleton<MainViewModel>();

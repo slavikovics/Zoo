@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
@@ -15,25 +11,25 @@ public partial class AddDietTypeViewModel : ViewModelBase
 {
     private readonly ISelectService _dataService;
     
-    private readonly IDietsRepository _dietsRepository;
+    private readonly IDietTypesRepository _dietTypesRepository;
     
     private readonly MainViewModel _mainViewModel;
 
     [ObservableProperty] private string _title = "Добавить тип рациона питания";
 
-    [ObservableProperty] private DietType _diet = new(1, "Новый тип рациона");
+    [ObservableProperty] private DietType _dietType = new(1, "Новый тип рациона");
     
-    public AddDietTypeViewModel(ISelectService dataService, IDietsRepository dietsRepository, MainViewModel mainViewModel)
+    public AddDietTypeViewModel(ISelectService dataService, IDietTypesRepository dietTypesRepository, MainViewModel mainViewModel)
     {
         _dataService = dataService;
         _mainViewModel = mainViewModel;
-        _dietsRepository = dietsRepository;
+        _dietTypesRepository = dietTypesRepository;
     }
 
     [RelayCommand]
     private async Task Save()
     {
-        //await _dietsRepository.Create(Diet);
+        await _dietTypesRepository.Create(DietType);
         _mainViewModel.NavigateToDietTypesCommand.Execute(null);
     }
 

@@ -54,7 +54,7 @@ public partial class DietTypesViewModel : ViewModelBase
     {
         try
         {
-            await _deleteService.Delete<Diet>(id);
+            await _deleteService.Delete<DietType>(id);
             
             var itemsToRemove = DietTypes.Where(x => x.Id == id).ToList();
             foreach (var item in itemsToRemove)
