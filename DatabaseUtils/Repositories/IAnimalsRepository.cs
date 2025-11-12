@@ -5,4 +5,6 @@ namespace DatabaseUtils.Repositories;
 public interface IAnimalsRepository : IRepository<Animal>
 {
     Task AddVets(int animalId, List<Employee> vets);
+    Task RemoveAllVets(int animalId);
+    Task<IEnumerable<Employee>> GetAllVets(int animalId);
 }

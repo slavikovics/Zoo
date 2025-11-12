@@ -100,4 +100,26 @@ public class AnimalsRepository : IAnimalsRepository
             vetIds
         });
     }
+
+    public async Task RemoveAllVets(int animalId)
+    {
+        var sql = "CALL RemoveAllVetsFromAnimal(@animalId)";
+
+        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+        await connection.ExecuteAsync(sql, new
+        {
+            animalId
+        });
+    }
+
+    public async Task<IEnumerable<Employee>> GetAllVets(int animalId)
+    {
+        var sql = "SELECT * FROM GetAnimalVetsFullInfo(@animalId)";
+
+        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+        return await connection.QueryAsync<Employee>(sql, new
+        {
+            animalId
+        });
+    }
 }

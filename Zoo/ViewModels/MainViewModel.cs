@@ -18,7 +18,6 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel()
     {
         _navigationService = App.ServiceProvider?.GetService<INavigationService>();
-        NavigateToPets();
     }
 
     [RelayCommand]
@@ -118,6 +117,14 @@ public partial class MainViewModel : ViewModelBase
         IsAddEnabled = false;
         IsBackEnabled = true;
     }
+    
+    public async Task UpdateAnimal(int id)
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<UpdateAnimalViewModel>();
+        await (CurrentViewModel as UpdateAnimalViewModel)!.InitializeAsync(id);
+        IsAddEnabled = false;
+        IsBackEnabled = true;
+    }
 
     [RelayCommand]
     private void Add()
@@ -137,6 +144,7 @@ public partial class MainViewModel : ViewModelBase
         switch (CurrentViewModel)
         {
             case AddAnimalViewModel: NavigateToPets(); break;
+            case UpdateAnimalViewModel: NavigateToPets(); break;
             case AddDietViewModel: NavigateToDiets(); break;
             case UpdateDietViewModel: NavigateToDiets(); break;
             case AddEmployeeViewModel: NavigateToEmployees(); break;

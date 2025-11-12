@@ -32,7 +32,7 @@ public partial class AddDietViewModel : ViewModelBase
         _dataService = dataService;
         _mainViewModel = mainViewModel;
         _dietsRepository = dietsRepository;
-        InitializeAsync();
+        _ = InitializeAsync();
     }
 
     private async Task InitializeAsync()

@@ -13,13 +13,16 @@ public partial class PetsViewModel : ViewModelBase
     private readonly ISelectService _selectService;
     
     private readonly IDeleteService _deleteService;
+    
+    private readonly MainViewModel _mainViewModel;
 
     public ObservableCollection<Animal> Animals { get; set; }
     
-    public PetsViewModel(ISelectService selectService, IDeleteService deleteService)
+    public PetsViewModel(ISelectService selectService, IDeleteService deleteService, MainViewModel mainViewModel)
     {
         _selectService = selectService;
         _deleteService = deleteService;
+        _mainViewModel = mainViewModel;
         Animals = new ObservableCollection<Animal>();
         Task.Run(LoadAnimals);
     }
@@ -66,5 +69,11 @@ public partial class PetsViewModel : ViewModelBase
         {
             Console.WriteLine(sqlException.Message);
         }
+    }
+    
+    [RelayCommand]
+    private async Task UpdateAnimal(int id)
+    {
+        await _mainViewModel.UpdateAnimal(id);
     }
 }

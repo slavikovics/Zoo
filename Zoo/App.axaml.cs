@@ -76,6 +76,7 @@ public partial class App : Application
         serviceCollection.AddTransient<UpdateDietTypeViewModel>();
         serviceCollection.AddTransient<UpdateDietViewModel>();
         serviceCollection.AddTransient<UpdateEmployeeViewModel>();
+        serviceCollection.AddTransient<UpdateAnimalViewModel>();
 
         serviceCollection.AddSingleton<ISelectService, SelectService>();
         serviceCollection.AddSingleton<IDeleteService, DeleteService>();
@@ -96,6 +97,7 @@ public partial class App : Application
             mainWindow.DataContext = navService?.NavigateTo<MainViewModel>();
 
             desktop.MainWindow = mainWindow;
+            (mainWindow.DataContext as MainViewModel)!.NavigateToPetsCommand.Execute(null);
         }
 
         base.OnFrameworkInitializationCompleted();

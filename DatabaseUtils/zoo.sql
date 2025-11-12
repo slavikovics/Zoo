@@ -336,11 +336,6 @@ CREATE OR REPLACE FUNCTION GetAnimalVetsFullInfo(
 AS
 $$
 BEGIN
-    -- Проверяем существование животного
-    IF NOT EXISTS (SELECT 1 FROM Animals WHERE Id = p_animal_id) THEN
-        RAISE EXCEPTION 'Животное с ID % не существует', p_animal_id;
-    END IF;
-
     RETURN QUERY
         SELECT e.Id,
                e.Name,
@@ -431,14 +426,14 @@ $$
 DECLARE
     v_spouse_id INT;
 BEGIN
-    SELECT
-        CASE
-            WHEN EmployeeId = p_employee_id THEN SpouseId
-            WHEN SpouseId = p_employee_id THEN EmployeeId
-            END
+    SELECT CASE
+               WHEN EmployeeId = p_employee_id THEN SpouseId
+               WHEN SpouseId = p_employee_id THEN EmployeeId
+               END
     INTO v_spouse_id
     FROM EmployeeSpouse
-    WHERE EmployeeId = p_employee_id OR SpouseId = p_employee_id
+    WHERE EmployeeId = p_employee_id
+       OR SpouseId = p_employee_id
     LIMIT 1;
 
     RETURN v_spouse_id;

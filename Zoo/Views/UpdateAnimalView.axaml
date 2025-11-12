@@ -1,0 +1,86 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Zoo.Views.UpdateAnimalView"
+             xmlns:vm="using:Zoo.ViewModels"
+             x:DataType="vm:UpdateAnimalViewModel">
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="15">
+            <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold"/>
+             
+                <StackPanel Spacing="10" Margin="10">
+                    <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя:" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding AnimalName}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Тип питомца:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" 
+                                  ItemsSource="{Binding AnimalTypes}"
+                                  SelectedIndex="{Binding AnimalTypeId}"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата рождения:" VerticalAlignment="Center"/>
+                        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding AnimalBirthDate}"/>
+                        
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Пол:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" 
+                                  ItemsSource="{Binding SexOptions}"
+                                  SelectedItem="{Binding AnimalSex}"/>
+                    </Grid>
+                </StackPanel>
+            
+                <StackPanel Spacing="10" Margin="10">
+                    <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Зона обитания:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" 
+                                  ItemsSource="{Binding HabitatZones}"
+                                  SelectedIndex="{Binding AnimalHabitatZoneId}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Рацион питания:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" 
+                                  ItemsSource="{Binding Diets}"
+                                  SelectedIndex="{Binding AnimalDietId}"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Смотритель:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="2" Grid.Column="1" 
+                                  ItemsSource="{Binding Caretakers}"
+                                  SelectedIndex="{Binding AnimalCaretakerId}"/>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Spacing="10" Margin="10">
+                    <Grid ColumnDefinitions="150,*" RowDefinitions="Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Место зимовки:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" 
+                                  ItemsSource="{Binding WinterPlaces}"
+                                  SelectedIndex="{Binding AnimalWinterPlaceId}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Доп. информация:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" 
+                                  ItemsSource="{Binding ReptileInfos}"
+                                  SelectedIndex="{Binding AnimalReptileInfoId}"/>
+                    </Grid>
+                </StackPanel>
+            
+                <StackPanel Spacing="10" Margin="10">
+                    <TextBlock Margin="5" HorizontalAlignment="Left">Ветеринары:</TextBlock>
+                    <ListBox SelectionMode="Multiple, Toggle" SelectedItems="{Binding VetsToRemove}" ItemsSource="{Binding SelectedVets}" Height="120">
+                    </ListBox>
+                    <ComboBox ItemsSource="{Binding AvailableVets}"
+                              SelectedItem="{Binding SelectedVetToAdd}"
+                              Margin="0,5,0,0"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="Добавить ветеринара" Command="{Binding AddVetCommand}" CommandParameter="{Binding SelectedVetToAdd}" Margin="0,5"/>
+                        <Button Content="Удалить выбранные" Command="{Binding RemoveVetCommand}" Margin="0,5"/>
+                    </StackPanel>
+                </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                <Button Content="Обновить" Command="{Binding SaveCommand}"/>
+                <Button Content="Отмена" Command="{Binding CancelCommand}"/>
+            </StackPanel>
+            <TextBlock Foreground="DarkRed" Text="{Binding Error}"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

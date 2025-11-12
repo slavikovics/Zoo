@@ -36,7 +36,7 @@
                 <DataGridTemplateColumn CanUserResize="False" Header="Редактировать" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="models1:Animal">
-                            <Button HorizontalAlignment="Center" Margin="8 4 8 4">
+                            <Button Command="{Binding #Pets.((vm:PetsViewModel)DataContext).UpdateAnimalCommand}" CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
                                 <Svg Width="16" Path="../Assets/edit.svg"/>
                             </Button>
                         </DataTemplate>

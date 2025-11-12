@@ -43,7 +43,7 @@ public partial class AddEmployeeViewModel : ViewModelBase
         _dataService = dataService;
         _mainViewModel = mainViewModel;
         _employeesRepository = employeesRepository;
-        InitializeAsync();
+        _ = InitializeAsync();
     }
 
     private async Task InitializeAsync()
