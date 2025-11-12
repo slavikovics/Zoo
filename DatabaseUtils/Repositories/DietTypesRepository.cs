@@ -34,7 +34,7 @@ public class DietTypesRepository : IDietTypesRepository
     {
         var sql = "CALL UpdateDietType(@id, @type)";
         using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
-    
+
         await connection.ExecuteAsync(sql, new
         {
             id = model.Id,
@@ -51,7 +51,7 @@ public class DietTypesRepository : IDietTypesRepository
     {
         var sql = "CALL CreateDietType(@type)";
         using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
-    
+
         await connection.ExecuteAsync(sql, new
         {
             type = dietType.Type

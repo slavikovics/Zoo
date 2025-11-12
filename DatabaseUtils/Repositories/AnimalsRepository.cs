@@ -32,7 +32,33 @@ public class AnimalsRepository : IAnimalsRepository
 
     public async Task Update(Animal model)
     {
-        throw new NotImplementedException();
+        var sql = @"CALL UpdateAnimal(
+        @animalId,
+        @name,
+        @typeId,
+        @birthdate::date,
+        @sex,
+        @winterPlaceId,
+        @reptileInfoId,
+        @dietId,
+        @habitatZoneId,
+        @caretakerId)";
+
+        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+
+        await connection.ExecuteAsync(sql, new
+        {
+            animalId = model.Id,
+            model.Name,
+            model.TypeId,
+            model.BirthDate,
+            model.Sex,
+            model.WinterPlaceId,
+            model.ReptileInfoId,
+            model.DietId,
+            model.HabitatZoneId,
+            model.CaretakerId
+        });
     }
 
     public async Task Delete(int id)

@@ -12,7 +12,7 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty] private bool _isBackEnabled;
 
     [ObservableProperty] private bool _isAddEnabled;
-    
+
     private readonly INavigationService? _navigationService;
 
     public MainViewModel()
@@ -44,7 +44,7 @@ public partial class MainViewModel : ViewModelBase
         IsAddEnabled = true;
         IsBackEnabled = false;
     }
-    
+
     [RelayCommand]
     private void NavigateToAddDiet()
     {
@@ -52,7 +52,7 @@ public partial class MainViewModel : ViewModelBase
         IsAddEnabled = false;
         IsBackEnabled = true;
     }
-    
+
     [RelayCommand]
     private void NavigateToDietTypes()
     {
@@ -60,7 +60,7 @@ public partial class MainViewModel : ViewModelBase
         IsAddEnabled = true;
         IsBackEnabled = false;
     }
-    
+
     [RelayCommand]
     private void NavigateToAddDietType()
     {
@@ -68,7 +68,7 @@ public partial class MainViewModel : ViewModelBase
         IsAddEnabled = false;
         IsBackEnabled = true;
     }
-    
+
     [RelayCommand]
     private void NavigateToEmployees()
     {
@@ -76,7 +76,7 @@ public partial class MainViewModel : ViewModelBase
         IsAddEnabled = true;
         IsBackEnabled = false;
     }
-    
+
     [RelayCommand]
     private void NavigateToAddEmployee()
     {
@@ -88,19 +88,27 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void NavigateToAnimalSearch()
     {
-        
     }
 
     [RelayCommand]
     private void NavigateToFamilyPairs()
     {
-        
     }
-    
+
     public async Task UpdateDietType(int id)
     {
         CurrentViewModel = _navigationService?.NavigateTo<UpdateDietTypeViewModel>();
         await (CurrentViewModel as UpdateDietTypeViewModel)!.InitializeAsync(id);
+        IsAddEnabled = false;
+        IsBackEnabled = true;
+    }
+
+    public async Task UpdateDiet(int id)
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<UpdateDietViewModel>();
+        await (CurrentViewModel as UpdateDietViewModel)!.InitializeAsync(id);
+        IsAddEnabled = false;
+        IsBackEnabled = true;
     }
 
     [RelayCommand]
@@ -122,8 +130,10 @@ public partial class MainViewModel : ViewModelBase
         {
             case AddAnimalViewModel: NavigateToPets(); break;
             case AddDietViewModel: NavigateToDiets(); break;
+            case UpdateDietViewModel: NavigateToDiets(); break;
             case AddEmployeeViewModel: NavigateToEmployees(); break;
             case AddDietTypeViewModel: NavigateToDietTypes(); break;
+            case UpdateDietTypeViewModel: NavigateToDietTypes(); break;
         }
     }
 }

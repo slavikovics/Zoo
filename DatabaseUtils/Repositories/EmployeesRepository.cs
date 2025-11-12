@@ -32,7 +32,17 @@ public class EmployeesRepository : IEmployeesRepository
 
     public async Task Update(Employee model)
     {
-        throw new NotImplementedException();
+        var sql = "CALL UpdateEmployee(@id, @name, @birthdate, @phoneNumber, @maritalStatus)";
+        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+
+        await connection.ExecuteAsync(sql, new
+        {
+            id = model.Id,
+            name = model.Name,
+            birthdate = model.BirthDate,
+            phoneNumber = model.PhoneNumber,
+            maritalStatus = model.MaritalStatus
+        });
     }
 
     public async Task Delete(int id)

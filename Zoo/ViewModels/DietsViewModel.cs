@@ -13,13 +13,16 @@ public partial class DietsViewModel : ViewModelBase
     private readonly ISelectService _selectService;
 
     private readonly IDeleteService _deleteService;
+    
+    private readonly MainViewModel _mainViewModel;
 
     public ObservableCollection<Diet> Diets { get; set; }
     
-    public DietsViewModel(ISelectService selectService, IDeleteService deleteService)
+    public DietsViewModel(ISelectService selectService, IDeleteService deleteService, MainViewModel mainViewModel)
     {
         _selectService = selectService;
         _deleteService = deleteService;
+        _mainViewModel = mainViewModel;
         Diets = new ObservableCollection<Diet>();
         Task.Run(LoadDiets);
     }
@@ -66,5 +69,11 @@ public partial class DietsViewModel : ViewModelBase
         {
             Console.WriteLine(sqlException.Message);
         }
+    }
+    
+    [RelayCommand]
+    private async Task UpdateDiet(int id)
+    {
+        await _mainViewModel.UpdateDiet(id);
     }
 }
