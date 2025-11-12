@@ -12,8 +12,6 @@ namespace Zoo.ViewModels;
 
 public partial class AddAnimalViewModel : ViewModelBase
 {
-    private readonly INavigationService _navigationService;
-
     private readonly ISelectService _dataService;
 
     private readonly IAnimalsRepository _animalsRepository;
@@ -64,10 +62,9 @@ public partial class AddAnimalViewModel : ViewModelBase
 
     public ObservableCollection<string> SexOptions { get; } = ["Male", "Female", "Unknown"];
 
-    public AddAnimalViewModel(INavigationService navigationService, ISelectService dataService,
+    public AddAnimalViewModel(ISelectService dataService,
         IAnimalsRepository animalsRepository, MainViewModel mainViewModel)
     {
-        _navigationService = navigationService;
         _dataService = dataService;
         _mainViewModel = mainViewModel;
         _animalsRepository = animalsRepository;

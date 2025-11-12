@@ -63,7 +63,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void NavigateToAddDietType()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<AddDietViewModel>();
+        CurrentViewModel = _navigationService?.NavigateTo<AddDietTypeViewModel>();
         IsAddEnabled = false;
         IsBackEnabled = true;
     }
@@ -104,6 +104,7 @@ public partial class MainViewModel : ViewModelBase
             case PetsViewModel: NavigateToAddPet(); break;
             case DietsViewModel: NavigateToAddDiet(); break;
             case EmployeesViewModel: NavigateToAddEmployee(); break;
+            case DietTypesViewModel: NavigateToAddDietType(); break;
         }
     }
 
@@ -115,6 +116,7 @@ public partial class MainViewModel : ViewModelBase
             case AddAnimalViewModel: NavigateToPets(); break;
             case AddDietViewModel: NavigateToDiets(); break;
             case AddEmployeeViewModel: NavigateToEmployees(); break;
+            case AddDietTypeViewModel: NavigateToDietTypes(); break;
         }
     }
 }

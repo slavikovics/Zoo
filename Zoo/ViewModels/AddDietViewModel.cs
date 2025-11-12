@@ -13,8 +13,6 @@ namespace Zoo.ViewModels;
 
 public partial class AddDietViewModel : ViewModelBase
 {
-    private readonly INavigationService _navigationService;
-    
     private readonly ISelectService _dataService;
     
     private readonly IDietsRepository _dietsRepository;
@@ -29,9 +27,8 @@ public partial class AddDietViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<DietType> _dietTypes = [];
 
-    public AddDietViewModel(INavigationService navigationService, ISelectService dataService, IDietsRepository dietsRepository, MainViewModel mainViewModel)
+    public AddDietViewModel(ISelectService dataService, IDietsRepository dietsRepository, MainViewModel mainViewModel)
     {
-        _navigationService = navigationService;
         _dataService = dataService;
         _mainViewModel = mainViewModel;
         _dietsRepository = dietsRepository;
