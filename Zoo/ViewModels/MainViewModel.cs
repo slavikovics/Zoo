@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -94,6 +95,12 @@ public partial class MainViewModel : ViewModelBase
     private void NavigateToFamilyPairs()
     {
         
+    }
+    
+    public async Task UpdateDietType(int id)
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<UpdateDietTypeViewModel>();
+        await (CurrentViewModel as UpdateDietTypeViewModel)!.InitializeAsync(id);
     }
 
     [RelayCommand]
