@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Zoo.Views.UpdateEmployeeView"
+             xmlns:vm="using:Zoo.ViewModels"
+             x:DataType="vm:UpdateEmployeeViewModel">
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="15">
+            <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold"/>
+            
+                <StackPanel Spacing="10" Margin="10">
+                    <Grid ColumnDefinitions="200,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя:" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Employee.Name}"/>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Дата рождения:" VerticalAlignment="Center"/>
+                        <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding Employee.BirthDate}"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Номер телефона:" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Employee.PhoneNumber}"/>
+                        
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Семейное положение:" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" 
+                                  ItemsSource="{Binding MaritalStatusOptions}"
+                                  SelectedItem="{Binding SelectedMaritalStatus}"/>
+                        
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Женат (за мужем):" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="4" Grid.Column="1" 
+                                  ItemsSource="{Binding AvailableSpouses}"
+                                  SelectedItem="{Binding SelectedSpouse}">
+                            <ComboBox.Styles>
+                                <Style Selector="ComboBox">
+                                    <Setter Property="IsEnabled" Value="{Binding IsMarried}"/>
+                                </Style>
+                            </ComboBox.Styles>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                <Button Content="Обновить" Command="{Binding SaveCommand}"/>
+                <Button Content="Отмена" Command="{Binding CancelCommand}"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

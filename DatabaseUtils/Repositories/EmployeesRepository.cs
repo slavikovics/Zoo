@@ -32,7 +32,7 @@ public class EmployeesRepository : IEmployeesRepository
 
     public async Task Update(Employee model)
     {
-        var sql = "CALL UpdateEmployee(@id, @name, @birthdate, @phoneNumber, @maritalStatus)";
+        var sql = "CALL UpdateEmployee(@id, @name, @birthdate::date, @phoneNumber, @maritalStatus)";
         using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
 
         await connection.ExecuteAsync(sql, new
@@ -88,4 +88,18 @@ public class EmployeesRepository : IEmployeesRepository
             employeeId = employee.Id
         });
     }
+    
+    public async Task<int?> GetSpouseId(int employeeId)
+    {
+        var sql = "SELECT GetEmployeeSpouseId(@employeeId)";
+        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+
+        var spouseId = await connection.ExecuteScalarAsync<int?>(sql, new
+        {
+            employeeId
+        });
+
+        return spouseId;
+    }
+
 }

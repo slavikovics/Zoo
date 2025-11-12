@@ -422,6 +422,30 @@ BEGIN
 END;
 $$;
 
+-- 16. Функция для получения SpouseId для Employee
+CREATE OR REPLACE FUNCTION GetEmployeeSpouseId(p_employee_id INT)
+    RETURNS INT
+    LANGUAGE plpgsql
+AS
+$$
+DECLARE
+    v_spouse_id INT;
+BEGIN
+    SELECT
+        CASE
+            WHEN EmployeeId = p_employee_id THEN SpouseId
+            WHEN SpouseId = p_employee_id THEN EmployeeId
+            END
+    INTO v_spouse_id
+    FROM EmployeeSpouse
+    WHERE EmployeeId = p_employee_id OR SpouseId = p_employee_id
+    LIMIT 1;
+
+    RETURN v_spouse_id;
+END;
+$$;
+
+
 -- 1. Типы животных
 INSERT INTO AnimalTypes (Name)
 VALUES ('Млекопитающее'),

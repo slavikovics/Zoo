@@ -75,6 +75,7 @@ public partial class App : Application
 
         serviceCollection.AddTransient<UpdateDietTypeViewModel>();
         serviceCollection.AddTransient<UpdateDietViewModel>();
+        serviceCollection.AddTransient<UpdateEmployeeViewModel>();
 
         serviceCollection.AddSingleton<ISelectService, SelectService>();
         serviceCollection.AddSingleton<IDeleteService, DeleteService>();

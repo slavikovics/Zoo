@@ -110,6 +110,14 @@ public partial class MainViewModel : ViewModelBase
         IsAddEnabled = false;
         IsBackEnabled = true;
     }
+    
+    public async Task UpdateEmployee(int id)
+    {
+        CurrentViewModel = _navigationService?.NavigateTo<UpdateEmployeeViewModel>();
+        await (CurrentViewModel as UpdateEmployeeViewModel)!.InitializeAsync(id);
+        IsAddEnabled = false;
+        IsBackEnabled = true;
+    }
 
     [RelayCommand]
     private void Add()
@@ -132,6 +140,7 @@ public partial class MainViewModel : ViewModelBase
             case AddDietViewModel: NavigateToDiets(); break;
             case UpdateDietViewModel: NavigateToDiets(); break;
             case AddEmployeeViewModel: NavigateToEmployees(); break;
+            case UpdateEmployeeViewModel: NavigateToEmployees(); break;
             case AddDietTypeViewModel: NavigateToDietTypes(); break;
             case UpdateDietTypeViewModel: NavigateToDietTypes(); break;
         }

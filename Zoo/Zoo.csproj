@@ -76,5 +76,9 @@
         <DependentUpon>UpdateDietView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Views\UpdateEmployeeView.axaml.cs">
+        <DependentUpon>UpdateEmployeeView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>
