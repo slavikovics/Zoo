@@ -143,6 +143,14 @@ public class NavigationService : INavigationService
         await (_mainViewModel.CurrentViewModel as UpdateAnimalViewModel)!.InitializeAsync(id);
     }
 
+    public async Task DetailedInfo(int id)
+    {
+        EnableAll();
+        _mainViewModel.IsAddEnabled = false;
+        _mainViewModel.CurrentViewModel = NavigateTo<AnimalDetailsViewModel>();
+        await (_mainViewModel.CurrentViewModel as AnimalDetailsViewModel)!.InitializeAsync(id);
+    }
+
     public TViewModel NavigateTo<TViewModel>() where TViewModel : ViewModelBase
     {
         var viewModel = _serviceProvider.GetService(typeof(TViewModel)) as TViewModel;

@@ -1,0 +1,75 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Zoo.Views.AnimalDetailsView"
+             xmlns:vm="using:Zoo.ViewModels"
+             x:DataType="vm:AnimalDetailsViewModel">
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="15">
+            <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold" />
+
+            <Border BorderBrush="Gray" CornerRadius="5" BorderThickness="1" Padding="15">
+                <StackPanel>
+                    <TextBlock Text="Основная информация" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
+                    <Grid ColumnDefinitions="200,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя:" FontWeight="Bold" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Animal.Name}" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Тип питомца:" FontWeight="Bold" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding AnimalType.Name}" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата рождения:" FontWeight="Bold" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Animal.BirthDate}" />
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Пол:" FontWeight="Bold" />
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Animal.Sex}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="Gray" CornerRadius="5" BorderThickness="1" Padding="15">
+                <StackPanel>
+                    <TextBlock Text="Информация о содержании" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
+                    <Grid ColumnDefinitions="200,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Зона обитания:" FontWeight="Bold" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding HabitatZone.Name}" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Рацион питания:" FontWeight="Bold" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Diet.Name}" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Смотритель:" FontWeight="Bold" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Caretaker.Name}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="Gray" CornerRadius="5" BorderThickness="1" Padding="15">
+                <StackPanel>
+                    <TextBlock Text="Специфическая информация" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
+                    <Grid ColumnDefinitions="200,*" RowDefinitions="Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Место зимовки:" FontWeight="Bold" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding WinterPlace}" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Информация о спячке:" FontWeight="Bold" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ReptileInfo}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="Gray" CornerRadius="5" BorderThickness="1" Padding="15">
+                <StackPanel>
+                    <TextBlock Text="Закрепленные ветеринары" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
+                    <ListBox ItemsSource="{Binding Vets}" Height="120">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

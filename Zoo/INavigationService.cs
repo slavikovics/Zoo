@@ -22,4 +22,5 @@ public interface INavigationService
     Task UpdateDiet(int id);
     Task UpdateEmployee(int id);
     Task UpdateAnimal(int id);
+    Task DetailedInfo(int id);
 }

@@ -132,6 +132,7 @@ public partial class MainViewModel : ViewModelBase
             case UpdateEmployeeViewModel: NavigateToEmployees(); break;
             case AddDietTypeViewModel: NavigateToDietTypes(); break;
             case UpdateDietTypeViewModel: NavigateToDietTypes(); break;
+            case AnimalDetailsViewModel: NavigateToAnimalSearch(); break;
         }
     }
 }

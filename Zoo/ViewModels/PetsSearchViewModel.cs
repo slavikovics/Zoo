@@ -13,6 +13,7 @@ public partial class PetsSearchViewModel : ViewModelBase
 {
     private readonly ISelectService _selectService;
     private readonly IAnimalsRepository _animalsRepository;
+    private readonly INavigationService _navigationService;
 
     public ObservableCollection<Animal> Animals { get; set; }
     public ObservableCollection<AnimalType> AnimalTypes { get; set; }
@@ -22,17 +23,19 @@ public partial class PetsSearchViewModel : ViewModelBase
 
     public PetsSearchViewModel(
         ISelectService selectService,
-        IAnimalsRepository animalsRepository)
+        IAnimalsRepository animalsRepository,
+        INavigationService navigationService)
     {
         _selectService = selectService;
         _animalsRepository = animalsRepository;
+        _navigationService = navigationService;
 
         Animals = new ObservableCollection<Animal>();
         AnimalTypes = new ObservableCollection<AnimalType>();
 
-        Task.Run(LoadTypes);
+        Task.WhenAll(LoadTypes(), LoadAnimals());
     }
-    
+
     private async Task LoadTypes()
     {
         try
@@ -57,14 +60,32 @@ public partial class PetsSearchViewModel : ViewModelBase
             _ = DelayVisibility();
         }
     }
-    
+
+    private async Task LoadAnimals()
+    {
+        var animals = await _selectService.SelectAll<Animal>();
+        var animalsList = animals?.ToList();
+
+        await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            Animals.Clear();
+            if (animalsList != null)
+            {
+                foreach (var animal in animalsList)
+                {
+                    Animals.Add(animal);
+                }
+            }
+        });
+    }
+
     [RelayCommand]
     private async Task Search()
     {
         try
         {
             int? typeId = SelectedType?.Id;
-            
+
             var result = await _animalsRepository.Search(SearchName, typeId);
             var list = result?.ToList();
 
@@ -85,5 +106,11 @@ public partial class PetsSearchViewModel : ViewModelBase
             ErrorMessage = $"Error searching animals: {e.Message}";
             _ = DelayVisibility();
         }
+    }
+
+    [RelayCommand]
+    private async Task DetailedInfo(int id)
+    {
+        await _navigationService.DetailedInfo(id);
     }
 }

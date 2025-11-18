@@ -92,5 +92,9 @@
         <DependentUpon>PetsSearch.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Views\AnimalDetailsView.axaml.cs">
+        <DependentUpon>AnimalDetailsView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

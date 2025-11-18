@@ -39,6 +39,17 @@
                         <DataGridTextColumn Header="Информация о спячке" Binding="{Binding ReptileInfoId}" />
                         <DataGridTextColumn Header="Зона обитания" Binding="{Binding HabitatZoneId}" />
                         <DataGridTextColumn Header="Смотритель" Binding="{Binding CaretakerId}" />
+                        
+                        <DataGridTemplateColumn CanUserResize="False" Header="Редактировать" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate DataType="models1:Animal">
+                                    <Button Command="{Binding #Pets.((vm:PetsSearchViewModel)DataContext).DetailedInfoCommand}"
+                                            CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
+                                        <Svg Width="16" Path="../Assets/info.svg" />
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

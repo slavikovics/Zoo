@@ -69,6 +69,7 @@ public partial class App : Application
         serviceCollection.AddTransient<EmployeesViewModel>();
         serviceCollection.AddTransient<FamilyPairsViewModel>();
         serviceCollection.AddTransient<PetsSearchViewModel>(); 
+        serviceCollection.AddTransient<AnimalDetailsViewModel>();
         
         serviceCollection.AddTransient<AddAnimalViewModel>();
         serviceCollection.AddTransient<AddDietViewModel>();
