@@ -7,35 +7,52 @@
              xmlns:vm="using:Zoo.ViewModels"
              xmlns:models1="clr-namespace:DatabaseUtils.Models;assembly=DatabaseUtils"
              x:DataType="vm:DietTypesViewModel">
-    <ScrollViewer>
-        <DataGrid x:Name="Diets" AutoGenerateColumns="False" CanUserResizeColumns="True" ItemsSource="{Binding DietTypes}" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True"/>
-                
-                <DataGridTextColumn Header="Тип" Binding="{Binding Type}" IsReadOnly="True"/>
-                
-                <!-- Edit column -->
-                <DataGridTemplateColumn CanUserResize="False" Header="Редактировать" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models1:DietType">
-                            <Button Command="{Binding #Diets.((vm:DietTypesViewModel)DataContext).UpdateDietTypesCommand}" CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
-                                <Svg Width="16" Path="../Assets/edit.svg"/>
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                
-                <!-- Delete column -->
-                <DataGridTemplateColumn CanUserResize="False" Header="Удалить" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="models1:DietType">
-                            <Button Command="{Binding #Diets.((vm:DietTypesViewModel)DataContext).DeleteDietTypesCommand}" CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
-                                <Svg Width="16" Path="../Assets/bin.svg"/>
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-    </ScrollViewer>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <DataGrid x:Name="Diets" AutoGenerateColumns="False" CanUserResizeColumns="True"
+                      ItemsSource="{Binding DietTypes}" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" />
+
+                    <DataGridTextColumn Header="Тип" Binding="{Binding Type}" IsReadOnly="True" />
+
+                    <!-- Edit column -->
+                    <DataGridTemplateColumn CanUserResize="False" Header="Редактировать" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="models1:DietType">
+                                <Button
+                                    Command="{Binding #Diets.((vm:DietTypesViewModel)DataContext).UpdateDietTypesCommand}"
+                                    CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
+                                    <Svg Width="16" Path="../Assets/edit.svg" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Delete column -->
+                    <DataGridTemplateColumn CanUserResize="False" Header="Удалить" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="models1:DietType">
+                                <Button
+                                    Command="{Binding #Diets.((vm:DietTypesViewModel)DataContext).DeleteDietTypesCommand}"
+                                    CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
+                                    <Svg Width="16" Path="../Assets/bin.svg" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Svg IsVisible="{Binding IsErrorVisible}" Width="16" Path="../Assets/error.svg" />
+            <TextBlock Margin="10  0 0 0" IsVisible="{Binding IsErrorVisible}" Foreground="DarkRed"
+                       Text="{Binding ErrorMessage}" />
+        </StackPanel>
+    </Grid>
+
 </UserControl>

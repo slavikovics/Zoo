@@ -151,7 +151,9 @@ public partial class UpdateAnimalViewModel : ViewModelBase
         }
         catch (Exception e)
         {
-            Error += e.Message;
+            IsErrorVisible = true;
+            ErrorMessage = $"Error loading dropdown: {e.Message}";
+            _ = DelayVisibility();
         }
     }
 
@@ -192,10 +194,19 @@ public partial class UpdateAnimalViewModel : ViewModelBase
             (int)Caretakers.ElementAtOrDefault(AnimalCaretakerId)!.Id!
         );
 
-        await _animalsRepository.Update(animal);
-        await _animalsRepository.AddVets(animal.Id, SelectedVets.ToList());
+        try
+        {
+            await _animalsRepository.Update(animal);
+            await _animalsRepository.AddVets(animal.Id, SelectedVets.ToList());
 
-        _mainViewModel.NavigateToPetsCommand.Execute(null);
+            _mainViewModel.NavigateToPetsCommand.Execute(null);
+        }
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error updating animal: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 
     [RelayCommand]

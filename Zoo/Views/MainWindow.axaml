@@ -18,15 +18,55 @@
     
     <DockPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto"  DockPanel.Dock="Top">
-            <StackPanel Margin="5 5 5 20" Orientation="Horizontal" Spacing="10">
-                <Button IsEnabled="{Binding IsBackEnabled}" Command="{Binding BackCommand}">Назад</Button>
-                <Button IsEnabled="{Binding IsAddEnabled}" Command="{Binding AddCommand}">Добавить</Button>
-                <Button Command="{Binding NavigateToPetsCommand}">Питомцы</Button>
-                <Button Command="{Binding NavigateToDietsCommand}">Рационы питания</Button>
-                <Button Command="{Binding NavigateToDietTypesCommand}">Типы рационов</Button>
-                <Button Command="{Binding NavigateToEmployeesCommand}">Сотрудники</Button>
-                <Button Command="{Binding NavigateToAnimalSearchCommand}">Поиск по типу и имени питомца</Button>
-                <Button Command="{Binding NavigateToFamilyPairsCommand}">Семейные пары</Button>
+            <StackPanel Margin="5 5 5 20" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+                <Button CornerRadius="15" IsEnabled="{Binding IsBackEnabled}" Command="{Binding BackCommand}">
+                    <StackPanel>
+                        <Svg Width="20" Path="../Assets/back.svg"/>
+                        <TextBlock>Назад</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button CornerRadius="15" IsEnabled="{Binding IsAddEnabled}" Command="{Binding AddCommand}">
+                    <StackPanel>
+                        <Svg Width="20" Path="../Assets/add.svg"/>
+                        <TextBlock>Добавить</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button CornerRadius="15" Command="{Binding NavigateToPetsCommand}">
+                    <StackPanel>
+                        <Svg Width="20" Path="../Assets/animal.svg"/>
+                        <TextBlock>Питомцы</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button CornerRadius="15" Command="{Binding NavigateToDietsCommand}">
+                    <StackPanel>
+                        <Svg Width="20" Path="../Assets/diet.svg"/>
+                        <TextBlock>Рационы питания</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button CornerRadius="15" Command="{Binding NavigateToDietTypesCommand}">
+                    <StackPanel>
+                        <Svg Width="20" Path="../Assets/diet_type.svg"/>
+                        <TextBlock>Типы рационов</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button CornerRadius="15" Command="{Binding NavigateToEmployeesCommand}">
+                    <StackPanel>
+                        <Svg Width="20" Path="../Assets/employee.svg"/>
+                        <TextBlock>Сотрудники</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button CornerRadius="15" Command="{Binding NavigateToAnimalSearchCommand}">
+                    <StackPanel>
+                        <Svg Width="20" Path="../Assets/search.svg"/>
+                        <TextBlock>Поиск</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button CornerRadius="15" Command="{Binding NavigateToFamilyPairsCommand}">
+                    <StackPanel>
+                        <Svg Width="20" Path="../Assets/family.svg"/>
+                        <TextBlock>Семейные пары</TextBlock>
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </ScrollViewer>
         <ContentControl Name="MainContent" DockPanel.Dock="Bottom" Content="{Binding CurrentViewModel}"/>

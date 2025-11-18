@@ -11,13 +11,13 @@ namespace Zoo.ViewModels;
 public partial class EmployeesViewModel : ViewModelBase
 {
     private readonly ISelectService _selectService;
-    
+
     private readonly IDeleteService _deleteService;
-    
+
     private readonly MainViewModel _mainViewModel;
 
     public ObservableCollection<Employee> Employees { get; set; }
-    
+
     public EmployeesViewModel(ISelectService selectService, IDeleteService deleteService, MainViewModel mainViewModel)
     {
         _selectService = selectService;
@@ -33,7 +33,7 @@ public partial class EmployeesViewModel : ViewModelBase
         {
             var employees = await _selectService.SelectAll<Employee>();
             var employeesList = employees?.ToList();
-            
+
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
                 Employees.Clear();
@@ -46,9 +46,11 @@ public partial class EmployeesViewModel : ViewModelBase
                 }
             });
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Console.WriteLine($"Error loading employees: {ex.Message}");
+            IsErrorVisible = true;
+            ErrorMessage = $"Error loading employees: {e.Message}";
+            _ = DelayVisibility();
         }
     }
 
@@ -58,7 +60,7 @@ public partial class EmployeesViewModel : ViewModelBase
         try
         {
             await _deleteService.Delete<Employee>(id);
-            
+
             var itemsToRemove = Employees.Where(x => x.Id == id).ToList();
             foreach (var item in itemsToRemove)
             {
@@ -67,13 +69,24 @@ public partial class EmployeesViewModel : ViewModelBase
         }
         catch (Exception sqlException)
         {
-            Console.WriteLine(sqlException.Message);
+            IsErrorVisible = true;
+            ErrorMessage = $"Error deleting employee: {sqlException.Message}";
+            _ = DelayVisibility();
         }
     }
-    
+
     [RelayCommand]
     private async Task UpdateEmployee(int id)
     {
-        await _mainViewModel.UpdateEmployee(id);
+        try
+        {
+            await _mainViewModel.UpdateEmployee(id);
+        }
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error updating employee: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 }

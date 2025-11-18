@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
@@ -29,8 +30,17 @@ public partial class AddDietTypeViewModel : ViewModelBase
     [RelayCommand]
     private async Task Save()
     {
-        await _dietTypesRepository.Create(DietType);
-        _mainViewModel.NavigateToDietTypesCommand.Execute(null);
+        try
+        {
+            await _dietTypesRepository.Create(DietType);
+            _mainViewModel.NavigateToDietTypesCommand.Execute(null);
+        }
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error adding diet type: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 
     [RelayCommand]

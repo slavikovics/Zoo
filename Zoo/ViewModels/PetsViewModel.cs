@@ -11,13 +11,13 @@ namespace Zoo.ViewModels;
 public partial class PetsViewModel : ViewModelBase
 {
     private readonly ISelectService _selectService;
-    
+
     private readonly IDeleteService _deleteService;
-    
+
     private readonly MainViewModel _mainViewModel;
 
     public ObservableCollection<Animal> Animals { get; set; }
-    
+
     public PetsViewModel(ISelectService selectService, IDeleteService deleteService, MainViewModel mainViewModel)
     {
         _selectService = selectService;
@@ -33,7 +33,7 @@ public partial class PetsViewModel : ViewModelBase
         {
             var animals = await _selectService.SelectAll<Animal>();
             var animalsList = animals?.ToList();
-            
+
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
                 Animals.Clear();
@@ -46,9 +46,11 @@ public partial class PetsViewModel : ViewModelBase
                 }
             });
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Console.WriteLine($"Error loading animals: {ex.Message}");
+            IsErrorVisible = true;
+            ErrorMessage = $"Error loading animals: {e.Message}";
+            _ = DelayVisibility();
         }
     }
 
@@ -58,7 +60,7 @@ public partial class PetsViewModel : ViewModelBase
         try
         {
             await _deleteService.Delete<Animal>(id);
-            
+
             var itemsToRemove = Animals.Where(x => x.Id == id).ToList();
             foreach (var item in itemsToRemove)
             {
@@ -67,13 +69,24 @@ public partial class PetsViewModel : ViewModelBase
         }
         catch (Exception sqlException)
         {
-            Console.WriteLine(sqlException.Message);
+            IsErrorVisible = true;
+            ErrorMessage = $"Error deleting animals: {sqlException.Message}";
+            _ = DelayVisibility();
         }
     }
-    
+
     [RelayCommand]
     private async Task UpdateAnimal(int id)
     {
-        await _mainViewModel.UpdateAnimal(id);
+        try
+        {
+            await _mainViewModel.UpdateAnimal(id);
+        }
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error updating animals: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 }

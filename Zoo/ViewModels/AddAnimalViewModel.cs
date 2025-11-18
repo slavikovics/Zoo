@@ -58,8 +58,6 @@ public partial class AddAnimalViewModel : ViewModelBase
 
     [ObservableProperty] private Employee? _selectedVetToAdd;
 
-    [ObservableProperty] private string _error = "";
-
     public ObservableCollection<string> SexOptions { get; } = ["Male", "Female", "Unknown"];
 
     public AddAnimalViewModel(ISelectService dataService,
@@ -109,7 +107,9 @@ public partial class AddAnimalViewModel : ViewModelBase
         }
         catch (Exception e)
         {
-            Error += e.Message;
+            IsErrorVisible = true;
+            ErrorMessage = $"Error deleting diet: {e.Message}";
+            _ = DelayVisibility();
         }
     }
 
@@ -149,13 +149,22 @@ public partial class AddAnimalViewModel : ViewModelBase
             (int)Caretakers.ElementAtOrDefault(AnimalCaretakerId)!.Id!
         );
 
-        var newAnimal = await _animalsRepository.Create(animal);
-        if (newAnimal is not null)
+        try
         {
-            await _animalsRepository.AddVets((int)newAnimal, SelectedVets.ToList());
+            var newAnimal = await _animalsRepository.Create(animal);
+            if (newAnimal is not null)
+            {
+                await _animalsRepository.AddVets((int)newAnimal, SelectedVets.ToList());
+            }
+            
+            _mainViewModel.NavigateToPetsCommand.Execute(null);
         }
-
-        _mainViewModel.NavigateToPetsCommand.Execute(null);
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error adding animal: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 
     [RelayCommand]

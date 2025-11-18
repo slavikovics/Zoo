@@ -70,11 +70,20 @@ public partial class UpdateDietViewModel : ViewModelBase
     [RelayCommand]
     private async Task Save()
     {
-        int selectedDietType = DietTypes.ElementAtOrDefault(SelectedDietType)!.Id;
-        Diet.TypeId = selectedDietType;
-        await _dietsRepository.Update(Diet);
+        try
+        {
+            int selectedDietType = DietTypes.ElementAtOrDefault(SelectedDietType)!.Id;
+            Diet.TypeId = selectedDietType;
+            await _dietsRepository.Update(Diet);
 
-        _mainViewModel.NavigateToDietsCommand.Execute(null);
+            _mainViewModel.NavigateToDietsCommand.Execute(null);
+        }
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error updating diet: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 
     [RelayCommand]

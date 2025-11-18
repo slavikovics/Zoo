@@ -109,7 +109,7 @@ public partial class MainViewModel : ViewModelBase
         IsAddEnabled = false;
         IsBackEnabled = true;
     }
-    
+
     public async Task UpdateEmployee(int id)
     {
         CurrentViewModel = _navigationService?.NavigateTo<UpdateEmployeeViewModel>();
@@ -117,7 +117,7 @@ public partial class MainViewModel : ViewModelBase
         IsAddEnabled = false;
         IsBackEnabled = true;
     }
-    
+
     public async Task UpdateAnimal(int id)
     {
         CurrentViewModel = _navigationService?.NavigateTo<UpdateAnimalViewModel>();

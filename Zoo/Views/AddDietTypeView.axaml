@@ -6,20 +6,32 @@
              x:Class="Zoo.Views.AddDietTypeView"
              xmlns:vm="using:Zoo.ViewModels"
              x:DataType="vm:AddDietTypeViewModel">
-    <ScrollViewer>
-        <StackPanel Margin="20" Spacing="15">
-            <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold"/>
-            <StackPanel Spacing="10" Margin="10">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel Margin="20" Spacing="15">
+                <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold" />
+                <StackPanel Spacing="10" Margin="10">
                     <Grid ColumnDefinitions="120,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Тип:" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding DietType.Type}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Тип:" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding DietType.Type}" />
                     </Grid>
-            </StackPanel>
+                </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
-                <Button Content="Добавить" Command="{Binding SaveCommand}"/>
-                <Button Content="Отмена" Command="{Binding CancelCommand}"/>
+                <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                    <Button Content="Добавить" Command="{Binding SaveCommand}" />
+                    <Button Content="Отмена" Command="{Binding CancelCommand}" />
+                </StackPanel>
             </StackPanel>
+        </ScrollViewer>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Svg IsVisible="{Binding IsErrorVisible}" Width="16" Path="../Assets/error.svg" />
+            <TextBlock Margin="10  0 0 0" IsVisible="{Binding IsErrorVisible}" Foreground="DarkRed"
+                       Text="{Binding ErrorMessage}" />
         </StackPanel>
-    </ScrollViewer>
+    </Grid>
+
 </UserControl>

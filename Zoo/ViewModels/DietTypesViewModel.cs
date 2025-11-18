@@ -13,11 +13,11 @@ public partial class DietTypesViewModel : ViewModelBase
     private readonly ISelectService _selectService;
 
     private readonly IDeleteService _deleteService;
-    
+
     private readonly MainViewModel _mainViewModel;
 
     public ObservableCollection<DietType> DietTypes { get; set; }
-    
+
     public DietTypesViewModel(ISelectService selectService, IDeleteService deleteService, MainViewModel mainViewModel)
     {
         _selectService = selectService;
@@ -33,7 +33,7 @@ public partial class DietTypesViewModel : ViewModelBase
         {
             var dietTypes = await _selectService.SelectAll<DietType>();
             var dietTypesList = dietTypes?.ToList();
-            
+
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
                 DietTypes.Clear();
@@ -46,9 +46,11 @@ public partial class DietTypesViewModel : ViewModelBase
                 }
             });
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Console.WriteLine($"Error loading diet types: {ex.Message}");
+            IsErrorVisible = true;
+            ErrorMessage = $"Error loading diet types: {e.Message}";
+            _ = DelayVisibility();
         }
     }
 
@@ -58,7 +60,7 @@ public partial class DietTypesViewModel : ViewModelBase
         try
         {
             await _deleteService.Delete<DietType>(id);
-            
+
             var itemsToRemove = DietTypes.Where(x => x.Id == id).ToList();
             foreach (var item in itemsToRemove)
             {
@@ -67,13 +69,24 @@ public partial class DietTypesViewModel : ViewModelBase
         }
         catch (Exception sqlException)
         {
-            Console.WriteLine(sqlException.Message);
+            IsErrorVisible = true;
+            ErrorMessage = $"Error deleting diet type: {sqlException.Message}";
+            _ = DelayVisibility();
         }
     }
-    
+
     [RelayCommand]
     private async Task UpdateDietTypes(int id)
     {
-        await _mainViewModel.UpdateDietType(id);
+        try
+        {
+            await _mainViewModel.UpdateDietType(id);
+        }
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error updating diet type: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 }

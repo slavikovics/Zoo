@@ -1,7 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
@@ -13,11 +15,11 @@ public partial class DietsViewModel : ViewModelBase
     private readonly ISelectService _selectService;
 
     private readonly IDeleteService _deleteService;
-    
+
     private readonly MainViewModel _mainViewModel;
 
     public ObservableCollection<Diet> Diets { get; set; }
-    
+
     public DietsViewModel(ISelectService selectService, IDeleteService deleteService, MainViewModel mainViewModel)
     {
         _selectService = selectService;
@@ -33,7 +35,7 @@ public partial class DietsViewModel : ViewModelBase
         {
             var diets = await _selectService.SelectAll<Diet>();
             var dietsList = diets?.ToList();
-            
+
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
                 Diets.Clear();
@@ -48,7 +50,9 @@ public partial class DietsViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error loading diets: {ex.Message}");
+            IsErrorVisible = true;
+            ErrorMessage = $"Error loading diets: {ex.Message}";
+            _ = DelayVisibility();
         }
     }
 
@@ -58,7 +62,7 @@ public partial class DietsViewModel : ViewModelBase
         try
         {
             await _deleteService.Delete<Diet>(id);
-            
+
             var itemsToRemove = Diets.Where(x => x.Id == id).ToList();
             foreach (var item in itemsToRemove)
             {
@@ -67,13 +71,24 @@ public partial class DietsViewModel : ViewModelBase
         }
         catch (Exception sqlException)
         {
-            Console.WriteLine(sqlException.Message);
+            IsErrorVisible = true;
+            ErrorMessage = $"Error deleting diet: {sqlException.Message}";
+            _ = DelayVisibility();
         }
     }
-    
+
     [RelayCommand]
     private async Task UpdateDiet(int id)
     {
-        await _mainViewModel.UpdateDiet(id);
+        try
+        {
+            await _mainViewModel.UpdateDiet(id);
+        }
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error updating diet: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 }

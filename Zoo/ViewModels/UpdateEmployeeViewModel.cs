@@ -14,9 +14,9 @@ namespace Zoo.ViewModels;
 public partial class UpdateEmployeeViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
-    
+
     private readonly ISelectService _dataService;
-    
+
     private readonly MainViewModel _mainViewModel;
 
     private readonly IEmployeesRepository _employeesRepository;
@@ -26,18 +26,18 @@ public partial class UpdateEmployeeViewModel : ViewModelBase
     [ObservableProperty] private Employee _employee;
 
     [ObservableProperty] private ObservableCollection<Employee> _availableSpouses = [Employee.Empty()];
-    
+
     [ObservableProperty] private Employee _selectedSpouse;
-    
+
     public ObservableCollection<string> MaritalStatusOptions { get; } = ["Single", "Married", "Divorced", "Widowed"];
-    
-    [ObservableProperty] 
-    [NotifyPropertyChangedFor(nameof(IsMarried))]
+
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsMarried))]
     private string _selectedMaritalStatus = "Single";
-   
+
     public bool IsMarried => SelectedMaritalStatus == "Married";
 
-    public UpdateEmployeeViewModel(INavigationService navigationService, ISelectService dataService, IEmployeesRepository employeesRepository, MainViewModel mainViewModel)
+    public UpdateEmployeeViewModel(INavigationService navigationService, ISelectService dataService,
+        IEmployeesRepository employeesRepository, MainViewModel mainViewModel)
     {
         _navigationService = navigationService;
         _dataService = dataService;
@@ -56,18 +56,18 @@ public partial class UpdateEmployeeViewModel : ViewModelBase
         {
             Console.WriteLine(e);
         }
-        
+
         if (items is null) return;
-        
+
         foreach (var item in items.ToList())
         {
             AvailableSpouses.Add(item);
         }
-        
+
         if (AvailableSpouses.Any()) SelectedSpouse = AvailableSpouses[0];
 
         var employees = await _employeesRepository.SelectById(id);
-        
+
         if (employees is null) return;
         Employee = employees.First();
         SelectedMaritalStatus = Employee.MaritalStatus;
@@ -93,16 +93,25 @@ public partial class UpdateEmployeeViewModel : ViewModelBase
     [RelayCommand]
     private async Task Save()
     {
-        await _employeesRepository.RemoveAllSpouses(Employee);
-        
-        Employee.MaritalStatus = SelectedMaritalStatus;
-        await _employeesRepository.Update(Employee);
-        if (SelectedSpouse.Id is not null && Employee.Id is not null)
+        try
         {
-            await _employeesRepository.AddSpouse((int)Employee.Id, SelectedSpouse);
-        }
+            await _employeesRepository.RemoveAllSpouses(Employee);
 
-        _mainViewModel.NavigateToEmployeesCommand.Execute(null);
+            Employee.MaritalStatus = SelectedMaritalStatus;
+            await _employeesRepository.Update(Employee);
+            if (SelectedSpouse.Id is not null && Employee.Id is not null)
+            {
+                await _employeesRepository.AddSpouse((int)Employee.Id, SelectedSpouse);
+            }
+
+            _mainViewModel.NavigateToEmployeesCommand.Execute(null);
+        }
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error updating employee: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 
     [RelayCommand]

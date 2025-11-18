@@ -14,15 +14,15 @@ namespace Zoo.ViewModels;
 public partial class AddDietViewModel : ViewModelBase
 {
     private readonly ISelectService _dataService;
-    
+
     private readonly IDietsRepository _dietsRepository;
-    
+
     private readonly MainViewModel _mainViewModel;
 
     [ObservableProperty] private string _title = "Добавить рацион питания";
 
     [ObservableProperty] private Diet _diet = new(1, "Новый рацион", 1, null);
-    
+
     [ObservableProperty] private int _selectedDietType = -1;
 
     [ObservableProperty] private ObservableCollection<DietType> _dietTypes = [];
@@ -46,9 +46,9 @@ public partial class AddDietViewModel : ViewModelBase
         {
             Console.WriteLine(e);
         }
-        
+
         if (items is null) return;
-        
+
         foreach (var item in items.ToList())
         {
             DietTypes.Add(item);
@@ -60,11 +60,19 @@ public partial class AddDietViewModel : ViewModelBase
     [RelayCommand]
     private async Task Save()
     {
-        int selectedDietType = DietTypes.ElementAtOrDefault(SelectedDietType)!.Id;
-        Diet.TypeId = selectedDietType;
-        await _dietsRepository.Create(Diet);
-        
-        _mainViewModel.NavigateToDietsCommand.Execute(null);
+        try
+        {
+            int selectedDietType = DietTypes.ElementAtOrDefault(SelectedDietType)!.Id;
+            Diet.TypeId = selectedDietType;
+            await _dietsRepository.Create(Diet);
+            _mainViewModel.NavigateToDietsCommand.Execute(null);
+        }
+        catch (Exception e)
+        {
+            IsErrorVisible = true;
+            ErrorMessage = $"Error adding diet: {e.Message}";
+            _ = DelayVisibility();
+        }
     }
 
     [RelayCommand]
