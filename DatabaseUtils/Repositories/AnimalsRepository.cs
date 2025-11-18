@@ -122,4 +122,21 @@ public class AnimalsRepository : IAnimalsRepository
             animalId
         });
     }
+
+    public async Task<IEnumerable<Animal>> Search(string name, int? typeId)
+    {
+        var sql = @"
+        SELECT * 
+        FROM ANIMALS 
+        WHERE (@name IS NULL OR Name LIKE '%' || @name || '%')
+          AND (@typeId IS NULL OR TypeId = @typeId)";
+
+        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+
+        return await connection.QueryAsync<Animal>(sql, new
+        {
+            name,
+            typeId
+        });
+    }
 }

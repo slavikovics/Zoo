@@ -87,6 +87,9 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void NavigateToAnimalSearch()
     {
+        CurrentViewModel = _navigationService?.NavigateTo<PetsSearchViewModel>();
+        IsAddEnabled = false;
+        IsBackEnabled = false;
     }
 
     [RelayCommand]

@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Zoo.Views.PetsSearchView"
+             xmlns:vm="using:Zoo.ViewModels"
+             xmlns:models1="clr-namespace:DatabaseUtils.Models;assembly=DatabaseUtils"
+             x:DataType="vm:PetsSearchViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBox Margin="5" Watermark="Поиск по имени" Text="{Binding SearchName}" />
+                    <ComboBox  Width="150" Margin="5" ItemsSource="{Binding AnimalTypes}"
+                              SelectedItem="{Binding SelectedType}" />
+                    <Button Margin="5" Command="{Binding SearchCommand}">
+                        <Svg Width="16" Path="../Assets/search.svg" />
+                    </Button>
+                </StackPanel>
+                <DataGrid x:Name="Pets"
+                          ItemsSource="{Binding Animals}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          Margin="0 10 0 0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                        <DataGridTextColumn Header="Тип" Binding="{Binding TypeId}" />
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Дата рождения"
+                                            Binding="{Binding BirthDate}" />
+                        <DataGridTextColumn Header="Пол" Binding="{Binding Sex}" />
+                        <DataGridTextColumn Header="Номер рациона" Binding="{Binding DietId}" />
+                        <DataGridTextColumn Header="Место зимовки" Binding="{Binding WinterPlaceId}" />
+                        <DataGridTextColumn Header="Информация о спячке" Binding="{Binding ReptileInfoId}" />
+                        <DataGridTextColumn Header="Зона обитания" Binding="{Binding HabitatZoneId}" />
+                        <DataGridTextColumn Header="Смотритель" Binding="{Binding CaretakerId}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Svg IsVisible="{Binding IsErrorVisible}" Width="16" Path="../Assets/error.svg" />
+            <TextBlock Margin="10  0 0 0" IsVisible="{Binding IsErrorVisible}" Foreground="DarkRed"
+                       Text="{Binding ErrorMessage}" />
+        </StackPanel>
+    </Grid>
+
+</UserControl>
