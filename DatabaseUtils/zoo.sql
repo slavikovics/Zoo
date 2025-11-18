@@ -440,6 +440,21 @@ BEGIN
 END;
 $$;
 
+-- View для просмотра семейных пар
+DROP VIEW IF EXISTS FamilyPairs;
+CREATE VIEW FamilyPairs AS
+(
+SELECT Employees.Name        AS EmployeeName,
+       Employees.BirthDate   AS EmployeeBirthDate,
+       Employees.PhoneNumber AS EmployeePhoneNumber,
+       Spouses.Name          AS SpouseName,
+       Spouses.BirthDate     AS SpouseBirthDate,
+       Spouses.PhoneNumber   AS SpousePhoneNumber
+FROM Employees
+         JOIN EmployeeSpouse AS ES ON ES.EmployeeId = Employees.Id
+         JOIN Employees AS Spouses ON ES.SpouseId = Spouses.Id
+WHERE Employees.MaritalStatus = 'Married'
+    );
 
 -- 1. Типы животных
 INSERT INTO AnimalTypes (Name)

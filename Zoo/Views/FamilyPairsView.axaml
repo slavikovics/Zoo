@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Zoo.Views.FamilyPairsView"
+             xmlns:vm="using:Zoo.ViewModels"
+             xmlns:models1="clr-namespace:DatabaseUtils.Models;assembly=DatabaseUtils"
+             x:DataType="vm:FamilyPairsViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <DataGrid AutoGenerateColumns="False" CanUserResizeColumns="True"
+                      ItemsSource="{Binding FamilyPairs}" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Имя" Binding="{Binding EmployeeName}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Дата рождения" Binding="{Binding EmployeeBirthDate}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding EmployeePhoneNumber}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Имя супруга(и)" Binding="{Binding SpouseName}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Дата рождения супруга(и)" Binding="{Binding SpouseBirthDate}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Номер телефона супруга(и)" Binding="{Binding SpousePhoneNumber}" IsReadOnly="True" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Svg IsVisible="{Binding IsErrorVisible}" Width="16" Path="../Assets/error.svg" />
+            <TextBlock Margin="10  0 0 0" IsVisible="{Binding IsErrorVisible}" Foreground="DarkRed"
+                       Text="{Binding ErrorMessage}" />
+        </StackPanel>
+    </Grid>
+
+</UserControl>

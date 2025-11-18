@@ -92,6 +92,9 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void NavigateToFamilyPairs()
     {
+        CurrentViewModel = _navigationService?.NavigateTo<FamilyPairsViewModel>();
+        IsAddEnabled = false;
+        IsBackEnabled = false;
     }
 
     public async Task UpdateDietType(int id)

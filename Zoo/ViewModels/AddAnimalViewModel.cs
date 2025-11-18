@@ -133,30 +133,30 @@ public partial class AddAnimalViewModel : ViewModelBase
     [RelayCommand]
     private async Task Save()
     {
-        int? reptileInfoId = ReptileInfos.ElementAtOrDefault(AnimalReptileInfoId)!.Id;
-        int? winterPlaceId = WinterPlaces.ElementAtOrDefault(AnimalWinterPlaceId)!.Id;
-
-        Animal animal = new(
-            1,
-            AnimalName,
-            AnimalTypes.ElementAtOrDefault(AnimalTypeId)!.Id,
-            AnimalBirthDate.DateTime,
-            AnimalSex,
-            winterPlaceId,
-            reptileInfoId,
-            Diets.ElementAtOrDefault(AnimalDietId)!.Id,
-            HabitatZones.ElementAtOrDefault(AnimalHabitatZoneId)!.Id,
-            (int)Caretakers.ElementAtOrDefault(AnimalCaretakerId)!.Id!
-        );
-
         try
         {
+            int? reptileInfoId = ReptileInfos.ElementAtOrDefault(AnimalReptileInfoId)!.Id;
+            int? winterPlaceId = WinterPlaces.ElementAtOrDefault(AnimalWinterPlaceId)!.Id;
+
+            Animal animal = new(
+                1,
+                AnimalName,
+                AnimalTypes.ElementAtOrDefault(AnimalTypeId)!.Id,
+                AnimalBirthDate.DateTime,
+                AnimalSex,
+                winterPlaceId,
+                reptileInfoId,
+                Diets.ElementAtOrDefault(AnimalDietId)!.Id,
+                HabitatZones.ElementAtOrDefault(AnimalHabitatZoneId)!.Id,
+                (int)Caretakers.ElementAtOrDefault(AnimalCaretakerId)!.Id!
+            );
+
             var newAnimal = await _animalsRepository.Create(animal);
             if (newAnimal is not null)
             {
                 await _animalsRepository.AddVets((int)newAnimal, SelectedVets.ToList());
             }
-            
+
             _mainViewModel.NavigateToPetsCommand.Execute(null);
         }
         catch (Exception e)

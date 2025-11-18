@@ -84,5 +84,9 @@
         <DependentUpon>UpdateAnimalView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Views\FamilyPairsView.axaml.cs">
+        <DependentUpon>FamilyPairsView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>
