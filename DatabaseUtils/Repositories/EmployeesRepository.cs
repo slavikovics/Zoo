@@ -7,9 +7,7 @@ namespace DatabaseUtils.Repositories;
 public class EmployeesRepository : IEmployeesRepository
 {
     private readonly ISelectService _selectService;
-
     private readonly IDeleteService _deleteService;
-
     private readonly IDatabaseConnectionFactory _databaseConnectionFactory;
 
     public EmployeesRepository(ISelectService selectService, IDeleteService deleteService,
@@ -88,7 +86,7 @@ public class EmployeesRepository : IEmployeesRepository
             employeeId = employee.Id
         });
     }
-    
+
     public async Task<int?> GetSpouseId(int employeeId)
     {
         var sql = "SELECT GetEmployeeSpouseId(@employeeId)";

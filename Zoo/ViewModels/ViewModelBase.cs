@@ -7,7 +7,6 @@ namespace Zoo.ViewModels;
 public partial class ViewModelBase : ObservableObject
 {
     [ObservableProperty] private string _errorMessage = "";
-
     [ObservableProperty] private bool _isErrorVisible;
 
     private CancellationTokenSource? _errorTimerCts;

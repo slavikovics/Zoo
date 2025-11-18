@@ -11,7 +11,6 @@ using DatabaseUtils.Queries;
 using DatabaseUtils.Repositories;
 using DatabaseUtils.TableNameResolver;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Zoo.ViewModels;
 using Zoo.Views;
 
@@ -68,9 +67,9 @@ public partial class App : Application
         serviceCollection.AddTransient<DietTypesViewModel>();
         serviceCollection.AddTransient<EmployeesViewModel>();
         serviceCollection.AddTransient<FamilyPairsViewModel>();
-        serviceCollection.AddTransient<PetsSearchViewModel>(); 
+        serviceCollection.AddTransient<PetsSearchViewModel>();
         serviceCollection.AddTransient<AnimalDetailsViewModel>();
-        
+
         serviceCollection.AddTransient<AddAnimalViewModel>();
         serviceCollection.AddTransient<AddDietViewModel>();
         serviceCollection.AddTransient<AddEmployeeViewModel>();

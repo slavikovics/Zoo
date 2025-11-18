@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
-using DatabaseUtils.Queries;
 using DatabaseUtils.Repositories;
 
 namespace Zoo.ViewModels;
@@ -11,11 +10,9 @@ namespace Zoo.ViewModels;
 public partial class AddDietTypeViewModel : ViewModelBase
 {
     private readonly IDietTypesRepository _dietTypesRepository;
-
     private readonly INavigationService _navigationService;
 
     [ObservableProperty] private string _title = "Добавить тип рациона питания";
-
     [ObservableProperty] private DietType _dietType = new(1, "Новый тип рациона");
 
     public AddDietTypeViewModel(IDietTypesRepository dietTypesRepository, INavigationService navigationService)

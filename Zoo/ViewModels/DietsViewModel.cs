@@ -1,9 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
@@ -13,9 +11,7 @@ namespace Zoo.ViewModels;
 public partial class DietsViewModel : ViewModelBase
 {
     private readonly ISelectService _selectService;
-
     private readonly IDeleteService _deleteService;
-
     private readonly INavigationService _navigationService;
 
     public ObservableCollection<Diet> Diets { get; set; }

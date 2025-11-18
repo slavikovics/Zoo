@@ -7,9 +7,7 @@ namespace DatabaseUtils.Repositories;
 public class DietTypesRepository : IDietTypesRepository
 {
     private readonly ISelectService _selectService;
-
     private readonly IDeleteService _deleteService;
-
     private readonly IDatabaseConnectionFactory _databaseConnectionFactory;
 
     public DietTypesRepository(ISelectService selectService, IDeleteService deleteService,

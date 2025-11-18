@@ -7,9 +7,7 @@ namespace DatabaseUtils.Repositories;
 public class AnimalsRepository : IAnimalsRepository
 {
     private readonly ISelectService _selectService;
-
     private readonly IDeleteService _deleteService;
-
     private readonly IDatabaseConnectionFactory _databaseConnectionFactory;
 
     public AnimalsRepository(ISelectService selectService, IDeleteService deleteService,

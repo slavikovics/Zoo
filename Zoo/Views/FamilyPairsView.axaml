@@ -18,10 +18,13 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Имя" Binding="{Binding EmployeeName}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Дата рождения" Binding="{Binding EmployeeBirthDate}" IsReadOnly="True" />
-                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding EmployeePhoneNumber}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Номер телефона" Binding="{Binding EmployeePhoneNumber}"
+                                        IsReadOnly="True" />
                     <DataGridTextColumn Header="Имя супруга(и)" Binding="{Binding SpouseName}" IsReadOnly="True" />
-                    <DataGridTextColumn Header="Дата рождения супруга(и)" Binding="{Binding SpouseBirthDate}" IsReadOnly="True" />
-                    <DataGridTextColumn Header="Номер телефона супруга(и)" Binding="{Binding SpousePhoneNumber}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Дата рождения супруга(и)" Binding="{Binding SpouseBirthDate}"
+                                        IsReadOnly="True" />
+                    <DataGridTextColumn Header="Номер телефона супруга(и)" Binding="{Binding SpousePhoneNumber}"
+                                        IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

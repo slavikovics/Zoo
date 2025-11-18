@@ -14,17 +14,12 @@ namespace Zoo.ViewModels;
 public partial class AddEmployeeViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
-
     private readonly ISelectService _dataService;
-
     private readonly IEmployeesRepository _employeesRepository;
 
     [ObservableProperty] private string _title = "Добавить сотрудника";
-
     [ObservableProperty] private Employee _employee = new(1, "Новый сотрудник", DateTime.Now, "232", "Single");
-
     [ObservableProperty] private ObservableCollection<Employee> _availableSpouses = [Employee.Empty()];
-
     [ObservableProperty] private Employee _selectedSpouse;
 
     public ObservableCollection<string> MaritalStatusOptions { get; } = ["Single", "Married", "Divorced", "Widowed"];

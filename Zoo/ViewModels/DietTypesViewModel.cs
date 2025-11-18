@@ -11,9 +11,7 @@ namespace Zoo.ViewModels;
 public partial class DietTypesViewModel : ViewModelBase
 {
     private readonly ISelectService _selectService;
-
     private readonly IDeleteService _deleteService;
-
     private readonly INavigationService _navigationService;
 
     public ObservableCollection<DietType> DietTypes { get; set; }

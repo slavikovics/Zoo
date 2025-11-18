@@ -13,49 +13,28 @@ namespace Zoo.ViewModels;
 public partial class AddAnimalViewModel : ViewModelBase
 {
     private readonly ISelectService _dataService;
-
     private readonly IAnimalsRepository _animalsRepository;
-
     private readonly INavigationService _navigationService;
 
     [ObservableProperty] private string _title = "Добавить питомца";
-
     [ObservableProperty] private string _animalName = "Новый питомец";
-
     [ObservableProperty] private int _animalTypeId = -1;
-
     [ObservableProperty] private DateTimeOffset _animalBirthDate = DateTimeOffset.Now;
-
     [ObservableProperty] private string _animalSex = "Unknown";
-
     [ObservableProperty] private int _animalHabitatZoneId = -1;
-
     [ObservableProperty] private int _animalDietId = -1;
-
     [ObservableProperty] private int _animalCaretakerId = -1;
-
     [ObservableProperty] private int _animalWinterPlaceId = -1;
-
     [ObservableProperty] private int _animalReptileInfoId = -1;
-
     [ObservableProperty] private ObservableCollection<AnimalType> _animalTypes = [];
-
     [ObservableProperty] private ObservableCollection<BirdsWinterPlace> _winterPlaces = [BirdsWinterPlace.Empty()];
-
     [ObservableProperty] private ObservableCollection<ReptileInfo> _reptileInfos = [ReptileInfo.Empty()];
-
     [ObservableProperty] private ObservableCollection<Diet> _diets = [];
-
     [ObservableProperty] private ObservableCollection<HabitatZone> _habitatZones = [];
-
     [ObservableProperty] private ObservableCollection<Employee> _caretakers = [];
-
     [ObservableProperty] private ObservableCollection<Employee> _availableVets = [];
-
     [ObservableProperty] private ObservableCollection<Employee> _selectedVets = [];
-
     [ObservableProperty] private ObservableCollection<Employee> _vetsToRemove = [];
-
     [ObservableProperty] private Employee? _selectedVetToAdd;
 
     public ObservableCollection<string> SexOptions { get; } = ["Male", "Female", "Unknown"];

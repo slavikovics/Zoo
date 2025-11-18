@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.Input;
 using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
 using DatabaseUtils.Repositories;
-using Npgsql;
 
 namespace Zoo.ViewModels;
 

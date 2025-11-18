@@ -16,7 +16,7 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBox Margin="5" Watermark="Поиск по имени" Text="{Binding SearchName}" />
-                    <ComboBox  Width="150" Margin="5" ItemsSource="{Binding AnimalTypes}"
+                    <ComboBox Width="150" Margin="5" ItemsSource="{Binding AnimalTypes}"
                               SelectedItem="{Binding SelectedType}" />
                     <Button Margin="5" Command="{Binding SearchCommand}">
                         <Svg Width="16" Path="../Assets/search.svg" />
@@ -39,12 +39,13 @@
                         <DataGridTextColumn Header="Информация о спячке" Binding="{Binding ReptileInfoId}" />
                         <DataGridTextColumn Header="Зона обитания" Binding="{Binding HabitatZoneId}" />
                         <DataGridTextColumn Header="Смотритель" Binding="{Binding CaretakerId}" />
-                        
-                        <DataGridTemplateColumn CanUserResize="False" Header="Редактировать" IsReadOnly="True">
+
+                        <DataGridTemplateColumn CanUserResize="False" Header="Информация" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="models1:Animal">
-                                    <Button Command="{Binding #Pets.((vm:PetsSearchViewModel)DataContext).DetailedInfoCommand}"
-                                            CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
+                                    <Button
+                                        Command="{Binding #Pets.((vm:PetsSearchViewModel)DataContext).DetailedInfoCommand}"
+                                        CommandParameter="{Binding Id}" HorizontalAlignment="Center" Margin="8 4 8 4">
                                         <Svg Width="16" Path="../Assets/info.svg" />
                                     </Button>
                                 </DataTemplate>

@@ -14,20 +14,16 @@ namespace Zoo.ViewModels;
 public partial class AddDietViewModel : ViewModelBase
 {
     private readonly ISelectService _dataService;
-
     private readonly IDietsRepository _dietsRepository;
-    
     private readonly INavigationService _navigationService;
-    
+
     [ObservableProperty] private string _title = "Добавить рацион питания";
-
     [ObservableProperty] private Diet _diet = new(1, "Новый рацион", 1, null);
-
     [ObservableProperty] private int _selectedDietType = -1;
-
     [ObservableProperty] private ObservableCollection<DietType> _dietTypes = [];
 
-    public AddDietViewModel(ISelectService dataService, IDietsRepository dietsRepository, INavigationService navigationService)
+    public AddDietViewModel(ISelectService dataService, IDietsRepository dietsRepository,
+        INavigationService navigationService)
     {
         _dataService = dataService;
         _dietsRepository = dietsRepository;

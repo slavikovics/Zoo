@@ -6,7 +6,6 @@ namespace DatabaseUtils.Queries;
 public class DeleteService : IDeleteService
 {
     private readonly IDatabaseConnectionFactory _connectionFactory;
-    
     private readonly ITableNameResolver _tableNameResolver;
 
     public DeleteService(IDatabaseConnectionFactory databaseConnectionFactory, ITableNameResolver tableNameResolver)
@@ -19,6 +18,6 @@ public class DeleteService : IDeleteService
     {
         var deleteQuery = $@"DELETE FROM {_tableNameResolver.ResolveTableName<T>()} WHERE {idColumnName} = @id";
         using var connection = await _connectionFactory.CreateConnectionAsync();
-        await connection.ExecuteAsync(deleteQuery, new {id});
+        await connection.ExecuteAsync(deleteQuery, new { id });
     }
 }

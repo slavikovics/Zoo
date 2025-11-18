@@ -60,7 +60,8 @@
         </ScrollViewer>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <Svg IsVisible="{Binding IsErrorVisible}" Width="16" Path="../Assets/error.svg" />
-            <TextBlock Margin="10  0 0 0" IsVisible="{Binding IsErrorVisible}" Foreground="DarkRed" Text="{Binding ErrorMessage}"/>
+            <TextBlock Margin="10  0 0 0" IsVisible="{Binding IsErrorVisible}" Foreground="DarkRed"
+                       Text="{Binding ErrorMessage}" />
         </StackPanel>
     </Grid>
 </UserControl>
