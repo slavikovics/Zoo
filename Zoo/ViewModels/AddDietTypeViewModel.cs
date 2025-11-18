@@ -10,21 +10,18 @@ namespace Zoo.ViewModels;
 
 public partial class AddDietTypeViewModel : ViewModelBase
 {
-    private readonly ISelectService _dataService;
-    
     private readonly IDietTypesRepository _dietTypesRepository;
-    
-    private readonly MainViewModel _mainViewModel;
+
+    private readonly INavigationService _navigationService;
 
     [ObservableProperty] private string _title = "Добавить тип рациона питания";
 
     [ObservableProperty] private DietType _dietType = new(1, "Новый тип рациона");
-    
-    public AddDietTypeViewModel(ISelectService dataService, IDietTypesRepository dietTypesRepository, MainViewModel mainViewModel)
+
+    public AddDietTypeViewModel(IDietTypesRepository dietTypesRepository, INavigationService navigationService)
     {
-        _dataService = dataService;
-        _mainViewModel = mainViewModel;
         _dietTypesRepository = dietTypesRepository;
+        _navigationService = navigationService;
     }
 
     [RelayCommand]
@@ -33,7 +30,7 @@ public partial class AddDietTypeViewModel : ViewModelBase
         try
         {
             await _dietTypesRepository.Create(DietType);
-            _mainViewModel.NavigateToDietTypesCommand.Execute(null);
+            _navigationService.NavigateToDietTypes();
         }
         catch (Exception e)
         {
@@ -46,6 +43,6 @@ public partial class AddDietTypeViewModel : ViewModelBase
     [RelayCommand]
     private void Cancel()
     {
-        _mainViewModel.NavigateToDietTypesCommand.Execute(null);
+        _navigationService.NavigateToDietTypes();
     }
 }

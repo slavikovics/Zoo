@@ -10,126 +10,101 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty] private ViewModelBase? _currentViewModel;
 
     [ObservableProperty] private bool _isBackEnabled;
-
     [ObservableProperty] private bool _isAddEnabled;
-
+    [ObservableProperty] private bool _areAnimalsEnabled;
+    [ObservableProperty] private bool _areDietTypesEnabled;
+    [ObservableProperty] private bool _areDietsEnabled;
+    [ObservableProperty] private bool _areEmployeesEnabled;
+    [ObservableProperty] private bool _isSearchEnabled;
+    [ObservableProperty] private bool _areFamilyPairsEnabled;
+    
     private readonly INavigationService? _navigationService;
 
     public MainViewModel()
     {
         _navigationService = App.ServiceProvider?.GetService<INavigationService>();
+        _navigationService?.SetMainViewModel(this);
     }
 
     [RelayCommand]
     private void NavigateToPets()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<PetsViewModel>();
-        IsAddEnabled = true;
-        IsBackEnabled = false;
+        _navigationService?.NavigateToPets();
     }
 
     [RelayCommand]
     private void NavigateToAddPet()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<AddAnimalViewModel>();
-        IsAddEnabled = false;
-        IsBackEnabled = true;
+        _navigationService?.NavigateToAddPet();
     }
 
     [RelayCommand]
     private void NavigateToDiets()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<DietsViewModel>();
-        IsAddEnabled = true;
-        IsBackEnabled = false;
+        _navigationService?.NavigateToDiets();
     }
 
     [RelayCommand]
     private void NavigateToAddDiet()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<AddDietViewModel>();
-        IsAddEnabled = false;
-        IsBackEnabled = true;
+        _navigationService?.NavigateToAddDiet();
     }
 
     [RelayCommand]
     private void NavigateToDietTypes()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<DietTypesViewModel>();
-        IsAddEnabled = true;
-        IsBackEnabled = false;
+        _navigationService?.NavigateToDietTypes();
     }
 
     [RelayCommand]
     private void NavigateToAddDietType()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<AddDietTypeViewModel>();
-        IsAddEnabled = false;
-        IsBackEnabled = true;
+        _navigationService?.NavigateToAddDietType();
     }
 
     [RelayCommand]
     private void NavigateToEmployees()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<EmployeesViewModel>();
-        IsAddEnabled = true;
-        IsBackEnabled = false;
+        _navigationService?.NavigateToEmployees();
     }
 
     [RelayCommand]
     private void NavigateToAddEmployee()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<AddEmployeeViewModel>();
-        IsAddEnabled = false;
-        IsBackEnabled = true;
+        _navigationService?.NavigateToAddEmployee();
     }
 
     [RelayCommand]
     private void NavigateToAnimalSearch()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<PetsSearchViewModel>();
-        IsAddEnabled = false;
-        IsBackEnabled = false;
+        _navigationService?.NavigateToAnimalSearch();
     }
 
     [RelayCommand]
     private void NavigateToFamilyPairs()
     {
-        CurrentViewModel = _navigationService?.NavigateTo<FamilyPairsViewModel>();
-        IsAddEnabled = false;
-        IsBackEnabled = false;
+        _navigationService?.NavigateToFamilyPairs();
     }
 
     public async Task UpdateDietType(int id)
     {
-        CurrentViewModel = _navigationService?.NavigateTo<UpdateDietTypeViewModel>();
-        await (CurrentViewModel as UpdateDietTypeViewModel)!.InitializeAsync(id);
-        IsAddEnabled = false;
-        IsBackEnabled = true;
+        await _navigationService?.UpdateDietType(id)!;
     }
 
     public async Task UpdateDiet(int id)
     {
-        CurrentViewModel = _navigationService?.NavigateTo<UpdateDietViewModel>();
-        await (CurrentViewModel as UpdateDietViewModel)!.InitializeAsync(id);
-        IsAddEnabled = false;
-        IsBackEnabled = true;
+        await _navigationService?.UpdateDiet(id)!;
+
     }
 
     public async Task UpdateEmployee(int id)
     {
-        CurrentViewModel = _navigationService?.NavigateTo<UpdateEmployeeViewModel>();
-        await (CurrentViewModel as UpdateEmployeeViewModel)!.InitializeAsync(id);
-        IsAddEnabled = false;
-        IsBackEnabled = true;
+        await _navigationService?.UpdateEmployee(id)!;
     }
 
     public async Task UpdateAnimal(int id)
     {
-        CurrentViewModel = _navigationService?.NavigateTo<UpdateAnimalViewModel>();
-        await (CurrentViewModel as UpdateAnimalViewModel)!.InitializeAsync(id);
-        IsAddEnabled = false;
-        IsBackEnabled = true;
+        await _navigationService?.UpdateAnimal(id)!;
     }
 
     [RelayCommand]

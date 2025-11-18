@@ -13,62 +13,68 @@
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainViewModel/>
+        <vm:MainViewModel />
     </Design.DataContext>
-    
+
     <DockPanel>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto"  DockPanel.Dock="Top">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top">
             <StackPanel Margin="5 5 5 20" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
                 <Button CornerRadius="15" IsEnabled="{Binding IsBackEnabled}" Command="{Binding BackCommand}">
                     <StackPanel>
-                        <Svg Width="20" Path="../Assets/back.svg"/>
+                        <Svg Width="20" Path="../Assets/back.svg" />
                         <TextBlock>Назад</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button CornerRadius="15" IsEnabled="{Binding IsAddEnabled}" Command="{Binding AddCommand}">
                     <StackPanel>
-                        <Svg Width="20" Path="../Assets/add.svg"/>
+                        <Svg Width="20" Path="../Assets/add.svg" />
                         <TextBlock>Добавить</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button CornerRadius="15" Command="{Binding NavigateToPetsCommand}">
+                <Button CornerRadius="15" IsEnabled="{Binding AreAnimalsEnabled}"
+                        Command="{Binding NavigateToPetsCommand}">
                     <StackPanel>
-                        <Svg Width="20" Path="../Assets/animal.svg"/>
+                        <Svg Width="20" Path="../Assets/animal.svg" />
                         <TextBlock>Питомцы</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button CornerRadius="15" Command="{Binding NavigateToDietsCommand}">
+                <Button CornerRadius="15" IsEnabled="{Binding AreDietsEnabled}"
+                        Command="{Binding NavigateToDietsCommand}">
                     <StackPanel>
-                        <Svg Width="20" Path="../Assets/diet.svg"/>
+                        <Svg Width="20" Path="../Assets/diet.svg" />
                         <TextBlock>Рационы питания</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button CornerRadius="15" Command="{Binding NavigateToDietTypesCommand}">
+                <Button CornerRadius="15" IsEnabled="{Binding AreDietTypesEnabled}"
+                        Command="{Binding NavigateToDietTypesCommand}">
                     <StackPanel>
-                        <Svg Width="20" Path="../Assets/diet_type.svg"/>
+                        <Svg Width="20" Path="../Assets/diet_type.svg" />
                         <TextBlock>Типы рационов</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button CornerRadius="15" Command="{Binding NavigateToEmployeesCommand}">
+                <Button CornerRadius="15" IsEnabled="{Binding AreEmployeesEnabled}"
+                        Command="{Binding NavigateToEmployeesCommand}">
                     <StackPanel>
-                        <Svg Width="20" Path="../Assets/employee.svg"/>
+                        <Svg Width="20" Path="../Assets/employee.svg" />
                         <TextBlock>Сотрудники</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button CornerRadius="15" Command="{Binding NavigateToAnimalSearchCommand}">
+                <Button CornerRadius="15" IsEnabled="{Binding IsSearchEnabled}"
+                        Command="{Binding NavigateToAnimalSearchCommand}">
                     <StackPanel>
-                        <Svg Width="20" Path="../Assets/search.svg"/>
+                        <Svg Width="20" Path="../Assets/search.svg" />
                         <TextBlock>Поиск</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button CornerRadius="15" Command="{Binding NavigateToFamilyPairsCommand}">
+                <Button CornerRadius="15" IsEnabled="{Binding AreFamilyPairsEnabled}"
+                        Command="{Binding NavigateToFamilyPairsCommand}">
                     <StackPanel>
-                        <Svg Width="20" Path="../Assets/family.svg"/>
+                        <Svg Width="20" Path="../Assets/family.svg" />
                         <TextBlock>Семейные пары</TextBlock>
                     </StackPanel>
                 </Button>
             </StackPanel>
         </ScrollViewer>
-        <ContentControl Name="MainContent" DockPanel.Dock="Bottom" Content="{Binding CurrentViewModel}"/>
+        <ContentControl Name="MainContent" DockPanel.Dock="Bottom" Content="{Binding CurrentViewModel}" />
     </DockPanel>
 </Window>

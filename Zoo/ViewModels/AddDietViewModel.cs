@@ -16,9 +16,9 @@ public partial class AddDietViewModel : ViewModelBase
     private readonly ISelectService _dataService;
 
     private readonly IDietsRepository _dietsRepository;
-
-    private readonly MainViewModel _mainViewModel;
-
+    
+    private readonly INavigationService _navigationService;
+    
     [ObservableProperty] private string _title = "Добавить рацион питания";
 
     [ObservableProperty] private Diet _diet = new(1, "Новый рацион", 1, null);
@@ -27,11 +27,11 @@ public partial class AddDietViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<DietType> _dietTypes = [];
 
-    public AddDietViewModel(ISelectService dataService, IDietsRepository dietsRepository, MainViewModel mainViewModel)
+    public AddDietViewModel(ISelectService dataService, IDietsRepository dietsRepository, INavigationService navigationService)
     {
         _dataService = dataService;
-        _mainViewModel = mainViewModel;
         _dietsRepository = dietsRepository;
+        _navigationService = navigationService;
         _ = InitializeAsync();
     }
 
@@ -65,7 +65,7 @@ public partial class AddDietViewModel : ViewModelBase
             int selectedDietType = DietTypes.ElementAtOrDefault(SelectedDietType)!.Id;
             Diet.TypeId = selectedDietType;
             await _dietsRepository.Create(Diet);
-            _mainViewModel.NavigateToDietsCommand.Execute(null);
+            _navigationService.NavigateToDiets();
         }
         catch (Exception e)
         {
@@ -78,6 +78,6 @@ public partial class AddDietViewModel : ViewModelBase
     [RelayCommand]
     private void Cancel()
     {
-        _mainViewModel.NavigateToDietsCommand.Execute(null);
+        _navigationService.NavigateToDiets();
     }
 }

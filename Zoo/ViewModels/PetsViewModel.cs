@@ -11,18 +11,17 @@ namespace Zoo.ViewModels;
 public partial class PetsViewModel : ViewModelBase
 {
     private readonly ISelectService _selectService;
-
     private readonly IDeleteService _deleteService;
-
-    private readonly MainViewModel _mainViewModel;
+    private readonly INavigationService _navigationService;
 
     public ObservableCollection<Animal> Animals { get; set; }
 
-    public PetsViewModel(ISelectService selectService, IDeleteService deleteService, MainViewModel mainViewModel)
+    public PetsViewModel(ISelectService selectService, IDeleteService deleteService,
+        INavigationService navigationService)
     {
         _selectService = selectService;
         _deleteService = deleteService;
-        _mainViewModel = mainViewModel;
+        _navigationService = navigationService;
         Animals = new ObservableCollection<Animal>();
         Task.Run(LoadAnimals);
     }
@@ -80,7 +79,7 @@ public partial class PetsViewModel : ViewModelBase
     {
         try
         {
-            await _mainViewModel.UpdateAnimal(id);
+            await _navigationService.UpdateAnimal(id);
         }
         catch (Exception e)
         {

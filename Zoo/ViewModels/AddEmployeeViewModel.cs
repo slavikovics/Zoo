@@ -17,8 +17,6 @@ public partial class AddEmployeeViewModel : ViewModelBase
 
     private readonly ISelectService _dataService;
 
-    private readonly MainViewModel _mainViewModel;
-
     private readonly IEmployeesRepository _employeesRepository;
 
     [ObservableProperty] private string _title = "Добавить сотрудника";
@@ -37,11 +35,10 @@ public partial class AddEmployeeViewModel : ViewModelBase
     public bool IsMarried => SelectedMaritalStatus == "Married";
 
     public AddEmployeeViewModel(INavigationService navigationService, ISelectService dataService,
-        IEmployeesRepository employeesRepository, MainViewModel mainViewModel)
+        IEmployeesRepository employeesRepository)
     {
         _navigationService = navigationService;
         _dataService = dataService;
-        _mainViewModel = mainViewModel;
         _employeesRepository = employeesRepository;
         _ = InitializeAsync();
     }
@@ -80,7 +77,7 @@ public partial class AddEmployeeViewModel : ViewModelBase
                 await _employeesRepository.AddSpouse((int)newEmployee, SelectedSpouse);
             }
 
-            _mainViewModel.NavigateToEmployeesCommand.Execute(null);
+            _navigationService.NavigateToEmployees();
         }
         catch (Exception e)
         {
@@ -93,6 +90,6 @@ public partial class AddEmployeeViewModel : ViewModelBase
     [RelayCommand]
     private void Cancel()
     {
-        _mainViewModel.NavigateToEmployeesCommand.Execute(null);
+        _navigationService.NavigateToEmployees();
     }
 }

@@ -6,13 +6,13 @@ namespace Zoo.ViewModels;
 
 public partial class ViewModelBase : ObservableObject
 {
-    [ObservableProperty] private string _errorMessage;
+    [ObservableProperty] private string _errorMessage = "";
 
     [ObservableProperty] private bool _isErrorVisible;
 
     private CancellationTokenSource? _errorTimerCts;
 
-    public async Task DelayVisibility()
+    protected async Task DelayVisibility()
     {
         _errorTimerCts?.Cancel();
         _errorTimerCts = new CancellationTokenSource();

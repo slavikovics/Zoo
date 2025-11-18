@@ -14,21 +14,13 @@ namespace Zoo.ViewModels;
 public partial class UpdateEmployeeViewModel : ViewModelBase
 {
     private readonly INavigationService _navigationService;
-
     private readonly ISelectService _dataService;
-
-    private readonly MainViewModel _mainViewModel;
-
     private readonly IEmployeesRepository _employeesRepository;
 
     [ObservableProperty] private string _title = "Редактировать сотрудника";
-
     [ObservableProperty] private Employee _employee;
-
     [ObservableProperty] private ObservableCollection<Employee> _availableSpouses = [Employee.Empty()];
-
     [ObservableProperty] private Employee _selectedSpouse;
-
     public ObservableCollection<string> MaritalStatusOptions { get; } = ["Single", "Married", "Divorced", "Widowed"];
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsMarried))]
@@ -37,11 +29,10 @@ public partial class UpdateEmployeeViewModel : ViewModelBase
     public bool IsMarried => SelectedMaritalStatus == "Married";
 
     public UpdateEmployeeViewModel(INavigationService navigationService, ISelectService dataService,
-        IEmployeesRepository employeesRepository, MainViewModel mainViewModel)
+        IEmployeesRepository employeesRepository)
     {
         _navigationService = navigationService;
         _dataService = dataService;
-        _mainViewModel = mainViewModel;
         _employeesRepository = employeesRepository;
     }
 
@@ -104,7 +95,7 @@ public partial class UpdateEmployeeViewModel : ViewModelBase
                 await _employeesRepository.AddSpouse((int)Employee.Id, SelectedSpouse);
             }
 
-            _mainViewModel.NavigateToEmployeesCommand.Execute(null);
+            _navigationService.NavigateToEmployees();
         }
         catch (Exception e)
         {
@@ -117,6 +108,6 @@ public partial class UpdateEmployeeViewModel : ViewModelBase
     [RelayCommand]
     private void Cancel()
     {
-        _mainViewModel.NavigateToEmployeesCommand.Execute(null);
+        _navigationService.NavigateToEmployees();
     }
 }

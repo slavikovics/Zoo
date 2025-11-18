@@ -12,21 +12,18 @@ namespace Zoo.ViewModels;
 public partial class UpdateDietTypeViewModel : ViewModelBase
 {
     private readonly ISelectService _dataService;
-
     private readonly IDietTypesRepository _dietTypesRepository;
-
-    private readonly MainViewModel _mainViewModel;
+    private readonly INavigationService _navigationService;
 
     [ObservableProperty] private string _title = "Редактировать тип рациона питания";
-
     [ObservableProperty] private DietType _dietType;
 
     public UpdateDietTypeViewModel(ISelectService dataService, IDietTypesRepository dietTypesRepository,
-        MainViewModel mainViewModel)
+        INavigationService navigationService)
     {
         _dataService = dataService;
-        _mainViewModel = mainViewModel;
         _dietTypesRepository = dietTypesRepository;
+        _navigationService = navigationService;
     }
 
     public async Task InitializeAsync(int id)
@@ -44,7 +41,7 @@ public partial class UpdateDietTypeViewModel : ViewModelBase
         try
         {
             await _dietTypesRepository.Update(DietType);
-            _mainViewModel.NavigateToDietTypesCommand.Execute(null);
+            _navigationService.NavigateToDietTypes();
         }
         catch (Exception e)
         {
@@ -57,6 +54,6 @@ public partial class UpdateDietTypeViewModel : ViewModelBase
     [RelayCommand]
     private void Cancel()
     {
-        _mainViewModel.NavigateToDietTypesCommand.Execute(null);
+        _navigationService.NavigateToDietTypes();
     }
 }
