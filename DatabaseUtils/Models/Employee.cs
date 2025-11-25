@@ -13,6 +13,8 @@ public class Employee(int? id, string name, DateTime birthDate, string phoneNumb
 
     public string MaritalStatus { get; set; } = maritalStatus;
     
+    public Employee? Spouse { get; set; }
+    
     public override string ToString()
     {
         if (Id is null) return "Нет сотрудника";

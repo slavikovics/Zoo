@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using System.Data;
+using Dapper;
 using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
 
@@ -30,17 +31,53 @@ public class EmployeesRepository : IEmployeesRepository
 
     public async Task Update(Employee model)
     {
-        var sql = "CALL UpdateEmployee(@id, @name, @birthdate::date, @phoneNumber, @maritalStatus)";
-        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
-
-        await connection.ExecuteAsync(sql, new
+        int? spouseId = null;
+        if (model.Spouse is not null)
         {
-            id = model.Id,
-            name = model.Name,
-            birthdate = model.BirthDate,
-            phoneNumber = model.PhoneNumber,
-            maritalStatus = model.MaritalStatus
-        });
+            spouseId = model.Spouse.Id;
+        }
+
+        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+        using var transaction = connection.BeginTransaction();
+
+        try
+        {
+            var getSpouseSql = "SELECT GetEmployeeSpouseId(@id)";
+            var currentSpouseId =
+                await connection.ExecuteScalarAsync<int?>(getSpouseSql, new { id = model.Id }, transaction);
+
+            if (spouseId != currentSpouseId)
+            {
+                await connection.ExecuteAsync(
+                    "CALL RemoveEmployeeSpouse(@employeeId)",
+                    new { employeeId = model.Id }, transaction);
+            }
+
+            await connection.ExecuteAsync(
+                "CALL UpdateEmployee(@id, @name, @birthdate::date, @phoneNumber, @maritalStatus)",
+                new
+                {
+                    id = model.Id,
+                    name = model.Name,
+                    birthdate = model.BirthDate,
+                    phoneNumber = model.PhoneNumber,
+                    maritalStatus = model.MaritalStatus
+                }, transaction);
+
+            if (spouseId != currentSpouseId && spouseId is not null)
+            {
+                await connection.ExecuteAsync(
+                    "CALL AddEmployeeSpouse(@employeeId, @spouseId)",
+                    new { employeeId = model.Id, spouseId = spouseId.Value }, transaction);
+            }
+
+            transaction.Commit();
+        }
+        catch (Exception)
+        {
+            transaction.Rollback();
+            throw;
+        }
     }
 
     public async Task Delete(int id)
@@ -50,18 +87,41 @@ public class EmployeesRepository : IEmployeesRepository
 
     public async Task<int?> Create(Employee employee)
     {
-        var create = @"SELECT CreateEmployee(@name, @birthdate::date, @phoneNumber, @maritalStatus)";
+        int? spouseId = employee.Spouse?.Id;
+
         using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+        using var transaction = connection.BeginTransaction();
 
-        var newId = await connection.ExecuteScalarAsync<int>(create, new
+        try
         {
-            employee.Name,
-            employee.BirthDate,
-            employee.PhoneNumber,
-            employee.MaritalStatus
-        });
+            var parameters = new DynamicParameters();
+            parameters.Add("p_name", employee.Name);
+            parameters.Add("p_birthdate", employee.BirthDate.Date, DbType.Date);
+            parameters.Add("p_phone_number", employee.PhoneNumber);
+            parameters.Add("p_marital_status", employee.MaritalStatus);
+            parameters.Add("new_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-        return newId;
+            await connection.ExecuteAsync("CreateEmployee", parameters, commandType: CommandType.StoredProcedure,
+                transaction: transaction);
+
+            var newEmployeeId = parameters.Get<int?>("new_id");
+
+            if (spouseId is not null && newEmployeeId is not null)
+            {
+                await connection.ExecuteAsync(
+                    "CALL AddEmployeeSpouse(@employeeId, @spouseId)",
+                    new { employeeId = newEmployeeId.Value, spouseId = spouseId.Value },
+                    transaction: transaction);
+            }
+
+            transaction.Commit();
+            return newEmployeeId;
+        }
+        catch (Exception)
+        {
+            transaction.Rollback();
+            throw;
+        }
     }
 
     public async Task AddSpouse(int employeeId, Employee spouse)
@@ -76,9 +136,9 @@ public class EmployeesRepository : IEmployeesRepository
         });
     }
 
-    public async Task RemoveAllSpouses(Employee employee)
+    public async Task RemoveSpouse(Employee employee)
     {
-        var sql = "CALL RemoveAllEmployeeSpouses(@employeeId)";
+        var sql = "CALL RemoveEmployeeSpouse(@employeeId)";
         using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
 
         await connection.ExecuteAsync(sql, new

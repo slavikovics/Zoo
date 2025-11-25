@@ -16,17 +16,31 @@ public partial class UpdateEmployeeViewModel : ViewModelBase
     private readonly INavigationService _navigationService;
     private readonly ISelectService _dataService;
     private readonly IEmployeesRepository _employeesRepository;
+    
+    private readonly Employee _emptySpouse;
 
     [ObservableProperty] private string _title = "Редактировать сотрудника";
     [ObservableProperty] private Employee _employee;
-    [ObservableProperty] private ObservableCollection<Employee> _availableSpouses = [Employee.Empty()];
+    [ObservableProperty] private ObservableCollection<Employee> _availableSpouses;
     [ObservableProperty] private Employee _selectedSpouse;
     public ObservableCollection<string> MaritalStatusOptions { get; } = ["Single", "Married", "Divorced", "Widowed"];
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsMarried))]
     private string _selectedMaritalStatus = "Single";
 
-    public bool IsMarried => SelectedMaritalStatus == "Married";
+    public bool IsMarried => CheckMarried();
+
+    private bool CheckMarried()
+    {
+        if (SelectedMaritalStatus != "Married")
+        {
+            SelectedSpouse = _emptySpouse;
+            return false;
+        }
+
+        return true;
+    }
+    
 
     public UpdateEmployeeViewModel(INavigationService navigationService, ISelectService dataService,
         IEmployeesRepository employeesRepository)
@@ -34,6 +48,9 @@ public partial class UpdateEmployeeViewModel : ViewModelBase
         _navigationService = navigationService;
         _dataService = dataService;
         _employeesRepository = employeesRepository;
+        
+        _emptySpouse = Employee.Empty();
+        _availableSpouses = [_emptySpouse];
     }
 
     public async Task InitializeAsync(int id)
@@ -86,15 +103,9 @@ public partial class UpdateEmployeeViewModel : ViewModelBase
     {
         try
         {
-            await _employeesRepository.RemoveAllSpouses(Employee);
-
             Employee.MaritalStatus = SelectedMaritalStatus;
+            Employee.Spouse = SelectedSpouse;
             await _employeesRepository.Update(Employee);
-            if (SelectedSpouse.Id is not null && Employee.Id is not null)
-            {
-                await _employeesRepository.AddSpouse((int)Employee.Id, SelectedSpouse);
-            }
-
             _navigationService.NavigateToEmployees();
         }
         catch (Exception e)

@@ -17,9 +17,11 @@ public partial class AddEmployeeViewModel : ViewModelBase
     private readonly ISelectService _dataService;
     private readonly IEmployeesRepository _employeesRepository;
 
+    private readonly Employee _emptySpouse;
+
     [ObservableProperty] private string _title = "Добавить сотрудника";
     [ObservableProperty] private Employee _employee = new(1, "Новый сотрудник", DateTime.Now, "232", "Single");
-    [ObservableProperty] private ObservableCollection<Employee> _availableSpouses = [Employee.Empty()];
+    [ObservableProperty] private ObservableCollection<Employee> _availableSpouses;
     [ObservableProperty] private Employee _selectedSpouse;
 
     public ObservableCollection<string> MaritalStatusOptions { get; } = ["Single", "Married", "Divorced", "Widowed"];
@@ -27,7 +29,18 @@ public partial class AddEmployeeViewModel : ViewModelBase
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsMarried))]
     private string _selectedMaritalStatus = "Single";
 
-    public bool IsMarried => SelectedMaritalStatus == "Married";
+    public bool IsMarried => CheckMarried();
+
+    private bool CheckMarried()
+    {
+        if (SelectedMaritalStatus != "Married")
+        {
+            SelectedSpouse = _emptySpouse;
+            return false;
+        }
+
+        return true;
+    }
 
     public AddEmployeeViewModel(INavigationService navigationService, ISelectService dataService,
         IEmployeesRepository employeesRepository)
@@ -35,6 +48,8 @@ public partial class AddEmployeeViewModel : ViewModelBase
         _navigationService = navigationService;
         _dataService = dataService;
         _employeesRepository = employeesRepository;
+        _emptySpouse = Employee.Empty();
+        _availableSpouses = [_emptySpouse];
         _ = InitializeAsync();
     }
 
@@ -66,12 +81,8 @@ public partial class AddEmployeeViewModel : ViewModelBase
         try
         {
             Employee.MaritalStatus = SelectedMaritalStatus;
-            var newEmployee = await _employeesRepository.Create(Employee);
-            if (newEmployee is not null && SelectedSpouse.Id is not null)
-            {
-                await _employeesRepository.AddSpouse((int)newEmployee, SelectedSpouse);
-            }
-
+            Employee.Spouse = SelectedSpouse;
+            await _employeesRepository.Create(Employee);
             _navigationService.NavigateToEmployees();
         }
         catch (Exception e)

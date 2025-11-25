@@ -1,3 +1,4 @@
+using System.Data;
 using Dapper;
 using DatabaseUtils.Models;
 using DatabaseUtils.Queries;
@@ -66,24 +67,22 @@ public class AnimalsRepository : IAnimalsRepository
 
     public async Task<int?> Create(Animal animal)
     {
-        var create =
-            @"SELECT CreateAnimal(@name, @typeId, @birthdate::date, @sex, @winterPlaceId, @reptileInfoId, @dietId, @habitatZoneId, @caretakerId)";
         using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
 
-        var newId = await connection.ExecuteScalarAsync<int>(create, new
-        {
-            animal.Name,
-            animal.TypeId,
-            animal.BirthDate,
-            animal.Sex,
-            animal.WinterPlaceId,
-            animal.ReptileInfoId,
-            animal.DietId,
-            animal.HabitatZoneId,
-            animal.CaretakerId
-        });
+        var parameters = new DynamicParameters();
+        parameters.Add("p_name", animal.Name);
+        parameters.Add("p_type_id", animal.TypeId);
+        parameters.Add("p_birthdate", animal.BirthDate, DbType.Date);
+        parameters.Add("p_sex", animal.Sex);
+        parameters.Add("p_winter_place_id", animal.WinterPlaceId);
+        parameters.Add("p_reptile_info_id", animal.ReptileInfoId);
+        parameters.Add("p_diet_id", animal.DietId);
+        parameters.Add("p_habitat_zone_id", animal.HabitatZoneId);
+        parameters.Add("p_caretaker_id", animal.CaretakerId);
+        parameters.Add("p_id", dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
 
-        return newId;
+        await connection.ExecuteAsync("CreateAnimal", parameters, commandType: CommandType.StoredProcedure);
+        return parameters.Get<int?>("p_id");
     }
 
     public async Task AddVets(int animalId, List<Employee> vets)
