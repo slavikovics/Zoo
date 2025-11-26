@@ -461,7 +461,7 @@ BEGIN
 END;
 $$;
 
--- 16. Триггер на UPDATE в Employees
+-- 16. Триггер перед UPDATE в Employees
 CREATE OR REPLACE TRIGGER Trigger_CheckMaritalStatusOnUpdate
     BEFORE UPDATE OF MaritalStatus
     ON Employees
@@ -484,7 +484,7 @@ BEGIN
 END;
 $$;
 
--- 18. Триггер при вставке в EmployeeSpouse
+-- 18. Триггер после вставки в EmployeeSpouse
 CREATE OR REPLACE TRIGGER Trigger_HandleSpouseRelationInsert
     AFTER INSERT
     ON EmployeeSpouse
@@ -510,7 +510,7 @@ BEGIN
 END;
 $$;
 
--- 20. Триггер при удалении из EmployeeSpouse
+-- 20. Триггер после удаления из EmployeeSpouse
 CREATE OR REPLACE TRIGGER Trigger_HandleEmployeeSpouseDelete
     AFTER DELETE
     ON EmployeeSpouse
