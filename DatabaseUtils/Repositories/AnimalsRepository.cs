@@ -60,6 +60,63 @@ public class AnimalsRepository : IAnimalsRepository
         });
     }
 
+    public async Task UpdateWithVets(Animal model, List<Employee> vets)
+    {
+        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+        using var transaction = connection.BeginTransaction();
+
+        try
+        {
+            await connection.ExecuteAsync(
+                "CALL RemoveAllVetsFromAnimal(@animalId)",
+                new { animalId = model.Id },
+                transaction: transaction);
+
+            await connection.ExecuteAsync(
+                @"CALL UpdateAnimal(
+                @animalId,
+                @name,
+                @typeId,
+                @birthdate::date,
+                @sex,
+                @winterPlaceId,
+                @reptileInfoId,
+                @dietId,
+                @habitatZoneId,
+                @caretakerId)",
+                new
+                {
+                    animalId = model.Id,
+                    model.Name,
+                    model.TypeId,
+                    model.BirthDate,
+                    model.Sex,
+                    model.WinterPlaceId,
+                    model.ReptileInfoId,
+                    model.DietId,
+                    model.HabitatZoneId,
+                    model.CaretakerId
+                },
+                transaction: transaction);
+
+            if (vets.Any())
+            {
+                var vetIds = vets.Select(v => v.Id).ToArray();
+                await connection.ExecuteAsync(
+                    "CALL AddVetArrayToAnimal(@animalId, @vetIds)",
+                    new { animalId = model.Id, vetIds },
+                    transaction: transaction);
+            }
+
+            transaction.Commit();
+        }
+        catch (Exception)
+        {
+            transaction.Rollback();
+            throw;
+        }
+    }
+
     public async Task Delete(int id)
     {
         await _deleteService.Delete<Animal>(id);
@@ -83,6 +140,48 @@ public class AnimalsRepository : IAnimalsRepository
 
         await connection.ExecuteAsync("CreateAnimal", parameters, commandType: CommandType.StoredProcedure);
         return parameters.Get<int?>("p_id");
+    }
+
+    public async Task<int?> CreateWithVets(Animal animal, List<Employee> vets)
+    {
+        using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
+        using var transaction = connection.BeginTransaction();
+
+        try
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("p_name", animal.Name);
+            parameters.Add("p_type_id", animal.TypeId);
+            parameters.Add("p_birthdate", animal.BirthDate, DbType.Date);
+            parameters.Add("p_sex", animal.Sex);
+            parameters.Add("p_winter_place_id", animal.WinterPlaceId);
+            parameters.Add("p_reptile_info_id", animal.ReptileInfoId);
+            parameters.Add("p_diet_id", animal.DietId);
+            parameters.Add("p_habitat_zone_id", animal.HabitatZoneId);
+            parameters.Add("p_caretaker_id", animal.CaretakerId);
+            parameters.Add("p_id", dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+
+            await connection.ExecuteAsync("CreateAnimal", parameters, commandType: CommandType.StoredProcedure,
+                transaction: transaction);
+
+            var animalId = parameters.Get<int?>("p_id");
+            if (animalId.HasValue && vets.Any())
+            {
+                var vetIds = vets.Select(v => v.Id).ToArray();
+                await connection.ExecuteAsync(
+                    "CALL AddVetArrayToAnimal(@animalId, @vetIds)",
+                    new { animalId = animalId.Value, vetIds },
+                    transaction: transaction);
+            }
+
+            transaction.Commit();
+            return animalId;
+        }
+        catch (Exception)
+        {
+            transaction.Rollback();
+            throw;
+        }
     }
 
     public async Task AddVets(int animalId, List<Employee> vets)
@@ -122,11 +221,8 @@ public class AnimalsRepository : IAnimalsRepository
 
     public async Task<IEnumerable<Animal>> Search(string name, int? typeId)
     {
-        var sql = @"
-        SELECT * 
-        FROM ANIMALS 
-        WHERE (@name IS NULL OR Name LIKE '%' || @name || '%')
-          AND (@typeId IS NULL OR TypeId = @typeId)";
+        var sql =
+            @"SELECT * FROM ANIMALS WHERE (Name LIKE '%' || @name || '%') AND (TypeId = @typeId)";
 
         using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
 

@@ -134,8 +134,9 @@ public partial class UpdateAnimalViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void AddVet(Employee newVet)
+    private void AddVet(object vet)
     {
+        if (vet is not Employee newVet) return;
         if (!SelectedVets.Contains(newVet)) SelectedVets.Add(newVet);
     }
 
@@ -172,9 +173,7 @@ public partial class UpdateAnimalViewModel : ViewModelBase
 
         try
         {
-            await _animalsRepository.Update(animal);
-            await _animalsRepository.AddVets(animal.Id, SelectedVets.ToList());
-
+            await _animalsRepository.UpdateWithVets(animal, SelectedVets.ToList());
             _navigationService.NavigateToPets();
         }
         catch (Exception e)

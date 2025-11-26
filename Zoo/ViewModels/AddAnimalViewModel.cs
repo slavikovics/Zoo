@@ -93,8 +93,9 @@ public partial class AddAnimalViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void AddVet(Employee newVet)
+    private void AddVet(object vet)
     {
+        if (vet is not Employee newVet) return;
         if (!SelectedVets.Contains(newVet)) SelectedVets.Add(newVet);
     }
 
@@ -130,12 +131,7 @@ public partial class AddAnimalViewModel : ViewModelBase
                 (int)Caretakers.ElementAtOrDefault(AnimalCaretakerId)!.Id!
             );
 
-            var newAnimal = await _animalsRepository.Create(animal);
-            if (newAnimal is not null)
-            {
-                await _animalsRepository.AddVets((int)newAnimal, SelectedVets.ToList());
-            }
-
+            await _animalsRepository.CreateWithVets(animal, SelectedVets.ToList());
             _navigationService.NavigateToPets();
         }
         catch (Exception e)
