@@ -20,7 +20,7 @@ public partial class AddEmployeeViewModel : ViewModelBase
     private readonly Employee _emptySpouse;
 
     [ObservableProperty] private string _title = "Добавить сотрудника";
-    [ObservableProperty] private Employee _employee = new(1, "Новый сотрудник", DateTime.Now, "232", "Single");
+    [ObservableProperty] private Employee _employee = new(1, "Новый сотрудник", DateTime.Now, "+375-25-456-78-89", "Single");
     [ObservableProperty] private ObservableCollection<Employee> _availableSpouses;
     [ObservableProperty] private Employee _selectedSpouse;
 
