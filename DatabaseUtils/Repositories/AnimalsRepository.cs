@@ -221,9 +221,7 @@ public class AnimalsRepository : IAnimalsRepository
 
     public async Task<IEnumerable<Animal>> Search(string name, int? typeId)
     {
-        var sql =
-            @"SELECT * FROM ANIMALS WHERE (Name LIKE '%' || @name || '%') AND (TypeId = @typeId)";
-
+        var sql = @"SELECT * FROM ANIMALS WHERE (Name ILIKE '%' || @name || '%') AND (TypeId = @typeId)";
         using var connection = await _databaseConnectionFactory.CreateConnectionAsync();
 
         return await connection.QueryAsync<Animal>(sql, new

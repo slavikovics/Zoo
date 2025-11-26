@@ -106,6 +106,9 @@ CREATE TABLE AnimalVet
     FOREIGN KEY (VetId) REFERENCES Employees (Id) ON DELETE CASCADE
 );
 
+-- Индекс для поиска по типу и имени животного
+CREATE INDEX idx_animals_name_type ON Animals (Name, TypeId);
+
 -- 1. Процедура создания животного
 CREATE OR REPLACE PROCEDURE CreateAnimal(
     p_name VARCHAR(50),
