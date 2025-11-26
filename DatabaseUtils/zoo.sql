@@ -465,7 +465,7 @@ CREATE OR REPLACE TRIGGER Trigger_CheckMaritalStatusOnUpdate
     FOR EACH ROW
 EXECUTE FUNCTION CheckMaritalStatusConsistency();
 
--- Триггер при вставке в EmployeeSpouse
+-- 17. Триггерная функция для изменения MaritalStatus при добавлении брака
 CREATE OR REPLACE FUNCTION HandleSpouseRelationInsert()
     RETURNS TRIGGER
     LANGUAGE plpgsql
@@ -481,13 +481,14 @@ BEGIN
 END;
 $$;
 
+-- 18. Триггер при вставке в EmployeeSpouse
 CREATE OR REPLACE TRIGGER Trigger_HandleSpouseRelationInsert
     AFTER INSERT
     ON EmployeeSpouse
     FOR EACH ROW
 EXECUTE FUNCTION HandleSpouseRelationInsert();
 
--- Триггерная функция для обновления статусов сотрудников на 'Single' при удалении брака между ними 
+-- 19. Триггерная функция для обновления статусов сотрудников на 'Single' при удалении брака между ними 
 -- (при этом, если один из сотрудников был удалён и брак удалился по CASCADE, то обновление не производится)
 CREATE OR REPLACE FUNCTION HandleEmployeeSpouseDelete()
     RETURNS TRIGGER
@@ -506,14 +507,14 @@ BEGIN
 END;
 $$;
 
--- Триггер при удалении из EmployeeSpouse
+-- 20. Триггер при удалении из EmployeeSpouse
 CREATE OR REPLACE TRIGGER Trigger_HandleEmployeeSpouseDelete
     AFTER DELETE
     ON EmployeeSpouse
     FOR EACH ROW
 EXECUTE FUNCTION HandleEmployeeSpouseDelete();
 
--- View для просмотра семейных пар
+-- 21. View для просмотра семейных пар
 DROP VIEW IF EXISTS FamilyPairs;
 CREATE VIEW FamilyPairs AS
 (
